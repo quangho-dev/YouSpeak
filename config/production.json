@@ -1,11 +1,5 @@
 {
   "mongoURI": "mongodb+srv://QuangHo:un1c0rn1@cluster0-qv8ui.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "secret",
-  "PORT": 5000,
-  "vnp_TmnCode":"NK2SPZS2",
-  "vnp_HashSecret":"BALTCCIIQCNIVZEQMWXBQGHOBOQYCNWI",
-  "vnp_Url":"http://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
-  "vnp_ReturnUrl": "http://localhost:5000/api/vnpay/vnpay_return",
-  "nganluong_merchant_site_code": "50215",
-  "nganluong_secure_pass": "a5eef1880a3dd585e4a38e6383c8e506"
+  "PORT": 5000
 }
