@@ -1,5 +1,5 @@
 const BookingCalendarStudent = require('../models/bookingCalendarStudentModel')
-const BookingCalendarTeacher = require('../models/bookingCalendarModel')
+const BookingCalendarTeacher = require('../models/bookingCalendarTeacherModel')
 const nodemailer = require('nodemailer')
 const User = require('../models/userModel')
 

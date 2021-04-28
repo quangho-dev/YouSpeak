@@ -1,4 +1,4 @@
-const BookingCalendarTeacher = require('../models/bookingCalendarModel')
+const BookingCalendarTeacher = require('../models/bookingCalendarTeacherModel')
 const BookingCalendarStudent = require('../models/bookingCalendarStudentModel')
 
 // @route    POST api/booking-calendar-teacher
