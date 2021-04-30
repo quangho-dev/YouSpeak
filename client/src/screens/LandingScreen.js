@@ -7,7 +7,6 @@ import { Link, Redirect } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import IconButton from '@material-ui/core/IconButton'
-import Hidden from '@material-ui/core/Hidden'
 import { Link as LinkScroll } from 'react-scroll'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     height: '100vh',
     width: '100%',
-    marginTop: '-90px',
     padding: '0 1em',
   },
   overlay: {
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     left: '0',
     top: '0',
     width: '100%',
-    height: '100%',
+    height: '100vh',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   arrowDownContainer: {
@@ -56,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   },
   rowContainer: {
     padding: '0 1em',
+    [theme.breakpoints.up('sm')]: {
+      padding: '0 3em',
+    },
   },
   avatar: {
     height: '7em',
@@ -64,13 +65,15 @@ const useStyles = makeStyles((theme) => ({
   media: {
     width: '100%',
   },
+  howItWorksDescription: {
+    maxWidth: '25em',
+  },
 }))
 
 const Landing = (props) => {
   const classes = useStyles()
   const theme = useTheme()
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
-  const matchesXS = useMediaQuery(theme.breakpoints.up('xs'))
 
   const auth = useSelector((state) => state.auth)
   const { isAuthenticated, user } = auth
@@ -146,26 +149,24 @@ const Landing = (props) => {
           </Grid>
         </Grid>
 
-        {/* <Hidden xsDown>
-          <Grid item container className={classes.arrowDownContainer}>
-            <Grid item container className={classes.arrowDown}>
-              <Grid item>
-                <LinkScroll
-                  activeClass="active"
-                  to="why-choose-youspeak"
-                  spy={true}
-                  smooth={true}
-                  offset={-72}
-                  duration={500}
-                >
-                  <IconButton>
-                    <ArrowDownwardIcon style={{ fontSize: '1rem' }} />
-                  </IconButton>
-                </LinkScroll>
-              </Grid>
+        <Grid item container className={classes.arrowDownContainer}>
+          <Grid item container className={classes.arrowDown}>
+            <Grid item>
+              <LinkScroll
+                activeClass="active"
+                to="why-choose-youspeak"
+                spy={true}
+                smooth={true}
+                offset={-72}
+                duration={500}
+              >
+                <IconButton>
+                  <ArrowDownwardIcon style={{ fontSize: '1rem' }} />
+                </IconButton>
+              </LinkScroll>
             </Grid>
           </Grid>
-        </Hidden> */}
+        </Grid>
       </Grid>
 
       {/* Why YouSpeak */}
@@ -175,7 +176,8 @@ const Landing = (props) => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ paddingTop: '3em' }}
+        style={{ paddingTop: '5em' }}
+        className={classes.rowContainer}
       >
         <Grid item>
           <Typography
@@ -258,9 +260,10 @@ const Landing = (props) => {
         alignItems="center"
         direction="column"
         style={{
-          marginTop: '4em',
-          paddingBottom: '3em',
+          marginTop: '5em',
+          paddingBottom: '5em',
         }}
+        className={classes.rowContainer}
       >
         <Grid item>
           <Typography
@@ -287,13 +290,13 @@ const Landing = (props) => {
             />
           </Grid>
           <Grid item>
-            <Grid container item direction="column">
+            <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
                   <span style={{ fontSize: '2em' }}>1</span>. Chọn giáo viên
                 </p>
               </Grid>
-              <Grid item>
+              <Grid item className={classes.howItWorksDescription}>
                 <Typography variant="body2">
                   Xem video giới thiệu của giáo viên và đọc nhận xét của các học
                   viên khác.
@@ -311,15 +314,15 @@ const Landing = (props) => {
           className={classes.rowContainer}
           style={{ marginTop: '3em', marginBottom: '3em' }}
         >
-          <Grid item>
-            <Grid container item direction="column">
-              <Grid item>
-                <img
-                  src="https://source.unsplash.com/random/350x200"
-                  alt="Chọn giáo viên"
-                  style={{ width: '100%' }}
-                />
-              </Grid>
+          <Grid item style={{ order: matchesSM ? '1' : undefined }}>
+            <img
+              src="https://source.unsplash.com/random/350x200"
+              alt="Đặt lịch hẹn"
+              style={{ width: '100%' }}
+            />
+          </Grid>
+          <Grid item className={classes.howItWorksDescription}>
+            <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
                   <span style={{ fontSize: '2em' }}>2</span>. Đặt lịch hẹn
@@ -348,8 +351,8 @@ const Landing = (props) => {
               style={{ width: '100%' }}
             />
           </Grid>
-          <Grid item>
-            <Grid container item direction="column">
+          <Grid item className={classes.howItWorksDescription}>
+            <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
                   <span style={{ fontSize: '2em' }}>3</span>. Bắt đầu học
