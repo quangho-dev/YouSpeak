@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     height: '100vh',
     width: '100%',
-    marginTop: '-78px',
+    marginTop: '-90px',
     padding: '0 1em',
   },
   overlay: {
@@ -54,15 +54,15 @@ const useStyles = makeStyles((theme) => ({
   teacherShowcaseCard: {
     maxWidth: '240px',
   },
-  whyCard: {
-    maxWidth: '300px',
-  },
   rowContainer: {
-    padding: '0 10em',
+    padding: '0 1em',
   },
   avatar: {
     height: '7em',
     width: '7em',
+  },
+  media: {
+    width: '100%',
   },
 }))
 
@@ -70,6 +70,7 @@ const Landing = (props) => {
   const classes = useStyles()
   const theme = useTheme()
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesXS = useMediaQuery(theme.breakpoints.up('xs'))
 
   const auth = useSelector((state) => state.auth)
   const { isAuthenticated, user } = auth
@@ -145,7 +146,7 @@ const Landing = (props) => {
           </Grid>
         </Grid>
 
-        <Hidden xsDown>
+        {/* <Hidden xsDown>
           <Grid item container className={classes.arrowDownContainer}>
             <Grid item container className={classes.arrowDown}>
               <Grid item>
@@ -164,7 +165,7 @@ const Landing = (props) => {
               </Grid>
             </Grid>
           </Grid>
-        </Hidden>
+        </Hidden> */}
       </Grid>
 
       {/* Why YouSpeak */}
@@ -173,33 +174,32 @@ const Landing = (props) => {
         container
         direction="column"
         alignItems="center"
+        justify="center"
         style={{ paddingTop: '3em' }}
       >
         <Grid item>
           <Typography
-            variant={matchesSM ? 'h3' : 'h4'}
-            style={{ fontWeight: '500' }}
-            gutterBottom
+            variant="h4"
+            style={{ fontWeight: '500', textAlign: 'center' }}
           >
             Tại sao chọn YouSpeak?
           </Typography>
         </Grid>
         <Grid
-          item
           container
-          direction={matchesSM ? 'column' : 'row'}
+          direction="column"
           justify="center"
-          alignItems={matchesSM ? 'center' : undefined}
+          alignItems="center"
           spacing={4}
-          style={{ margin: 0, width: '100%', marginTop: '2em' }}
+          style={{ margin: 0, marginTop: '2em', maxWidth: '100%' }}
         >
-          <Grid item className={classes.whyCard}>
+          <Grid item>
             <Card>
               <CardMedia
                 component="img"
                 alt="Cá nhân hóa việc học"
                 className={classes.media}
-                image="https://source.unsplash.com/random/400x400"
+                image="https://source.unsplash.com/random/300x300"
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -212,13 +212,13 @@ const Landing = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item className={classes.whyCard}>
+          <Grid item>
             <Card>
               <CardMedia
                 component="img"
                 alt="thanh toán trên mỗi bài học"
                 className={classes.media}
-                image="https://source.unsplash.com/random/400x400"
+                image="https://source.unsplash.com/random/300x300"
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -231,13 +231,13 @@ const Landing = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item className={classes.whyCard}>
+          <Grid item>
             <Card>
               <CardMedia
                 component="img"
                 alt="Tùy ý chọn thời gian và địa điểm"
                 className={classes.media}
-                image="https://source.unsplash.com/random/400x400"
+                image="https://source.unsplash.com/random/300x300"
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -263,7 +263,10 @@ const Landing = (props) => {
         }}
       >
         <Grid item>
-          <Typography variant="h3" style={{ fontWeight: '500' }} gutterBottom>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: '500', textAlign: 'center' }}
+          >
             Cách học trên YouSpeak
           </Typography>
         </Grid>
@@ -280,6 +283,7 @@ const Landing = (props) => {
             <img
               src="https://source.unsplash.com/random/350x200"
               alt="Chọn giáo viên"
+              style={{ width: '100%' }}
             />
           </Grid>
           <Grid item>
@@ -307,8 +311,15 @@ const Landing = (props) => {
           className={classes.rowContainer}
           style={{ marginTop: '3em', marginBottom: '3em' }}
         >
-          <Grid item style={{ order: matchesSM ? '2' : undefined }}>
+          <Grid item>
             <Grid container item direction="column">
+              <Grid item>
+                <img
+                  src="https://source.unsplash.com/random/350x200"
+                  alt="Chọn giáo viên"
+                  style={{ width: '100%' }}
+                />
+              </Grid>
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
                   <span style={{ fontSize: '2em' }}>2</span>. Đặt lịch hẹn
@@ -320,12 +331,6 @@ const Landing = (props) => {
                 </Typography>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item style={{ order: matchesSM ? '1' : undefined }}>
-            <img
-              src="https://source.unsplash.com/random/350x200"
-              alt="Chọn giáo viên"
-            />
           </Grid>
         </Grid>
 
@@ -339,7 +344,8 @@ const Landing = (props) => {
           <Grid item>
             <img
               src="https://source.unsplash.com/random/350x200"
-              alt="Chọn giáo viên"
+              alt="Đặt lịch hẹn"
+              style={{ width: '100%' }}
             />
           </Grid>
           <Grid item>

@@ -1,5 +1,7 @@
 {
   "mongoURI": "mongodb+srv://QuangHo:un1c0rn1@cluster0-qv8ui.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "secret",
-  "PORT": 5000
+  "PORT": 5000,
+  "CLIENT_PAYPAL": "ASq1mi_XTOVgTfc0L_lJSuw0WBvpij_Gc9R99dFlRNEDuDJSzgYxv5AUmvnXiGSuqnp2VxlSUVrJkSWm",
+  "SECRET_PAYPAL": "EHvNfMZe9s06Xjfub6TBsuax_e0fSNAiV7mkr8qjCjblgkyzZAvpZbfpNnBMmVxubO00sXHZ9JwRIob6"
 }

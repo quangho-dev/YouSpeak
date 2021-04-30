@@ -157,7 +157,7 @@ const Header = ({
   const classes = useStyles()
   const theme = useTheme()
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'))
 
   const [openDrawer, setOpenDrawer] = useState(false)
 
@@ -265,7 +265,7 @@ const Header = ({
           <Grid item>
             <Button
               component={Link}
-              to="/register"
+              to="/register-user"
               style={{
                 color: 'white',
                 textTransform: 'none',
@@ -283,7 +283,7 @@ const Header = ({
               to="/for-teacher"
               style={{ color: 'white', textTransform: 'none' }}
             >
-              Dành cho giáo viên
+              For English teachers
             </Button>
           </Grid>
         </Grid>
@@ -529,7 +529,7 @@ const Header = ({
                       )}
                     </Button>
                   </Grid>
-                  <Grid item>{matches ? drawer : tabsLoggedIn}</Grid>
+                  <Grid item>{matchesXS ? drawer : tabsLoggedIn}</Grid>
                 </Grid>
               </Toolbar>
             </AppBar>
@@ -561,7 +561,7 @@ const Header = ({
                       />
                     </Button>
                   </Grid>
-                  <Grid item>{matches ? drawer : tabs}</Grid>
+                  <Grid item>{matchesXS ? drawer : tabs}</Grid>
                 </Grid>
               </Toolbar>
             </AppBar>

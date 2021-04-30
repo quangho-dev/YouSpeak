@@ -21,6 +21,7 @@ const bookingCalendarTeacherRoutes = require('./routes/api/bookingCalendarTeache
 const bookingCalendarStudentRoutes = require('./routes/api/bookingCalendarStudentRoutes')
 const sendContactUsEmail = require('./routes/api/contactUsRoute')
 const cors = require('cors')
+const config = require('config')
 const connectDB = require('./config/db')
 
 const app = express()
@@ -65,10 +66,8 @@ app.use('/api/profileTeacher', profileTeacherRoutes)
 app.use('/api/booking-calendar-student', bookingCalendarStudentRoutes)
 
 // Set up paypal payment
-const CLIENT =
-  'ASq1mi_XTOVgTfc0L_lJSuw0WBvpij_Gc9R99dFlRNEDuDJSzgYxv5AUmvnXiGSuqnp2VxlSUVrJkSWm'
-const SECRET =
-  'EHvNfMZe9s06Xjfub6TBsuax_e0fSNAiV7mkr8qjCjblgkyzZAvpZbfpNnBMmVxubO00sXHZ9JwRIob6'
+const CLIENT_PAYPAL = config.get('CLIENT_PAYPAL')
+const SECRET_PAYPAL = config.get('SECRET_PAYPAL')
 const PAYPAL_API = 'https://api-m.sandbox.paypal.com'
 
 app.post('/create-payment', async (req, res) => {
@@ -76,8 +75,8 @@ app.post('/create-payment', async (req, res) => {
     PAYPAL_API + '/v1/payments/payment',
     {
       auth: {
-        user: CLIENT,
-        pass: SECRET,
+        user: process.env.CLIENT_PAYPAL || CLIENT_PAYPAL,
+        pass: process.env.SECRET_PAYPAL || SECRET_PAYPAL,
       },
       body: {
         intent: 'sale',
@@ -122,8 +121,8 @@ app.post('/execute-payment/', async (req, res) => {
     PAYPAL_API + '/v1/payments/payment/' + paymentID + '/execute',
     {
       auth: {
-        user: CLIENT,
-        pass: SECRET,
+        user: process.env.CLIENT_PAYPAL || CLIENT_PAYPAL,
+        pass: process.env.SECRET_PAYPAL || SECRET_PAYPAL,
       },
       body: {
         payer_id: payerID,
@@ -178,6 +177,8 @@ app.use((req, res, next) => {
   next(error)
 })
 
-const PORT = process.env.PORT || 5000
+const PORT = config.get('PORT')
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+app.listen(process.env.PORT || PORT, () =>
+  console.log(`Server started on port ${PORT}`)
+)

@@ -71,7 +71,12 @@ const Footer = () => {
             <Grid item>
               <Typography variant="h6">Liên hệ:</Typography>
             </Grid>
-            <Grid item container alignItems="center">
+            <Grid
+              item
+              container
+              alignItems="center"
+              style={{ marginBottom: '1.5em' }}
+            >
               <Grid item>
                 <EmailIcon />
               </Grid>
@@ -81,7 +86,12 @@ const Footer = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container alignItems="center">
+            <Grid
+              item
+              container
+              alignItems="center"
+              style={{ marginBottom: '1.5em' }}
+            >
               <Grid item>
                 <PhoneIcon />
               </Grid>
