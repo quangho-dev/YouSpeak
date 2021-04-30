@@ -27,23 +27,10 @@ export default createMuiTheme({
       color: '#333',
     },
     h2: {
-      //   fontFamily: 'Roboto',
-      //   textTransform: 'uppercase',
-      //   fontWeight: 500,
-      //   fontSize: '3rem',
       color: '#333',
     },
     h3: {
-      //   fontSize: '2em',
       color: '#333',
-      // },
-      // h4: {
-      //   fontFamily: 'Roboto',
-      //   textTransform: 'none',
-      //   fontWeight: 300,
-      //   fontSize: '1.5rem',
-      //   color: '#ddd',
-      // },
     },
     h4: {
       color: '#333',
@@ -85,9 +72,4 @@ export default createMuiTheme({
       xl: 1920,
     },
   },
-  // // mixins: {
-  // //   toolbar: {
-  // //     height: 30,
-  // //   },
-  // },
 })
