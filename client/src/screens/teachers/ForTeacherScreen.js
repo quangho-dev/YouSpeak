@@ -23,13 +23,14 @@ const ForTeacherScreen = () => {
   const classes = useStyles()
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <Grid
-        item
-        container
-        alignItems="center"
-        className={classes.paddingContainer}
-      >
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className="container"
+    >
+      <Grid item container alignItems="center" style={{ marginBottom: '3em' }}>
         <Grid item>
           <Link to="/">
             <ArrowBackIcon fontSize="large" color="primary" />
@@ -47,11 +48,11 @@ const ForTeacherScreen = () => {
             }}
             className={classes.linkText}
           >
-            Back to home page
+            Back to homepage
           </Typography>
         </Grid>
       </Grid>
-      <Grid item style={{ marginTop: '6em' }}>
+      <Grid item>
         <Grid container justify="center" alignItems="center" spacing={4}>
           <Grid item>
             <Button

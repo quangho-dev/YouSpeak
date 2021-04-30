@@ -50,87 +50,91 @@ const LoginTeacher = () => {
   }
 
   return (
-    <>
-      <Grid container justify="center" alignItems="center" direction="column">
-        <Grid item>
-          <Avatar className={classes.avatar}>
-            <LockOpenIcon />
-          </Avatar>
-        </Grid>
-        <Grid item>
-          <Typography variant="h4" gutterBottom>
-            Sign in teacher account
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {(formik) => {
-              return (
-                <Form style={{ maxWidth: '25em' }}>
-                  <Field
-                    component={TextField}
-                    type="email"
-                    label="Email"
-                    name="email"
-                    fullWidth
-                    className={classes.formControl}
-                  />
-                  <Field
-                    component={TextField}
-                    fullWidth
-                    type="password"
-                    label="Password"
-                    name="password"
-                    className={classes.formControl}
-                  />
-                  <Button
-                    fullWidth
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                    disabled={!formik.isValid}
-                    style={{ color: 'white' }}
-                  >
-                    Sign in
-                  </Button>
-                  <Grid
-                    container
-                    alignItems="center"
-                    justify="center"
-                    style={{ margin: '0.7em 0' }}
-                  >
-                    <Grid item>
-                      <Typography variant="body1">
-                        You don't have an account?
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        component={Link}
-                        to="/teachers/register"
-                        variant="text"
-                        style={{
-                          fontSize: '1rem',
-                          textTransform: 'none',
-                          fontWeight: '600',
-                        }}
-                        disableRipple
-                      >
-                        Sign up
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Form>
-              )
-            }}
-          </Formik>
-        </Grid>
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      direction="column"
+      className="container"
+    >
+      <Grid item>
+        <Avatar className={classes.avatar}>
+          <LockOpenIcon />
+        </Avatar>
       </Grid>
-    </>
+      <Grid item>
+        <Typography variant="h4" gutterBottom style={{ textAlign: 'center' }}>
+          Sign in teacher account
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {(formik) => {
+            return (
+              <Form style={{ maxWidth: '25em' }}>
+                <Field
+                  component={TextField}
+                  type="email"
+                  label="Email"
+                  name="email"
+                  fullWidth
+                  className={classes.formControl}
+                />
+                <Field
+                  component={TextField}
+                  fullWidth
+                  type="password"
+                  label="Password"
+                  name="password"
+                  className={classes.formControl}
+                />
+                <Button
+                  fullWidth
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  disabled={!formik.isValid}
+                  style={{ color: 'white' }}
+                >
+                  Sign in
+                </Button>
+                <Grid
+                  container
+                  alignItems="center"
+                  justify="center"
+                  style={{ margin: '0.7em 0' }}
+                >
+                  <Grid item>
+                    <Typography variant="body1">
+                      You don't have an account?
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      component={Link}
+                      to="/teachers/register-teacher"
+                      variant="text"
+                      style={{
+                        fontSize: '1rem',
+                        textTransform: 'none',
+                        fontWeight: '600',
+                      }}
+                      disableRipple
+                    >
+                      Sign up
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Form>
+            )
+          }}
+        </Formik>
+      </Grid>
+    </Grid>
   )
 }
 

@@ -19,9 +19,15 @@ const RequestTeacherResendConfirmationTokenScreen = () => {
 
   return (
     <>
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className="container"
+      >
         <Grid item>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Yêu cầu gửi lại đường link để kích hoạt tài khoản:
           </Typography>
         </Grid>

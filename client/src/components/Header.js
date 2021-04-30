@@ -93,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     backgroundColor: theme.palette.common.green,
+    paddingTop: '7em',
   },
   drawerAvatar: {
     backgroundColor: 'white',

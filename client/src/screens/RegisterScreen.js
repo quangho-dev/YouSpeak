@@ -61,14 +61,20 @@ const RegisterScreen = () => {
 
   return (
     <Fragment>
-      <Grid container justify="center" alignItems="center" direction="column">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        direction="column"
+        className="container"
+      >
         <Grid item>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
         </Grid>
         <Grid item>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom style={{ textAlign: 'center' }}>
             Đăng ký tài khoản
           </Typography>
         </Grid>
@@ -81,7 +87,6 @@ const RegisterScreen = () => {
             {(formik) => {
               return (
                 <Form style={{ maxWidth: '25em' }}>
-                  {console.log('register screen:', formik.values)}
                   <FormikControl
                     control="input"
                     type="text"

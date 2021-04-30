@@ -26,7 +26,7 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
-    <div className={classes.rowContainer}>
+    <div className="container">
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item>
           <Typography variant="h4" gutterBottom>

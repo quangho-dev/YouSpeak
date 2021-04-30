@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/styles'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1em',
   },
   rowContainer: {
-    padding: '0 4em',
+    padding: '0 2em',
   },
   degreeImageCard: {
     maxWidth: 300,
@@ -53,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   expImage: {
     width: '100%',
     height: 'auto',
+  },
+  formContainer: {
+    maxWidth: '30em',
+    margin: 'auto',
   },
 }))
 
@@ -89,12 +94,7 @@ const TeacherRegisterForm = (props) => {
     >
       {({ isSubmitting, isValid }) => (
         <Form>
-          <Grid
-            container
-            alignItems="center"
-            className={classes.paddingContainer}
-            style={{ marginRight: 'auto' }}
-          >
+          <Grid container alignItems="center" className="container">
             <Grid item>
               <Link to="/for-teacher">
                 <ArrowBackIcon fontSize="large" color="primary" />
@@ -121,11 +121,17 @@ const TeacherRegisterForm = (props) => {
             direction="column"
             justify="center"
             alignItems="center"
-            className={classes.paddingContainer}
-            style={{ width: '70%', margin: 'auto' }}
+            className={clsx(classes.rowContainer, classes.formContainer)}
           >
             <Grid item>
-              <Typography variant="h4" style={{ textTransform: 'uppercase' }}>
+              <Typography
+                variant="h5"
+                style={{
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  fontWeight: '500',
+                }}
+              >
                 Register teacher account
               </Typography>
             </Grid>
@@ -196,9 +202,10 @@ const TeacherRegisterForm = (props) => {
             alignItems="center"
             justify="center"
             style={{ margin: '0.7em 0' }}
+            className={classes.rowContainer}
           >
             <Grid item>
-              <Typography variant="body1">Already registerd?</Typography>
+              <Typography variant="body1">Already registered?</Typography>
             </Grid>
             <Grid item>
               <Button
@@ -222,6 +229,7 @@ const TeacherRegisterForm = (props) => {
             alignItems="center"
             justify="center"
             style={{ margin: '0.7em 0' }}
+            className={classes.rowContainer}
           >
             <Grid item>
               <Typography variant="body1">

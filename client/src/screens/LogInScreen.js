@@ -51,7 +51,13 @@ const LogInScreen = () => {
 
   return (
     <>
-      <Grid container justify="center" alignItems="center" direction="column">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        direction="column"
+        className="container"
+      >
         <Grid item>
           <Avatar className={classes.avatar}>
             <LockOpenIcon />

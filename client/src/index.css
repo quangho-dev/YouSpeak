@@ -17,6 +17,12 @@ code {
 }
 
 .container {
-  padding: 7em 5em;
+  padding: 7em 2em 3em;
   background-color: #f0f2f5;
+}
+
+@media (min-width: 600px) {
+  .container {
+    padding: 8em 4em 3em;
+  }
 }
