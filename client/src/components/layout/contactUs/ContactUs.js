@@ -69,7 +69,7 @@ const ContactUs = () => {
               className={classes.bottomMargin}
             >
               <Typography
-                variant="h4"
+                variant="h5"
                 style={{ textTransform: 'uppercase', fontWeight: '500' }}
               >
                 Liên hệ với chúng tôi
@@ -83,7 +83,7 @@ const ContactUs = () => {
               style={{ alignSelf: 'center' }}
               className={classes.bottomMargin}
             >
-              <Card style={{ width: '30em', backgroundColor: '#F5D832' }}>
+              <Card style={{ backgroundColor: '#F5D832' }}>
                 <CardContent>
                   <Grid container direction="column">
                     <Grid item container justify="center" alignItems="center">
@@ -119,29 +119,29 @@ const ContactUs = () => {
               </Typography>
             </Grid>
 
-            <Grid item className={classes.bottomMargin}>
-              <Field
-                name="name"
-                type="text"
-                component={TextField}
-                label="Tên / Name"
-                style={{ width: '20em' }}
-              />
-            </Grid>
-
             <Grid
+              item
               container
-              justify="space-around"
+              direction="column"
+              justify="center"
               alignItems="center"
-              className={classes.bottomMargin}
             >
+              <Grid item className={classes.bottomMargin}>
+                <Field
+                  name="name"
+                  type="text"
+                  component={TextField}
+                  label="Tên / Name"
+                />
+              </Grid>
+
               <Grid item>
                 <Field
                   name="email"
                   type="email"
                   component={TextField}
                   label="Email của bạn / Your email"
-                  style={{ width: '20em' }}
+                  className={classes.bottomMargin}
                 />
               </Grid>
 
@@ -151,30 +151,30 @@ const ContactUs = () => {
                   type="number"
                   component={TextField}
                   label="Số điện thoại / Your phone number"
-                  style={{ width: '20em' }}
+                  className={classes.bottomMargin}
                 />
               </Grid>
-            </Grid>
 
-            <Grid item className={classes.bottomMargin}>
-              <Field
-                name="message"
-                type="text"
-                component={TextField}
-                label="Tin nhắn / Message"
-                multiline
-                rows={6}
-                style={{ width: '50em' }}
-              />
-            </Grid>
+              <Grid item>
+                <Field
+                  name="message"
+                  type="text"
+                  component={TextField}
+                  label="Tin nhắn / Message"
+                  multiline
+                  rows={6}
+                  className={classes.bottomMargin}
+                />
+              </Grid>
 
-            <Grid item>
-              <MyButton
-                type="submit"
-                disabled={isSubmitting || !isValid || !(isValid && dirty)}
-              >
-                Gửi / Send message
-              </MyButton>
+              <Grid item>
+                <MyButton
+                  type="submit"
+                  disabled={isSubmitting || !isValid || !(isValid && dirty)}
+                >
+                  Gửi / Send message
+                </MyButton>
+              </Grid>
             </Grid>
           </Grid>
         </Form>

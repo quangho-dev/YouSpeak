@@ -287,6 +287,17 @@ const Header = ({
               For English teachers
             </Button>
           </Grid>
+
+          <Grid item>
+            <Button
+              variant="text"
+              component={Link}
+              to="/contact-us"
+              style={{ color: 'white', textTransform: 'none' }}
+            >
+              Liên hệ với chúng tôi
+            </Button>
+          </Grid>
         </Grid>
       </SwipeableDrawer>
       <IconButton
