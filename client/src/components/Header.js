@@ -34,26 +34,26 @@ function ElevationScroll(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-    marginBottom: '1em',
-    [theme.breakpoints.down('md')]: {
-      marginBottom: '2em',
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: '2.25em',
-    },
-  },
-  toolbarPadding: {
-    ...theme.mixins.toolbar,
-    paddingBottom: '1em',
-    [theme.breakpoints.down('md')]: {
-      paddingBottom: '2em',
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingBottom: '2.25em',
-    },
-  },
+  // toolbarMargin: {
+  //   ...theme.mixins.toolbar,
+  //   marginBottom: '1em',
+  //   [theme.breakpoints.down('md')]: {
+  //     marginBottom: '2em',
+  //   },
+  //   [theme.breakpoints.down('xs')]: {
+  //     marginBottom: '2.25em',
+  //   },
+  // },
+  // toolbarPadding: {
+  //   ...theme.mixins.toolbar,
+  //   paddingBottom: '1em',
+  //   [theme.breakpoints.down('md')]: {
+  //     paddingBottom: '2em',
+  //   },
+  //   [theme.breakpoints.down('xs')]: {
+  //     paddingBottom: '2.25em',
+  //   },
+  // },
   logo: {
     height: '5em',
     [theme.breakpoints.down('md')]: {
