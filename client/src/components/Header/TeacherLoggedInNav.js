@@ -229,16 +229,17 @@ const TeacherLoggedInNav = ({ user, profileTeacher, logout }) => {
           aria-haspopup="true"
           onMouseOver={onMouseOverHandler}
         >
-          {user &&
-            profileTeacher &&
-            profileTeacher.teacherAvatar &&
-            user.role === 'teacher' && (
-              <Avatar
-                style={{ width: '3em', height: '3em', borderRadius: '50%' }}
-                src={null || profileTeacher.teacherAvatar}
-                alt="image-avatar"
-              />
-            )}
+          <Avatar
+            style={{ width: '3em', height: '3em', borderRadius: '50%' }}
+            src={
+              user &&
+              profileTeacher &&
+              profileTeacher.teacherAvatar &&
+              user.role === 'teacher' &&
+              profileTeacher.teacherAvatar
+            }
+            alt="image-avatar"
+          />
         </Button>
         <Menu
           id="simple-menu"

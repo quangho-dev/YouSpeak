@@ -45,7 +45,7 @@ const AddDocuments = () => {
       container
       direction="column"
       alignItems="center"
-      style={{ marginBottom: '2em' }}
+      style={{ width: '100%' }}
     >
       <Grid item>
         <Typography

@@ -8,8 +8,27 @@ import MyButton from '../ui/MyButton'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Spinner from '../ui/Spinner'
+import { makeStyles, useTheme } from '@material-ui/styles'
+
+const useStyles = makeStyles((theme) => ({
+  rowContainer: {
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
+  },
+}))
 
 const Lessons = () => {
+  const classes = useStyles()
+  const theme = useTheme()
+
   const dispatch = useDispatch()
 
   const lesson = useSelector((state) => state.lesson)
@@ -30,8 +49,9 @@ const Lessons = () => {
         container
         direction="column"
         alignItems="center"
-        className="container"
-        style={{ width: '100%', margin: 0 }}
+        className={classes.rowContainer}
+        style={{ width: '100%', margin: '7em 0 0' }}
+        spacing={2}
       >
         <Grid item>
           <Typography
@@ -41,15 +61,21 @@ const Lessons = () => {
             Type Of Lesson Manager
           </Typography>
         </Grid>
-        <Grid item style={{ marginTop: '1em' }}>
-          <LessonTable lessons={lessons} />
+        <Grid item style={{ minWidth: '60%' }}>
+          {lessons && lessons.length > 0 ? (
+            <LessonTable lessons={lessons} />
+          ) : (
+            <Typography variant="body1">
+              There aren't any type of lesson yet, please add some.
+            </Typography>
+          )}
         </Grid>
         <Grid
           item
           container
           justify="center"
           alignItems="center"
-          style={{ marginTop: '1em' }}
+          style={{ margin: '0', width: '100%' }}
           spacing={3}
         >
           <Grid item>

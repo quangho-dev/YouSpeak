@@ -6,6 +6,22 @@ import Spinner from '../../components/ui/Spinner'
 import { connect } from 'react-redux'
 import { getLessonsOfTeacherById } from '../../actions/lessons'
 import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles((theme) => ({
+  rowContainer: {
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
+  },
+}))
 
 const TeachersListScreen = ({
   getLessonsOfTeacherById,
@@ -14,6 +30,7 @@ const TeachersListScreen = ({
   teachersList: { teachersList: teachers, loading: loadingTeachersList },
 }) => {
   const [visible, setVisible] = useState(10)
+  const classes = useStyles()
 
   useEffect(() => {
     getTeachers()
@@ -32,14 +49,18 @@ const TeachersListScreen = ({
       container
       direction="column"
       alignItems="center"
-      className="container"
+      className={classes.rowContainer}
       spacing={1}
-      style={{ width: '100%', margin: 0 }}
+      style={{ width: '100%', margin: '7em 0 2em' }}
     >
       <Grid item style={{ margin: '1em 0 2.5em' }}>
         <Typography
           variant="h4"
-          style={{ textTransform: 'uppercase', fontWeight: '500' }}
+          style={{
+            textTransform: 'uppercase',
+            fontWeight: '600',
+            textAlign: 'center',
+          }}
         >
           Tìm một giáo viên:
         </Typography>
@@ -69,7 +90,7 @@ const TeachersListScreen = ({
           onClick={handleShowMoreTeachers}
           variant="contained"
           color="primary"
-          style={{ color: 'white', margin: '2em 0' }}
+          style={{ color: 'white', margin: ' 0 0 2em' }}
           disableRipple
         >
           Hiển thị thêm

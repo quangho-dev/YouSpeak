@@ -147,9 +147,13 @@ const ProfileTeacherPage2 = () => {
 
       <VideoUploader />
 
-      {values.typeOfTeacher === 'professional' && <DegreeImagesUploader />}
+      {values && values.typeOfTeacher === 'professional' && (
+        <DegreeImagesUploader />
+      )}
 
-      {values.typeOfTeacher === 'professional' && <ExpImagesUploader />}
+      {values && values.typeOfTeacher === 'professional' && (
+        <ExpImagesUploader />
+      )}
     </Grid>
   )
 }

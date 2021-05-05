@@ -1,18 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Typography, Avatar, Card, CardContent } from '@material-ui/core'
+import {
+  Grid,
+  Typography,
+  Avatar,
+  Card,
+  CardContent,
+  useMediaQuery,
+} from '@material-ui/core'
 import MyButton from '../../ui/MyButton'
 import { getProfileTeacherById } from '../../../actions/profileTeacher'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
 import Spinner from '../../ui/Spinner'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import ShowMoreText from 'react-show-more-text'
 import getMinPeriodPrice from '../../../utils/getMinPeriodPrice'
 import formatMoney from '../../../utils/formatMoney'
 import { Link } from 'react-router-dom'
+import './ReactPlayer.css'
+import DateRangeIcon from '@material-ui/icons/DateRange'
 
 const useStyles = makeStyles((theme) => ({
+  rowContainer: {
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
+  },
   marginBottom: {
     marginBottom: '2em',
   },
@@ -46,6 +67,9 @@ const TeacherInfo = ({
 
   const classes = useStyles()
 
+  const theme = useTheme()
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
+
   const executeOnClick = () => {
     setIsExpanded(!isExpanded)
   }
@@ -63,36 +87,51 @@ const TeacherInfo = ({
           container
           direction="column"
           alignItems="center"
-          className="container"
+          className={classes.rowContainer}
+          spacing={3}
+          style={{ margin: '7em 0 2em', width: '100%' }}
         >
           <Grid item>
             <Typography
-              variant="h4"
+              variant={matchesMD ? 'h4' : 'h5'}
               style={{
                 textTransform: 'uppercase',
-                marginBottom: '1em',
-                fontWeight: '500',
+                fontWeight: '600',
+                textAlign: 'center',
               }}
             >
-              Thông tin về giáo viên:
+              Thông tin về giáo viên
             </Typography>
           </Grid>
 
-          <Grid item container justify="center">
-            <Grid item style={{ margin: '0 3em 2em 0' }}>
-              {profileTeacher.video && (
+          <Grid item style={{ minWidth: matchesMD ? '60%' : '100%' }}>
+            {profileTeacher.video && (
+              <div className="player-wrapper">
                 <ReactPlayer
                   url={`/${profileTeacher.video}`}
                   controls
                   playing
                   light={`/${profileTeacher.thumbnail}`}
+                  width="100%"
+                  height="100%"
+                  className="react-player"
                 />
-              )}
-            </Grid>
+              </div>
+            )}
+          </Grid>
 
+          <Grid
+            item
+            container
+            direction={matchesMD ? 'row' : 'column'}
+            alignItems="center"
+            justify="center"
+            spacing={3}
+          >
             <Grid item>
-              <Grid container direction="column">
-                <Grid item style={{ marginBottom: '2em' }}>
+              {profileTeacher &&
+                profileTeacher.lessons &&
+                profileTeacher.lessons.length > 0 && (
                   <Card>
                     <CardContent>
                       <Grid
@@ -100,7 +139,7 @@ const TeacherInfo = ({
                         direction="column"
                         alignItems="center"
                         justify="center"
-                        spacing={2}
+                        spacing={1}
                       >
                         <Grid item>
                           <Typography variant="h6">
@@ -109,20 +148,17 @@ const TeacherInfo = ({
                         </Grid>
                         <Grid item>
                           <Typography variant="body1">
-                            {profileTeacher &&
-                              profileTeacher.lessons !== undefined &&
-                              profileTeacher.lessons.length > 0 &&
-                              formatMoney(
-                                Math.min(
-                                  ...profileTeacher.lessons.map(
-                                    (lesson) =>
-                                      lesson &&
-                                      lesson.periods.length > 0 &&
-                                      lesson.periods[0] &&
-                                      getMinPeriodPrice(lesson.periods[0])
-                                  )
+                            {formatMoney(
+                              Math.min(
+                                ...profileTeacher.lessons.map(
+                                  (lesson) =>
+                                    lesson &&
+                                    lesson.periods &&
+                                    lesson.periods.length > 0 &&
+                                    getMinPeriodPrice(lesson.periods[0])
                                 )
-                              )}
+                              )
+                            )}
                             &nbsp;VNĐ
                           </Typography>
                         </Grid>
@@ -130,48 +166,54 @@ const TeacherInfo = ({
                           <MyButton
                             component={Link}
                             to={`/book-learning-time/${profileTeacher.user._id}`}
-                            style={{ fontWeight: '700', color: 'white' }}
+                            style={{
+                              fontWeight: '700',
+                              color: 'white',
+                              background: '#b30000',
+                            }}
                           >
-                            Đặt lịch học
+                            <DateRangeIcon />
+                            &nbsp;Đặt lịch học
                           </MyButton>
                         </Grid>
                       </Grid>
                     </CardContent>
                   </Card>
-                </Grid>
-              </Grid>
+                )}
+            </Grid>
 
-              <Grid item>
+            <Grid item>
+              {profileTeacher.lessons.length > 0 && (
                 <Card>
                   <CardContent>
-                    <Grid container direction="column" alignItems="center">
+                    <Grid container direction="column" justify="center">
                       <Grid item>
                         <Typography variant="h6">Các kiểu bài học:</Typography>
                       </Grid>
-                      {profileTeacher.lessons.length > 0 &&
-                        profileTeacher.lessons.map((lesson, index) => (
-                          <Grid item key={index}>
-                            <Typography variant="body1">
-                              {index + 1}.&nbsp;
-                              {lesson.lessonName}
-                            </Typography>
-                          </Grid>
-                        ))}
+                      {profileTeacher.lessons.map((lesson, index) => (
+                        <Grid item key={index}>
+                          <Typography variant="body1">
+                            {index + 1}.&nbsp;
+                            {lesson.lessonName}
+                          </Typography>
+                        </Grid>
+                      ))}
                     </Grid>
                   </CardContent>
                 </Card>
-              </Grid>
+              )}
             </Grid>
           </Grid>
 
-          <Grid item className={classes.marginBottom}>
+          <Grid item>
             <Card style={{ padding: '2em' }}>
               <CardContent>
                 <Grid
                   container
                   justify="center"
                   alignItems="center"
-                  spacing={4}
+                  spacing={3}
+                  style={{ margin: '0', width: '100%' }}
                 >
                   <Grid item>
                     {profileTeacher.teacherAvatar && (
@@ -184,7 +226,7 @@ const TeacherInfo = ({
                   </Grid>
 
                   <Grid item>
-                    <Grid container direction="column" spacing={2}>
+                    <Grid container direction="column">
                       <Grid item>
                         {profileTeacher.user.name && (
                           <Typography variant="h6">
@@ -203,12 +245,14 @@ const TeacherInfo = ({
                       </Grid>
 
                       <Grid item>
-                        {profileTeacher.hometown && (
-                          <Typography variant="body1">
-                            <strong>Đến từ:</strong>&nbsp;
-                            {profileTeacher.hometown.label}
-                          </Typography>
-                        )}
+                        {profileTeacher &&
+                          profileTeacher.hometown &&
+                          profileTeacher.hometown.label && (
+                            <Typography variant="body1">
+                              <strong>Đến từ:</strong>&nbsp;
+                              {profileTeacher.hometown.label}
+                            </Typography>
+                          )}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -217,7 +261,7 @@ const TeacherInfo = ({
             </Card>
           </Grid>
 
-          <Grid item style={{ width: '100%' }}>
+          <Grid item style={{ maxWidth: matchesMD ? '80%' : undefined }}>
             <Card>
               <CardContent>
                 <Grid container direction="column">

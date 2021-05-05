@@ -27,7 +27,6 @@ const BookedLessonsTable = ({ bookedLessons }) => {
             <TableCell>Type of lesson</TableCell>
             <TableCell>Starting time</TableCell>
             <TableCell>Lesson's duration</TableCell>
-            <TableCell>Lesson's state</TableCell>
             <TableCell>{''}</TableCell>
           </TableRow>
         </TableHead>

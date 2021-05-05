@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
 import { Formik, Field, Form } from 'formik'
 import { useDispatch } from 'react-redux'
 import MyButton from '../../ui/MyButton'
@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { TextField } from 'formik-material-ui'
 import LessonPeriodForm from './LessonPeriodForm'
 import * as yup from 'yup'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import { createALesson } from '../../../actions/lessons'
 import AddDocuments from './AddDocuments'
 
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 const AddALesson = (props) => {
   const classes = useStyles()
+
+  const theme = useTheme()
 
   const dispatch = useDispatch()
 
@@ -73,25 +75,27 @@ const AddALesson = (props) => {
     >
       {({ isValid, values, dirty }) => (
         <Form>
-          <Grid container direction="column" alignItems="center">
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className="container"
+            spacing={2}
+          >
             <Grid item>
               <Typography
-                variant="h4"
+                variant="h5"
                 style={{
-                  margin: '1em 0',
                   textTransform: 'uppercase',
                   fontWeight: '600',
+                  alignText: 'center',
                 }}
               >
                 Add a type of lesson
               </Typography>
             </Grid>
 
-            <Grid
-              item
-              className={classes.bottomGutterFormControl}
-              style={{ width: '20em', marginBottom: '2em' }}
-            >
+            <Grid item style={{ width: '100%' }}>
               <Field
                 fullWidth
                 name="lessonName"
@@ -99,11 +103,7 @@ const AddALesson = (props) => {
                 label="Lesson's name"
               />
             </Grid>
-            <Grid
-              item
-              className={classes.bottomGutterFormControl}
-              style={{ width: '20em', marginBottom: '2em' }}
-            >
+            <Grid item style={{ width: '100%' }}>
               <Field
                 fullWidth
                 name="content"
@@ -116,17 +116,18 @@ const AddALesson = (props) => {
 
             <AddDocuments />
 
-            <Grid item style={{ marginBottom: '2em' }}>
+            <Grid item>
               <Typography variant="h6" className={classes.controlFormHeader}>
                 Lesson's duration:
               </Typography>
             </Grid>
             <Grid
               item
+              direction="column"
               container
               justify="center"
+              alignItems="center"
               spacing={1}
-              style={{ width: '100%', margin: 0 }}
             >
               <Grid item>
                 <LessonPeriodForm
@@ -163,9 +164,8 @@ const AddALesson = (props) => {
               item
               container
               justify="center"
+              alignItems="center"
               spacing={1}
-              style={{ margin: '1em 0', width: '100%' }}
-              className={classes.bottomGutterFormControl}
             >
               <Grid item>
                 <MyButton component={Link} to="/teachers/lessons">

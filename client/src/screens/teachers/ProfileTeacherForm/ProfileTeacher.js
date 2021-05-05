@@ -82,6 +82,23 @@ const ProfileTeacher = ({
   const [page, setPage] = useState(0)
   const [activeStep, setActiveStep] = useState(0)
 
+  const initialValues = {
+    hometown: '',
+    degreeImages: [],
+    expImages: [],
+    lessons: [],
+    phoneNumber: '',
+    user: null,
+    skypeId: '',
+    dateOfBirth: null,
+    introduction: '',
+    teacherAvatar: null,
+    thumbnail: null,
+    typeOfTeacher: '',
+    video: '',
+    lesson: '',
+  }
+
   // cac step trong stepper
   const getSteps = () => {
     return ['Choose a type of teacher', 'Fill your profile as a teacher']
@@ -139,34 +156,21 @@ const ProfileTeacher = ({
     if (!profileTeacher) getCurrentProfileTeacher()
     if (!loading && profileTeacher) {
       setFormData({
-        hometown: profileTeacher.hometown ? profileTeacher.hometown : null,
-        selectedDegreeImagesFiles: [],
-        degreeImages: profileTeacher.degreeImages
-          ? profileTeacher.degreeImages
-          : [],
-        expImages: profileTeacher.expImages ? profileTeacher.expImages : [],
-        lessons: profileTeacher.lessons ? profileTeacher.lessons : [],
-        phoneNumber: profileTeacher.phoneNumber
-          ? profileTeacher.phoneNumber
-          : 0,
-        user: profileTeacher.user ? profileTeacher.user : null,
-        skypeId: profileTeacher.skypeId ? profileTeacher.skypeId : '',
-        dateOfBirth: profileTeacher.dateOfBirth
-          ? profileTeacher.dateOfBirth
-          : null,
-        introduction: profileTeacher.introduction
-          ? profileTeacher.introduction
-          : '',
-        teacherAvatar: profileTeacher.teacherAvatar
-          ? profileTeacher.teacherAvatar
-          : '',
+        hometown: profileTeacher.hometown,
+        degreeImages: profileTeacher.degreeImages,
+        expImages: profileTeacher.expImages,
+        lessons: profileTeacher.lessons,
+        phoneNumber: profileTeacher.phoneNumber,
+        user: profileTeacher.user,
+        skypeId: profileTeacher.skypeId,
+        dateOfBirth: profileTeacher.dateOfBirth,
+        introduction: profileTeacher.introduction,
+        teacherAvatar: profileTeacher.teacherAvatar,
         selectedTeacherAvatarFile: null,
-        thumbnail: profileTeacher.thumbnail ? profileTeacher.thumbnail : null,
-        typeOfTeacher: profileTeacher.typeOfTeacher
-          ? profileTeacher.typeOfTeacher
-          : '',
-        video: profileTeacher.video ? profileTeacher.video : null,
-        lesson: profileTeacher.lesson ? profileTeacher.lesson : null,
+        thumbnail: profileTeacher.thumbnail,
+        typeOfTeacher: profileTeacher.typeOfTeacher,
+        video: profileTeacher.video,
+        lesson: profileTeacher.lesson,
       })
     }
   }, [getCurrentProfileTeacher, loading, profileTeacher])
@@ -178,7 +182,7 @@ const ProfileTeacher = ({
       ) : (
         <Formik
           enableReinitialize
-          initialValues={formData}
+          initialValues={formData || initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             const {
@@ -213,17 +217,18 @@ const ProfileTeacher = ({
                 profileTeacher ? true : false
               )
               setSubmitting(false)
+              history.push('/teachers/dashboard')
             }, 400)
           }}
         >
           {({ values, isSubmitting, isValid }) => (
-            <Dialog open fullWidth maxWidth="lg">
+            <Dialog open fullWidth maxWidth="lg" style={{ marginTop: '6em' }}>
               <Form autoComplete="off">
                 <Grid
                   container
                   alignItems="center"
                   className={classes.paddingContainer}
-                  style={{ marginRight: 'auto' }}
+                  style={{ marginRight: 'auto', paddingTop: '2em' }}
                 >
                   <Grid item>
                     <Link to="/teachers/dashboard">
@@ -309,7 +314,7 @@ const ProfileTeacher = ({
                                 variant="body1"
                                 style={{ fontWeight: '500' }}
                               >
-                                Submit
+                                Save
                               </Typography>
                             </Grid>
                           </Grid>

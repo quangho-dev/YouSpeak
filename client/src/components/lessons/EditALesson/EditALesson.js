@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
 import { Formik, Field, Form } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import MyButton from '../../ui/MyButton'
@@ -10,7 +10,7 @@ import { TextField } from 'formik-material-ui'
 import Spinner from '../../ui/Spinner'
 import LessonPeriodForm from './LessonPeriodForm'
 import * as yup from 'yup'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import { getLessonById, createOrUpdateALesson } from '../../../actions/lessons'
 import EditDocuments from './EditDocuments'
 
@@ -18,12 +18,14 @@ const useStyles = makeStyles((theme) => ({
   bottomGutterFormControl: {
     marginBottom: '1.5em',
   },
-  controlFormHeader: {
-    fontWeight: '500',
-    fontSize: '18px',
-  },
-  paddingContainer: {
-    padding: '0 2em',
+  controlWidth: {
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '70%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '50%',
+    },
   },
 }))
 
@@ -33,6 +35,10 @@ const EditALesson = (props) => {
   const lessonId = props.match.params.id
 
   const classes = useStyles()
+
+  const theme = useTheme()
+  const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesLG = useMediaQuery(theme.breakpoints.up('lg'))
 
   const dispatch = useDispatch()
 
@@ -92,100 +98,85 @@ const EditALesson = (props) => {
             container
             direction="column"
             alignItems="center"
-            className={classes.paddingContainer}
+            className="container"
+            spacing={3}
+            style={{ width: '100%', margin: '0' }}
           >
             <Grid item>
               <Typography
-                variant="h4"
+                variant={matchesSM ? 'h4' : 'h5'}
                 style={{
-                  margin: '1em 0',
                   textTransform: 'uppercase',
                   fontWeight: '600',
+                  textAlign: 'center',
                 }}
               >
                 Edit type of lesson
               </Typography>
             </Grid>
 
-            <Grid item container justify="center" spacing={5}>
-              <Grid item>
-                <Grid container direction="column" alignItems="center">
-                  <Grid item className={classes.bottomGutterFormControl}>
-                    <Field
-                      fullWidth
-                      name="lessonName"
-                      component={TextField}
-                      label="Lesson's name"
-                      style={{ width: '30em' }}
-                    />
-                  </Grid>
-                  <Grid item className={classes.bottomGutterFormControl}>
-                    <Field
-                      fullWidth
-                      multiline
-                      rows={6}
-                      name="content"
-                      component={TextField}
-                      label="Content"
-                      style={{ width: '30em' }}
-                    />
-                  </Grid>
-                  <EditDocuments />
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Grid container direction="column" alignItems="center">
-                  <Grid item>
-                    <Typography
-                      variant="h6"
-                      className={classes.controlFormHeader}
-                    >
-                      Lesson's duration:
-                    </Typography>
-                  </Grid>
-                  <Grid item container spacing={1}>
-                    {values.periods && (
-                      <LessonPeriodForm
-                        fieldCheckbox="periods[0].thirtyMinutes.isChosen"
-                        label="30 minutes"
-                        valueCheckbox={values.periods[0].thirtyMinutes.isChosen}
-                        fieldPrice="periods[0].thirtyMinutes.price"
-                        valuePrice={values.periods[0].thirtyMinutes.price}
-                      />
-                    )}
-                    {values.periods && (
-                      <LessonPeriodForm
-                        fieldCheckbox="periods[0].fortyFiveMinutes.isChosen"
-                        label="45 minutes"
-                        valueCheckbox={
-                          values.periods[0].fortyFiveMinutes.isChosen
-                        }
-                        fieldPrice="periods[0].fortyFiveMinutes.price"
-                        valuePrice={values.periods[0].fortyFiveMinutes.price}
-                      />
-                    )}
-
-                    {values.periods && (
-                      <LessonPeriodForm
-                        fieldCheckbox="periods[0].oneHour.isChosen"
-                        label="1 hour"
-                        valueCheckbox={values.periods[0].oneHour.isChosen}
-                        fieldPrice="periods[0].oneHour.price"
-                        valuePrice={values.periods[0].oneHour.price}
-                      />
-                    )}
-                  </Grid>
-                </Grid>
-              </Grid>
+            <Grid item className={classes.controlWidth}>
+              <Field
+                fullWidth
+                name="lessonName"
+                component={TextField}
+                label="Lesson's name"
+              />
             </Grid>
 
+            <Grid item className={classes.controlWidth}>
+              <Field
+                fullWidth
+                name="content"
+                component={TextField}
+                label="Content"
+              />
+            </Grid>
+
+            <EditDocuments />
+
+            <Grid item>
+              <Typography variant="h6">Lesson's duration:</Typography>
+            </Grid>
             <Grid
               item
               container
+              direction={matchesSM ? 'row' : 'column'}
+              alignItems="center"
               justify="center"
               spacing={1}
-              style={{ margin: '1em 0' }}
             >
+              {values.periods && (
+                <LessonPeriodForm
+                  fieldCheckbox="periods[0].thirtyMinutes.isChosen"
+                  label="30 minutes"
+                  valueCheckbox={values.periods[0].thirtyMinutes.isChosen}
+                  fieldPrice="periods[0].thirtyMinutes.price"
+                  valuePrice={values.periods[0].thirtyMinutes.price}
+                />
+              )}
+              {values.periods && (
+                <LessonPeriodForm
+                  fieldCheckbox="periods[0].fortyFiveMinutes.isChosen"
+                  label="45 minutes"
+                  valueCheckbox={values.periods[0].fortyFiveMinutes.isChosen}
+                  fieldPrice="periods[0].fortyFiveMinutes.price"
+                  valuePrice={values.periods[0].fortyFiveMinutes.price}
+                />
+              )}
+
+              {values.periods && (
+                <LessonPeriodForm
+                  fieldCheckbox="periods[0].oneHour.isChosen"
+                  label="1 hour"
+                  valueCheckbox={values.periods[0].oneHour.isChosen}
+                  fieldPrice="periods[0].oneHour.price"
+                  valuePrice={values.periods[0].oneHour.price}
+                />
+              )}
+            </Grid>
+
+            <Grid item container justify="center" spacing={1}>
               <Grid item>
                 <MyButton component={Link} to="/teachers/lessons">
                   <ArrowBackIcon />

@@ -14,6 +14,18 @@ import Avatar from '@material-ui/core/Avatar'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 const useStyles = makeStyles((theme) => ({
+  rowContainer: {
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
+  },
   formControl: {
     marginBottom: '1em',
   },
@@ -66,7 +78,8 @@ const RegisterScreen = () => {
         justify="center"
         alignItems="center"
         direction="column"
-        className="container"
+        className={classes.rowContainer}
+        style={{ margin: '6em 0 2em' }}
       >
         <Grid item>
           <Avatar className={classes.avatar}>

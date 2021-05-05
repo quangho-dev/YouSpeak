@@ -17,12 +17,17 @@ code {
 }
 
 .container {
-  padding: 7em 2em 3em;
-  background-color: #f0f2f5;
+  padding: 7em 1.5em 2em;
 }
 
 @media (min-width: 600px) {
   .container {
-    padding: 8em 4em 3em;
+    padding: 7em 3em 2em;
+  }
+}
+
+@media (min-width: 960px) {
+  .container {
+    padding: 7em 5em 2em;
   }
 }

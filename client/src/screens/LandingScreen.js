@@ -14,6 +14,12 @@ import CardMedia from '@material-ui/core/CardMedia'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useSelector } from 'react-redux'
 import landing1 from '../assets/landing1.jpg'
+import customize from '../assets/landing-page/customize.jpg'
+import pay from '../assets/landing-page/pay.jpg'
+import time from '../assets/landing-page/time.jpg'
+import chooseTeacher from '../assets/landing-page/chooseTeacher.jpg'
+import schedule from '../assets/landing-page/schedule.jpg'
+import startToLearn from '../assets/landing-page/start-to-learn.jpg'
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -74,6 +80,8 @@ const Landing = (props) => {
   const classes = useStyles()
   const theme = useTheme()
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
+  const matchesLG = useMediaQuery(theme.breakpoints.up('lg'))
 
   const auth = useSelector((state) => state.auth)
   const { isAuthenticated, user } = auth
@@ -176,7 +184,10 @@ const Landing = (props) => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ paddingTop: '5em' }}
+        style={{
+          paddingTop: '5em',
+          margin: 'auto',
+        }}
         className={classes.rowContainer}
       >
         <Grid item>
@@ -188,20 +199,21 @@ const Landing = (props) => {
           </Typography>
         </Grid>
         <Grid
+          item
           container
-          direction="column"
+          direction={matchesLG ? 'row' : 'column'}
           justify="center"
           alignItems="center"
           spacing={4}
-          style={{ margin: 0, marginTop: '2em', maxWidth: '100%' }}
+          style={{ margin: 0, width: '100%' }}
         >
-          <Grid item>
+          <Grid item lg={4}>
             <Card>
               <CardMedia
                 component="img"
                 alt="Cá nhân hóa việc học"
                 className={classes.media}
-                image="https://source.unsplash.com/random/300x300"
+                image={customize}
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -214,13 +226,13 @@ const Landing = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item lg={4}>
             <Card>
               <CardMedia
                 component="img"
                 alt="thanh toán trên mỗi bài học"
                 className={classes.media}
-                image="https://source.unsplash.com/random/300x300"
+                image={pay}
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -233,13 +245,13 @@ const Landing = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item lg={4}>
             <Card>
               <CardMedia
                 component="img"
                 alt="Tùy ý chọn thời gian và địa điểm"
                 className={classes.media}
-                image="https://source.unsplash.com/random/300x300"
+                image={time}
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h2">
@@ -284,7 +296,7 @@ const Landing = (props) => {
         >
           <Grid item>
             <img
-              src="https://source.unsplash.com/random/350x200"
+              src={chooseTeacher}
               alt="Chọn giáo viên"
               style={{ width: '100%' }}
             />
@@ -315,11 +327,7 @@ const Landing = (props) => {
           style={{ marginTop: '3em', marginBottom: '3em' }}
         >
           <Grid item style={{ order: matchesSM ? '1' : undefined }}>
-            <img
-              src="https://source.unsplash.com/random/350x200"
-              alt="Đặt lịch hẹn"
-              style={{ width: '100%' }}
-            />
+            <img src={schedule} alt="Đặt lịch hẹn" style={{ width: '100%' }} />
           </Grid>
           <Grid item className={classes.howItWorksDescription}>
             <Grid container direction="column">
@@ -346,7 +354,7 @@ const Landing = (props) => {
         >
           <Grid item>
             <img
-              src="https://source.unsplash.com/random/350x200"
+              src={startToLearn}
               alt="Đặt lịch hẹn"
               style={{ width: '100%' }}
             />

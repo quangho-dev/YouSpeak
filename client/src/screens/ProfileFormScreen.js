@@ -8,6 +8,7 @@ import {
   FormGroup,
   TextField,
   Typography,
+  useMediaQuery,
 } from '@material-ui/core'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import 'date-fns'
@@ -19,18 +20,36 @@ import {
 import { getCurrentProfile, createOrUpdateProfile } from '../actions/profile'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
+  rowContainer: {
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
+  },
   formControl: {
     marginBottom: '1.5em',
+    width: '100%',
   },
 }))
 
 const ProfileFormScreen = ({ history }) => {
   const classes = useStyles()
+
+  const theme = useTheme()
+  const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
+  const matchesLG = useMediaQuery(theme.breakpoints.up('lg'))
 
   const dispatch = useDispatch()
 
@@ -78,22 +97,26 @@ const ProfileFormScreen = ({ history }) => {
       direction="column"
       justify="center"
       alignItems="center"
-      className="container"
+      className={classes.rowContainer}
+      style={{ margin: '7em 0 2em' }}
     >
       <Grid item>
-        <Grid container justify="space-between" alignItems="center">
-          <Grid item>
-            <Typography
-              variant="h4"
-              gutterBottom
-              style={{ fontWeight: '500', textTransform: 'uppercase' }}
-            >
-              Chỉnh sửa Profile
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography
+          variant="h5"
+          gutterBottom
+          style={{
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+          }}
+        >
+          Chỉnh sửa Profile
+        </Typography>
       </Grid>
-      <Grid item style={{ width: '30em' }}>
+      <Grid
+        item
+        style={{ minWidth: matchesLG ? '60%' : matchesSM ? '80%' : '100%' }}
+      >
         <Formik
           enableReinitialize
           initialValues={{
@@ -132,22 +155,27 @@ const ProfileFormScreen = ({ history }) => {
             isValid,
           }) => (
             <Form>
-              <Grid container direction="column">
-                <Grid item style={{ margin: 'auto' }}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item>
                   <Avatar
                     src={imageAvatarState}
                     style={{ width: '4em', height: '4em' }}
                     alt="avatar-image"
                   />
                 </Grid>
-                <Grid item style={{ margin: 'auto' }}>
+                <Grid item>
                   <p>
                     Đổi ảnh profile
                     <br />
                     Tối đa 2MB
                   </p>
                 </Grid>
-                <Grid item style={{ margin: '0 auto 2em' }}>
+                <Grid item style={{ marginBottom: '2em' }}>
                   <Button
                     variant="contained"
                     component="label"

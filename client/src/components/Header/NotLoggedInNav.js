@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import IconButton from '@material-ui/core/IconButton'
@@ -114,8 +114,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   rowContainer: {
-    paddingLeft: '5em',
-    paddingRight: '5em',
+    paddingLeft: '1.5em',
+    paddingRight: '1.5em',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: '3em',
+      paddingRight: '3em',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5em',
+      paddingRight: '5em',
+    },
   },
 }))
 
@@ -178,6 +186,28 @@ const NotLoggedInNav = () => {
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
 
+  const history = useHistory()
+
+  const onClickLogInDrawerHandler = () => {
+    history.push('/login')
+    setOpenDrawer(false)
+  }
+
+  const onClickRegisterDrawerHandler = () => {
+    history.push('/register-user')
+    setOpenDrawer(false)
+  }
+
+  const onClickForTeachersDrawerHandler = () => {
+    history.push('/for-teacher')
+    setOpenDrawer(false)
+  }
+
+  const onClickContactUsDrawerHandler = () => {
+    history.push('/contact-us')
+    setOpenDrawer(false)
+  }
+
   const drawer = (
     <>
       <SwipeableDrawer
@@ -197,8 +227,7 @@ const NotLoggedInNav = () => {
         >
           <Grid item>
             <Button
-              component={Link}
-              to="/login"
+              onClick={onClickLogInDrawerHandler}
               style={{
                 color: 'white',
                 textTransform: 'none',
@@ -211,8 +240,7 @@ const NotLoggedInNav = () => {
           </Grid>
           <Grid item>
             <Button
-              component={Link}
-              to="/register-user"
+              onClick={onClickRegisterDrawerHandler}
               style={{
                 color: 'white',
                 textTransform: 'none',
@@ -226,8 +254,7 @@ const NotLoggedInNav = () => {
           <Grid item>
             <Button
               variant="text"
-              component={Link}
-              to="/for-teacher"
+              onClick={onClickForTeachersDrawerHandler}
               style={{ color: 'white', textTransform: 'none' }}
             >
               For English teachers
@@ -236,9 +263,7 @@ const NotLoggedInNav = () => {
 
           <Grid item>
             <Button
-              variant="text"
-              component={Link}
-              to="/contact-us"
+              onClick={onClickContactUsDrawerHandler}
               style={{ color: 'white', textTransform: 'none' }}
             >
               Liên hệ với chúng tôi

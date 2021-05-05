@@ -8,8 +8,17 @@ import Button from '@material-ui/core/Button'
 
 const ForTeacherScreen = () => {
   const useStyles = makeStyles((theme) => ({
-    paddingContainer: {
-      padding: '0 4em',
+    rowContainer: {
+      paddingLeft: '1.5em',
+      paddingRight: '1.5em',
+      [theme.breakpoints.up('sm')]: {
+        paddingLeft: '3em',
+        paddingRight: '3em',
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: '5em',
+        paddingRight: '5em',
+      },
     },
     linkText: {
       textTransform: 'uppercase',
@@ -28,9 +37,15 @@ const ForTeacherScreen = () => {
       direction="column"
       justify="center"
       alignItems="center"
-      className="container"
+      className={classes.rowContainer}
+      style={{ margin: '7em 0 2em' }}
     >
-      <Grid item container alignItems="center" style={{ marginBottom: '3em' }}>
+      <Grid
+        item
+        container
+        alignItems="center"
+        style={{ marginBottom: '1.5em' }}
+      >
         <Grid item>
           <Link to="/">
             <ArrowBackIcon fontSize="large" color="primary" />
