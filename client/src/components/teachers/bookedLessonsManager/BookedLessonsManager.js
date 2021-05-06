@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { getBookedLessons } from '../../../actions/bookingCalendarStudent'
+import { getBookedLessonsOfATeacher } from '../../../actions/bookingCalendarStudent'
 import Spinner from '../../ui/Spinner'
 import BookedLessonsTable from './BookedLessonsTable'
 
 const BookedLessonsManager = ({
   bookingCalendarStudent: { bookedLessons, loading },
-  getBookedLessons,
+  auth: { user },
+  getBookedLessonsOfATeacher,
 }) => {
   useEffect(() => {
-    getBookedLessons()
-  }, [getBookedLessons])
+    getBookedLessonsOfATeacher(user._id)
+  }, [getBookedLessonsOfATeacher, user._id])
   return (
     <Grid
       container
@@ -30,7 +31,7 @@ const BookedLessonsManager = ({
         </Typography>
       </Grid>
 
-      <Grid item style={{ minWidth: '40%' }}>
+      <Grid item>
         {loading ? (
           <Spinner />
         ) : bookedLessons.length === 0 ? (
@@ -45,8 +46,9 @@ const BookedLessonsManager = ({
 
 const mapStateToProps = (state) => ({
   bookingCalendarStudent: state.bookingCalendarStudent,
+  auth: state.auth,
 })
 
-export default connect(mapStateToProps, { getBookedLessons })(
+export default connect(mapStateToProps, { getBookedLessonsOfATeacher })(
   BookedLessonsManager
 )

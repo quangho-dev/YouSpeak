@@ -12,7 +12,9 @@ const {
   deleteLessonByID,
   createALesson,
   getLessonsOfTeacherById,
+  getBookedLessonsOfATeacher,
 } = require('../../controllers/teacherController')
+
 const { check } = require('express-validator')
 const { userAuth } = require('../../utils/authPassport')
 const checkObjectId = require('../../middleware/checkObjectId')
@@ -64,6 +66,13 @@ router.get('/lessons/:id', userAuth, checkObjectId('id'), getLessonById)
 router.delete('/lessons/:id', userAuth, checkObjectId('id'), deleteLessonByID)
 
 router.post('/lessons', userAuth, createALesson)
+
+router.get(
+  '/:teacherId/bookedLessons',
+  userAuth,
+  checkObjectId('teacherId'),
+  getBookedLessonsOfATeacher
+)
 
 router.get(
   '/:teacherId/lessons',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, useMediaQuery } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { Formik, Field, Form } from 'formik'
 import { useDispatch } from 'react-redux'
 import MyButton from '../../ui/MyButton'
@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { TextField } from 'formik-material-ui'
 import LessonPeriodForm from './LessonPeriodForm'
 import * as yup from 'yup'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import { createALesson } from '../../../actions/lessons'
 import AddDocuments from './AddDocuments'
 
@@ -25,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AddALesson = (props) => {
   const classes = useStyles()
-
-  const theme = useTheme()
 
   const dispatch = useDispatch()
 

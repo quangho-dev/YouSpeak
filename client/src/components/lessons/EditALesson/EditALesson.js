@@ -38,7 +38,6 @@ const EditALesson = (props) => {
 
   const theme = useTheme()
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
-  const matchesLG = useMediaQuery(theme.breakpoints.up('lg'))
 
   const dispatch = useDispatch()
 

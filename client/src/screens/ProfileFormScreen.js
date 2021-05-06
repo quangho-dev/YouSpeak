@@ -48,7 +48,6 @@ const ProfileFormScreen = ({ history }) => {
 
   const theme = useTheme()
   const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
-  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
   const matchesLG = useMediaQuery(theme.breakpoints.up('lg'))
 
   const dispatch = useDispatch()

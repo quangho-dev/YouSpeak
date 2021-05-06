@@ -15,6 +15,7 @@ import { connect } from 'react-redux'
 import Spinner from '../components/ui/Spinner'
 import moment from 'moment'
 import { makeStyles, useTheme } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
 
 const useStyles = makeStyles((theme) => ({
   rowContainer: {
@@ -134,7 +135,8 @@ const Dashboard = ({
                 to="/create-profile"
                 style={{ color: 'white' }}
               >
-                Chỉnh sửa profile
+                <EditIcon />
+                &nbsp;Chỉnh sửa profile
               </Button>
             </Grid>
           </Grid>

@@ -8,6 +8,8 @@ import {
   GET_ALL_BOOKED_LESSONS_ERROR,
   GET_BOOKED_LESSON_SUCCESS,
   GET_BOOKED_LESSON_ERROR,
+  GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
+  GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
 } from './types'
 import { toast } from 'react-toastify'
 import { getProfileTeacherById } from './profileTeacher'
@@ -84,6 +86,23 @@ export const getBookedLessonById = (bookedLessonId) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_BOOKED_LESSON_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
+
+// Get all bookded lessons of a teacher
+export const getBookedLessonsOfATeacher = (teacherId) => async (dispatch) => {
+  try {
+    const res = await api.get(`/teachers/${teacherId}/bookedLessons`)
+
+    dispatch({
+      type: GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     })
   }

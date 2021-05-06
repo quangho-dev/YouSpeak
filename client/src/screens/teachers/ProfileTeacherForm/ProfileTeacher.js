@@ -23,7 +23,7 @@ import ProfileTeacherPage2 from './ProfileTeacherPage2'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Spinner from '../../../components/ui/Spinner'
 import { connect } from 'react-redux'
-import PublishIcon from '@material-ui/icons/Publish'
+import SaveIcon from '@material-ui/icons/Save'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -287,7 +287,7 @@ const ProfileTeacher = ({
                                 variant="body1"
                                 style={{ fontWeight: '500' }}
                               >
-                                Back
+                                &nbsp;Back
                               </Typography>
                             </Grid>
                           </Grid>
@@ -306,7 +306,7 @@ const ProfileTeacher = ({
                         >
                           <Grid container justify="center" alignItems="center">
                             <Grid item>
-                              <PublishIcon style={{ fontSize: '1.5rem' }} />
+                              <SaveIcon style={{ fontSize: '1.5rem' }} />
                             </Grid>
 
                             <Grid item>
@@ -314,7 +314,7 @@ const ProfileTeacher = ({
                                 variant="body1"
                                 style={{ fontWeight: '500' }}
                               >
-                                Save
+                                &nbsp;Save
                               </Typography>
                             </Grid>
                           </Grid>

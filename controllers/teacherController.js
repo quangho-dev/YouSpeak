@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 const Lesson = require('../models/lessonModel')
+const BookingCalendarStudent = require('../models/bookingCalendarStudentModel')
 
 // @desc    Register a new teacher
 // @route   POST /api/teachers/register-teacher
@@ -428,6 +429,30 @@ const getLessonsOfTeacherById = async (req, res) => {
   }
 }
 
+// @route  GET api/teachers/:teacherId/bookedLessons
+// @desc     Get all booked lessons of a teacher
+// @access   Private/teachers
+const getBookedLessonsOfATeacher = async (req, res) => {
+  try {
+    const bookedLessons = await BookingCalendarStudent.find({
+      teacher: req.params.teacherId,
+    })
+      .populate('user', ['name'])
+      .populate('lesson', ['lessonName'])
+
+    if (!bookedLessons) {
+      return res
+        .status(400)
+        .json({ msg: 'Không tìm thấy bài học đã đặt của giáo viên này.' })
+    }
+
+    res.json(bookedLessons)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+}
+
 module.exports = {
   registerTeacher,
   loginTeacher,
@@ -440,4 +465,5 @@ module.exports = {
   deleteLessonByID,
   createALesson,
   getLessonsOfTeacherById,
+  getBookedLessonsOfATeacher,
 }

@@ -205,7 +205,7 @@ const Landing = (props) => {
           justify="center"
           alignItems="center"
           spacing={4}
-          style={{ margin: 0, width: '100%' }}
+          style={{ margin: 0, maxWidth: matchesSM ? '80%' : '100%' }}
         >
           <Grid item lg={4}>
             <Card>
@@ -291,17 +291,17 @@ const Landing = (props) => {
           item
           justify="space-between"
           alignItems="center"
-          style={{ marginTop: '2em' }}
+          style={{ marginTop: '2em', width: '100%' }}
           className={classes.rowContainer}
         >
-          <Grid item>
+          <Grid item md={5}>
             <img
               src={chooseTeacher}
               alt="Chọn giáo viên"
-              style={{ width: '100%' }}
+              style={{ maxWidth: '100%' }}
             />
           </Grid>
-          <Grid item>
+          <Grid item md={5}>
             <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
@@ -326,10 +326,14 @@ const Landing = (props) => {
           className={classes.rowContainer}
           style={{ marginTop: '3em', marginBottom: '3em' }}
         >
-          <Grid item style={{ order: matchesSM ? '1' : undefined }}>
-            <img src={schedule} alt="Đặt lịch hẹn" style={{ width: '100%' }} />
+          <Grid item style={{ order: matchesMD ? '1' : undefined }} md={5}>
+            <img
+              src={schedule}
+              alt="Đặt lịch hẹn"
+              style={{ maxWidth: '100%' }}
+            />
           </Grid>
-          <Grid item className={classes.howItWorksDescription}>
+          <Grid item className={classes.howItWorksDescription} md={5}>
             <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>
@@ -352,14 +356,14 @@ const Landing = (props) => {
           alignItems="center"
           className={classes.rowContainer}
         >
-          <Grid item>
+          <Grid item md={5}>
             <img
               src={startToLearn}
               alt="Đặt lịch hẹn"
-              style={{ width: '100%' }}
+              style={{ maxWidth: '100%' }}
             />
           </Grid>
-          <Grid item className={classes.howItWorksDescription}>
+          <Grid item className={classes.howItWorksDescription} md={5}>
             <Grid container direction="column">
               <Grid item>
                 <p style={{ textTransform: 'uppercase', fontWeight: '600' }}>

@@ -8,7 +8,7 @@ import MyButton from '../ui/MyButton'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Spinner from '../ui/Spinner'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme) => ({
   rowContainer: {
@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Lessons = () => {
   const classes = useStyles()
-  const theme = useTheme()
 
   const dispatch = useDispatch()
 

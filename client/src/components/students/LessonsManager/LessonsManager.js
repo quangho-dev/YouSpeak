@@ -16,7 +16,7 @@ import Spinner from '../../ui/Spinner'
 import MyButton from '../../ui/MyButton'
 import FindInPageIcon from '@material-ui/icons/FindInPage'
 import { Link } from 'react-router-dom'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import './table.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: '5em',
     },
   },
-  // table: {
-  //   minWidth: 650,
-  // },
 }))
 
 const LessonsManager = ({
