@@ -25,6 +25,7 @@ const MuiDatePicker = ({ ...props }) => {
         KeyboardButtonProps={{
           'aria-label': 'change date',
         }}
+        style={{ width: '100%' }}
       />
     </MuiPickersUtilsProvider>
   )

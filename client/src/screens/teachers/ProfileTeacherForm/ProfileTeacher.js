@@ -6,8 +6,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
-  Dialog,
-  DialogActions,
+  useMediaQuery,
 } from '@material-ui/core'
 import { Formik, Form } from 'formik'
 import 'date-fns'
@@ -16,7 +15,7 @@ import {
   createOrUpdateProfileTeacher,
 } from '../../../actions/profileTeacher'
 import * as yup from 'yup'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import { Link } from 'react-router-dom'
 import ProfileTeacherPage1 from './ProfileTeacherPage1'
 import ProfileTeacherPage2 from './ProfileTeacherPage2'
@@ -81,6 +80,9 @@ const ProfileTeacher = ({
 
   const [page, setPage] = useState(0)
   const [activeStep, setActiveStep] = useState(0)
+
+  const theme = useTheme()
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const initialValues = {
     hometown: '',
@@ -222,14 +224,14 @@ const ProfileTeacher = ({
           }}
         >
           {({ values, isSubmitting, isValid }) => (
-            <Dialog open fullWidth maxWidth="lg" style={{ marginTop: '6em' }}>
-              <Form autoComplete="off">
-                <Grid
-                  container
-                  alignItems="center"
-                  className={classes.paddingContainer}
-                  style={{ marginRight: 'auto', paddingTop: '2em' }}
-                >
+            <Form autoComplete="off">
+              <Grid
+                container
+                className="container"
+                direction="column"
+                justify="center"
+              >
+                <Grid item container alignItems="center">
                   <Grid item>
                     <Link to="/teachers/dashboard">
                       <ArrowBackIcon fontSize="large" color="primary" />
@@ -247,96 +249,105 @@ const ProfileTeacher = ({
                       }}
                       className={classes.linkText}
                     >
-                      Back to Dashboard
+                      Back
                     </Typography>
                   </Grid>
                 </Grid>
 
-                <Stepper activeStep={activeStep} alternativeLabel>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
+                <Grid item>
+                  {matchesMD && (
+                    <Stepper
+                      activeStep={activeStep}
+                      alternativeLabel
+                      style={{ backgroundColor: 'transparent' }}
+                    >
+                      {steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel>{label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
+                  )}
+                </Grid>
+
                 {pages[page]}
-                <DialogActions>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    spacing={3}
-                    style={{ marginTop: '1em', width: '100%', margin: 0 }}
-                  >
-                    {page !== 0 && (
-                      <Grid item>
-                        <Button
-                          onClick={() => prevPage()}
-                          color="primary"
-                          variant="contained"
-                          disableRipple
-                          style={{ color: 'white' }}
-                        >
-                          <Grid container justify="center" alignItems="center">
-                            <Grid item>
-                              <ArrowBackIcon style={{ fontSize: '1.5rem' }} />
-                            </Grid>
 
-                            <Grid item>
-                              <Typography
-                                variant="body1"
-                                style={{ fontWeight: '500' }}
-                              >
-                                &nbsp;Back
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </Button>
-                      </Grid>
-                    )}
-                    {page === pages.length - 1 ? (
-                      <Grid item>
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          color="primary"
-                          disableRipple
-                          disabled={!isValid || isSubmitting}
-                          style={{ color: 'white' }}
-                        >
-                          <Grid container justify="center" alignItems="center">
-                            <Grid item>
-                              <SaveIcon style={{ fontSize: '1.5rem' }} />
-                            </Grid>
-
-                            <Grid item>
-                              <Typography
-                                variant="body1"
-                                style={{ fontWeight: '500' }}
-                              >
-                                &nbsp;Save
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </Button>
-                      </Grid>
-                    ) : page !== 0 ? (
+                <Grid
+                  item
+                  container
+                  justify="center"
+                  alignItems="center"
+                  spacing={3}
+                  style={{ marginTop: '1em', width: '100%', margin: 0 }}
+                >
+                  {page !== 0 && (
+                    <Grid item>
                       <Button
-                        variant="contained"
+                        onClick={() => prevPage()}
                         color="primary"
-                        onClick={() => {
-                          nextPage()
-                        }}
+                        variant="contained"
                         disableRipple
                         style={{ color: 'white' }}
                       >
-                        Next
+                        <Grid container justify="center" alignItems="center">
+                          <Grid item>
+                            <ArrowBackIcon style={{ fontSize: '1.5rem' }} />
+                          </Grid>
+
+                          <Grid item>
+                            <Typography
+                              variant="body1"
+                              style={{ fontWeight: '500' }}
+                            >
+                              &nbsp;Back
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </Button>
-                    ) : null}
-                  </Grid>
-                </DialogActions>
-              </Form>
-            </Dialog>
+                    </Grid>
+                  )}
+                  {page === pages.length - 1 ? (
+                    <Grid item>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disableRipple
+                        disabled={!isValid || isSubmitting}
+                        style={{ color: 'white' }}
+                      >
+                        <Grid container justify="center" alignItems="center">
+                          <Grid item>
+                            <SaveIcon style={{ fontSize: '1.5rem' }} />
+                          </Grid>
+
+                          <Grid item>
+                            <Typography
+                              variant="body1"
+                              style={{ fontWeight: '500' }}
+                            >
+                              &nbsp;Save
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Button>
+                    </Grid>
+                  ) : page !== 0 ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        nextPage()
+                      }}
+                      disableRipple
+                      style={{ color: 'white' }}
+                    >
+                      Next
+                    </Button>
+                  ) : null}
+                </Grid>
+              </Grid>
+            </Form>
           )}
         </Formik>
       )}

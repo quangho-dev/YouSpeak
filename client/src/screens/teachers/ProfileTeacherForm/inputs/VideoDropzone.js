@@ -73,11 +73,10 @@ const VideoDropzone = ({
       container
       justify="center"
       alignItems="center"
-      spacing={3}
       className={classes.formControl}
     >
       <Grid item>
-        <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
+        <Dropzone onDrop={onDrop} multiple={false} maxSize={10}>
           {({ getRootProps, getInputProps }) => (
             <div
               style={{

@@ -173,119 +173,101 @@ const ExpImagesUploader = () => {
   )
 
   return (
-    <>
-      <Grid item className={classes.formControl}>
-        <Card style={{ backgroundColor: '#ecebeb' }}>
-          <CardContent>
-            <Grid container alignItems="center" direction="column" spacing={2}>
-              <Grid item>
-                <label
-                  htmlFor="exp-upload"
-                  style={{ fontSize: '1.5rem', fontWeight: '450' }}
-                >
-                  Upload your images of teaching experiences: ( * )
-                </label>
-              </Grid>
+    <Card>
+      <CardContent>
+        <Grid container alignItems="center" direction="column" spacing={2}>
+          <Grid item>
+            <label
+              htmlFor="exp-upload"
+              style={{ fontSize: '1.5rem', fontWeight: '450' }}
+            >
+              Upload your images of teaching experiences: ( * )
+            </label>
+          </Grid>
 
-              <Grid item>
-                <Typography variant="h6">Your current files:</Typography>
-              </Grid>
+          <Grid item>
+            <Typography variant="h6">Your current files:</Typography>
+          </Grid>
 
-              <Grid
-                item
-                container
-                justify="center"
-                alignItems="center"
-                spacing={2}
+          <Grid item container justify="center" alignItems="center" spacing={2}>
+            {renderExpImages(values.expImages)}
+          </Grid>
+
+          <Grid item>
+            <section>
+              <div
+                style={{
+                  width: '100%',
+                  border: '1px dashed lightgray',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '1em',
+                }}
+                {...getRootProps({ className: 'dropzone' })}
               >
-                {renderExpImages(values.expImages)}
-              </Grid>
+                <input {...getInputProps()} />
 
-              <Grid item>
-                <section className="container">
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '240px',
-                      border: '1px dashed lightgray',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '1em',
-                    }}
-                    {...getRootProps({ className: 'dropzone' })}
-                  >
-                    <input {...getInputProps()} />
-
-                    <Grid
-                      container
-                      direction="column"
-                      alignItems="center"
-                      spacing={1}
-                    >
-                      <Grid item>
-                        <AddAPhotoIcon style={{ fontSize: '2rem' }} />
-                      </Grid>
-
-                      <Grid item>
-                        <Typography variant="body2">
-                          Drag 'n' drop some files here, or click to select
-                          files
-                        </Typography>
-                      </Grid>
-
-                      <Grid item>
-                        <MyButton onClick={open}>Select your files</MyButton>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </section>
-              </Grid>
-
-              <Grid
-                item
-                container
-                justify="center"
-                alignItems="center"
-                spacing={2}
-              >
-                {renderPreviewExpImages(dataToPreview)}
-              </Grid>
-
-              {loadedExpImagesProgress > 0 && (
                 <Grid
-                  item
                   container
-                  spacing={1}
-                  justify="center"
+                  direction="column"
                   alignItems="center"
-                  style={{ margin: 'auto' }}
+                  spacing={1}
                 >
-                  <Grid item style={{ width: '90%' }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={loadedExpImagesProgress}
-                    />
-                  </Grid>
                   <Grid item>
-                    <Typography variant="body2">{`${Math.round(
-                      loadedExpImagesProgress
-                    )}%`}</Typography>
+                    <AddAPhotoIcon style={{ fontSize: '2rem' }} />
+                  </Grid>
+
+                  <Grid item>
+                    <Typography variant="body2">
+                      Drag 'n' drop some files here, or click to select files
+                    </Typography>
+                  </Grid>
+
+                  <Grid item>
+                    <MyButton onClick={open}>Select your files</MyButton>
                   </Grid>
                 </Grid>
-              )}
+              </div>
+            </section>
+          </Grid>
 
+          <Grid item container justify="center" alignItems="center" spacing={2}>
+            {renderPreviewExpImages(dataToPreview)}
+          </Grid>
+
+          {loadedExpImagesProgress > 0 && (
+            <Grid
+              item
+              container
+              spacing={1}
+              justify="center"
+              alignItems="center"
+              style={{ margin: 'auto' }}
+            >
+              <Grid item style={{ width: '90%' }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={loadedExpImagesProgress}
+                />
+              </Grid>
               <Grid item>
-                <MyButton onClick={handleSubmitExp}>
-                  <CloudUploadIcon />
-                  &nbsp;Upload
-                </MyButton>
+                <Typography variant="body2">{`${Math.round(
+                  loadedExpImagesProgress
+                )}%`}</Typography>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
-    </>
+          )}
+
+          <Grid item>
+            <MyButton onClick={handleSubmitExp}>
+              <CloudUploadIcon />
+              &nbsp;Upload
+            </MyButton>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   )
 }
 

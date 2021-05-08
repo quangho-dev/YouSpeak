@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
+import { useTheme } from '@material-ui/styles'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -20,6 +21,9 @@ const ChooseTime = ({
   nextPage,
 }) => {
   const { setFieldValue, values } = useFormikContext()
+
+  const theme = useTheme()
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const handleEventMouseEnter = (mouseEnterInfo) => {
     const eventElement = mouseEnterInfo.el
@@ -85,12 +89,20 @@ const ChooseTime = ({
   }, [getLessonById, values.lesson])
 
   return (
-    <Grid container direction="column" alignItems="center" spacing={2}>
+    <Grid item container direction="column" alignItems="center" spacing={2}>
       <Grid item>
-        <Typography variant="h5" style={{ textTransform: 'uppercase' }}>
+        <Typography
+          variant={matchesMD ? 'h4' : 'h5'}
+          style={{
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            fontWeight: '600',
+          }}
+        >
           Chọn thời gian học
         </Typography>
       </Grid>
+
       <Grid item style={{ alignSelf: 'flex-start' }}>
         <Typography variant="body1">
           Bạn vui lòng chọn thời gian học cho bài học{' '}

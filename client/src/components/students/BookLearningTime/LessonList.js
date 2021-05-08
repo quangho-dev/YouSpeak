@@ -30,11 +30,17 @@ const LessonList = ({ lessons, nextPage }) => {
   }
 
   return (
-    <TableContainer component={Paper} style={{ background: '#fff' }}>
+    <TableContainer
+      component={Paper}
+      style={{
+        background: '#fff',
+        padding: '1em',
+      }}
+    >
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Tên bài học</TableCell>
+            <TableCell>Tên kiểu bài học</TableCell>
             <TableCell align="right">Giá thấp nhất từ</TableCell>
             <TableCell align="right">&nbsp;</TableCell>
           </TableRow>

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, LinearProgress, Typography } from '@material-ui/core'
+import {
+  Grid,
+  LinearProgress,
+  Typography,
+  Card,
+  CardContent,
+} from '@material-ui/core'
 import ReactPlayer from 'react-player'
 import Dropzone from 'react-dropzone'
 import { makeStyles } from '@material-ui/styles'
@@ -9,6 +15,7 @@ import axios from 'axios'
 import MyButton from '../../../components/ui/MyButton'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { toast } from 'react-toastify'
+import './ReactPlayer.css'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -134,86 +141,109 @@ const VideoUploader = () => {
   }, [selectedFile])
 
   return (
-    <Grid
-      item
-      container
-      direction="column"
-      alignItems="center"
-      justify="center"
-      style={{ marginBottom: '3em' }}
-    >
-      <Grid item style={{ margin: 'auto' }} className={classes.formControl}>
-        <p>
-          Upload introduction video ( * )
-          <br />
-          about 1 - 3 minutes of length
-        </p>
-      </Grid>
-
-      <Grid
-        item
-        container
-        justify="center"
-        alignItems="center"
-        spacing={3}
-        className={classes.formControl}
-      >
-        <Grid item>
-          {dataToPreview !== null ? (
-            <ReactPlayer url={dataToPreview} controls playing />
-          ) : values.video ? (
-            <ReactPlayer url={`/${values.video}`} controls />
-          ) : null}
-        </Grid>
-        <Grid item>
-          <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
-            {({ getRootProps, getInputProps }) => (
-              <div
-                style={{
-                  width: '300px',
-                  height: '240px',
-                  border: '1px solid lightgray',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                <AddIcon style={{ fontSize: '3rem' }} />
-              </div>
-            )}
-          </Dropzone>
-        </Grid>
-      </Grid>
-
-      {loadedVideoProgress > 0 && (
+    <Card>
+      <CardContent>
         <Grid
-          item
           container
-          spacing={1}
-          justify="center"
+          direction="column"
           alignItems="center"
-          style={{ margin: 'auto' }}
+          justify="center"
+          style={{ marginBottom: '3em' }}
         >
-          <Grid item style={{ width: '90%' }}>
-            <LinearProgress variant="determinate" value={loadedVideoProgress} />
+          <Grid item style={{ margin: 'auto' }} className={classes.formControl}>
+            <p>
+              Upload introduction video ( * )
+              <br />
+              about 1 - 3 minutes of length
+            </p>
           </Grid>
+
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            spacing={2}
+            className={classes.formControl}
+          >
+            <Grid item style={{ minWidth: '100%' }}>
+              {dataToPreview !== null ? (
+                <div className="player-wrapper">
+                  <ReactPlayer
+                    url={dataToPreview}
+                    controls
+                    playing
+                    width="100%"
+                    height="100%"
+                    className="react-player"
+                  />
+                </div>
+              ) : values.video ? (
+                <div className="player-wrapper">
+                  <ReactPlayer
+                    url={`/${values.video}`}
+                    controls
+                    width="100%"
+                    height="100%"
+                    className="react-player"
+                  />
+                </div>
+              ) : null}
+            </Grid>
+            <Grid item>
+              <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
+                {({ getRootProps, getInputProps }) => (
+                  <div
+                    style={{
+                      width: '100%',
+                      padding: '4em',
+                      border: '1px solid lightgray',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    {...getRootProps()}
+                  >
+                    <input {...getInputProps()} />
+                    <AddIcon style={{ fontSize: '3rem' }} />
+                  </div>
+                )}
+              </Dropzone>
+            </Grid>
+          </Grid>
+
+          {loadedVideoProgress > 0 && (
+            <Grid
+              item
+              container
+              spacing={1}
+              justify="center"
+              alignItems="center"
+              style={{ margin: 'auto' }}
+            >
+              <Grid item style={{ width: '90%' }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={loadedVideoProgress}
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">{`${Math.round(
+                  loadedVideoProgress
+                )}%`}</Typography>
+              </Grid>
+            </Grid>
+          )}
+
           <Grid item>
-            <Typography variant="body1">{`${Math.round(
-              loadedVideoProgress
-            )}%`}</Typography>
+            <MyButton onClick={handleVideoSubmit}>
+              <CloudUploadIcon />
+              &nbsp;Upload video
+            </MyButton>
           </Grid>
         </Grid>
-      )}
-
-      <Grid item>
-        <MyButton onClick={handleVideoSubmit}>
-          <CloudUploadIcon />
-          &nbsp;Upload video
-        </MyButton>
-      </Grid>
-    </Grid>
+      </CardContent>
+    </Card>
   )
 }
 

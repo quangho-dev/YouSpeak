@@ -5,15 +5,13 @@ import {
   Grid,
   Typography,
   CardActions,
+  useMediaQuery,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import ButtonInput from './inputs/ButtonInput'
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    // Provide some spacing between cards
-    margin: 16,
-
     // Use flex layout with column direction for components in the card
     // (CardContent and CardActions)
     display: 'flex',
@@ -58,30 +56,36 @@ const useStyles = makeStyles((theme) => ({
 const ProfileTeacherPage1 = ({ setFieldValue, nextPage }) => {
   const classes = useStyles()
 
+  const theme = useTheme()
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
+
   return (
-    <>
-      <div style={{ textAlign: 'center' }}>
+    <Grid item container alignItems="center" justify="center" directon="column">
+      <Grid item>
         <Typography
           gutterBottom
-          style={{ textTransform: 'uppercase', fontWeight: '600' }}
-          variant="h4"
-          component="h2"
+          style={{
+            textTransform: 'uppercase',
+            fontWeight: '600',
+            textAlign: 'center',
+          }}
+          variant={matchesMD ? 'h4' : 'h5'}
         >
           Choose a type of teacher
         </Typography>
-      </div>
+      </Grid>
       <Grid
+        item
         container
-        justify="center"
-        alignItems="stretch"
-        style={{ padding: '0 3em' }}
+        justify={matchesMD ? 'space-around' : 'center'}
+        direction={matchesMD ? 'row' : 'column'}
       >
         <Grid
+          md={5}
           item
           component={Card}
-          xs
-          style={{ backgroundColor: '#e5e5e5' }}
           className={classes.card}
+          style={{ marginBottom: '2em' }}
         >
           <CardContent>
             <Typography
@@ -118,13 +122,8 @@ const ProfileTeacherPage1 = ({ setFieldValue, nextPage }) => {
             </div>
           </CardActions>
         </Grid>
-        <Grid
-          item
-          component={Card}
-          xs
-          style={{ backgroundColor: '#e5e5e5' }}
-          className={classes.card}
-        >
+
+        <Grid md={5} item component={Card} className={classes.card}>
           <CardContent>
             <div style={{ textAlign: 'center' }}>
               <Typography
@@ -153,7 +152,7 @@ const ProfileTeacherPage1 = ({ setFieldValue, nextPage }) => {
           </CardActions>
         </Grid>
       </Grid>
-    </>
+    </Grid>
   )
 }
 

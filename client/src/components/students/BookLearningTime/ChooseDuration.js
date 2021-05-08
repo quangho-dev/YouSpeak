@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
 import MyButton from '../../ui/MyButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import formatMoney from '../../../utils/formatMoney'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import { useFormikContext } from 'formik'
 import { getLessonById } from '../../../actions/lessons'
 import { connect } from 'react-redux'
@@ -44,17 +44,24 @@ const ChooseDuration = ({
   }
 
   const classes = useStyles()
+  const theme = useTheme()
+  const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   useEffect(() => {
     getLessonById(values.lesson)
   }, [getLessonById, values.lesson])
 
   return (
-    <Grid container direction="column" alignItems="center" spacing={2}>
+    <Grid item container direction="column" alignItems="center" spacing={2}>
       <Grid item>
         <Typography
-          variant="h4"
-          style={{ textTransform: 'uppercase', margin: '1.5em 0' }}
+          variant={matchesMD ? 'h4' : 'h5'}
+          style={{
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            fontWeight: '600',
+          }}
         >
           Chọn thời lượng của bài học
         </Typography>
@@ -62,9 +69,10 @@ const ChooseDuration = ({
       <Grid
         item
         container
+        direction={matchesSM ? 'row' : 'column'}
         alignItems="center"
-        justify="space-between"
-        style={{ maxWidth: '35em', marginBottom: '1.5em' }}
+        justify="center"
+        spacing={2}
       >
         {loading ? (
           <Spinner />

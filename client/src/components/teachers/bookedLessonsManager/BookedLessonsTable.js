@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  TableContainer,
   TableBody,
   Table,
   TableCell,
@@ -18,7 +17,7 @@ import moment from 'moment'
 
 const BookedLessonsTable = ({ bookedLessons }) => {
   return (
-    <TableContainer component={Paper}>
+    <Paper style={{ overflowX: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -34,14 +33,7 @@ const BookedLessonsTable = ({ bookedLessons }) => {
           {bookedLessons &&
             bookedLessons.length > 0 &&
             bookedLessons.map((lesson, index) => (
-              <TableRow
-                key={lesson._id}
-                style={
-                  index % 2
-                    ? { background: '#F3F5F7' }
-                    : { background: 'white' }
-                }
-              >
+              <TableRow key={lesson._id}>
                 <TableCell component="th" scope="row">
                   {index + 1}
                 </TableCell>
@@ -79,7 +71,7 @@ const BookedLessonsTable = ({ bookedLessons }) => {
             ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Paper>
   )
 }
 

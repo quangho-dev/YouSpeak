@@ -20,7 +20,6 @@ const BookedLessonsManager = ({
       alignItems="center"
       spacing={2}
       className="container"
-      style={{ width: '100%', margin: '0' }}
     >
       <Grid item>
         <Typography

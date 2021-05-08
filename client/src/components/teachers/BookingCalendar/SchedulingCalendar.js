@@ -7,7 +7,8 @@ import momentPlugin from '@fullcalendar/moment'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
 import { Link } from 'react-router-dom'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
+import { useTheme } from '@material-ui/styles'
 import MyButton from '../../ui/MyButton'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -15,8 +16,8 @@ import {
   getCurrentAvailableTime,
 } from '../../../actions/bookingCalendar'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import PublishIcon from '@material-ui/icons/Publish'
 import Spinner from '../../ui/Spinner'
+import SaveIcon from '@material-ui/icons/Save'
 
 const SchedulingCalendar = () => {
   const [calendarEvents, setCalendarEvents] = useState([])
@@ -25,6 +26,9 @@ const SchedulingCalendar = () => {
 
   const bookingCalendar = useSelector((state) => state.bookingCalendar)
   const { loading, availableTime } = bookingCalendar
+
+  const theme = useTheme()
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const id = uuidv4()
 
@@ -76,27 +80,23 @@ const SchedulingCalendar = () => {
   }
 
   return (
-    <div style={{ padding: '0 3em' }}>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        className="container"
-      >
-        <Grid item style={{ marginBottom: '1em' }}>
-          <Typography variant="h4" style={{ fontWeight: '600' }}>
-            SET AVAILABLE TIME FOR TEACHING
-          </Typography>
-        </Grid>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      className="container"
+      spacing={2}
+    >
+      <Grid item>
+        <Typography
+          variant="h5"
+          style={{ fontWeight: '600', textAlign: 'center' }}
+        >
+          SET AVAILABLE TIME FOR TEACHING
+        </Typography>
       </Grid>
-      <Grid
-        item
-        container
-        justify="center"
-        alignItems="center"
-        spacing={1}
-        style={{ marginBottom: '1em' }}
-      >
+
+      <Grid item container justify="center" alignItems="center" spacing={1}>
         <Grid item>
           <MyButton component={Link} to="/teachers/dashboard">
             <ArrowBackIcon />
@@ -105,8 +105,8 @@ const SchedulingCalendar = () => {
         </Grid>
         <Grid item>
           <MyButton onClick={handleSubmit}>
-            <PublishIcon />
-            &nbsp;Confirm
+            <SaveIcon />
+            &nbsp;Save
           </MyButton>
         </Grid>
       </Grid>
@@ -118,7 +118,7 @@ const SchedulingCalendar = () => {
       </Grid>
       <Grid item style={{ backgroundColor: 'white', padding: '1em' }}>
         <FullCalendar
-          initialView="timeGridWeek"
+          initialView={matchesMD ? 'timeGridWeek' : 'timeGridDay'}
           headerToolbar={{
             left: 'prev,next today',
             center: 'title',
@@ -140,7 +140,7 @@ const SchedulingCalendar = () => {
           eventMouseEnter={handleEventMouseEnter}
         />
       </Grid>
-    </div>
+    </Grid>
   )
 }
 

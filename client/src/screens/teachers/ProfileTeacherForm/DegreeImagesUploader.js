@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
     // and CardActions will be at the bottom
     justifyContent: 'space-between',
   },
-  paddingContainer: {
-    padding: '0 4em',
-  },
   linkText: {
     textTransform: 'uppercase',
     '&:hover, &:visited, &:active': {
@@ -44,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     marginBottom: '1em',
-  },
-  rowContainer: {
-    padding: '0 7em',
   },
   degreeImageCard: {
     maxWidth: 300,
@@ -175,119 +169,101 @@ const DegreeImagesUploader = () => {
   )
 
   return (
-    <>
-      <Grid item className={classes.formControl}>
-        <Card style={{ backgroundColor: '#ecebeb' }}>
-          <CardContent>
-            <Grid container alignItems="center" direction="column" spacing={2}>
-              <Grid item>
-                <label
-                  htmlFor="degree-upload"
-                  style={{ fontSize: '1.5rem', fontWeight: '450' }}
-                >
-                  Upload your images of teaching certificates: ( * )
-                </label>
-              </Grid>
+    <Card>
+      <CardContent>
+        <Grid container alignItems="center" direction="column" spacing={2}>
+          <Grid item>
+            <label
+              htmlFor="degree-upload"
+              style={{ fontSize: '1.5rem', fontWeight: '450' }}
+            >
+              Upload your images of teaching certificates: ( * )
+            </label>
+          </Grid>
 
-              <Grid item>
-                <Typography variant="h6">Your current files:</Typography>
-              </Grid>
+          <Grid item>
+            <Typography variant="h6">Your current files:</Typography>
+          </Grid>
 
-              <Grid
-                item
-                container
-                justify="center"
-                alignItems="center"
-                spacing={2}
+          <Grid item container justify="center" alignItems="center" spacing={2}>
+            {renderDegreeImages(values.degreeImages)}
+          </Grid>
+
+          <Grid item>
+            <section>
+              <div
+                style={{
+                  width: '100%',
+                  border: '1px dashed lightgray',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '1em',
+                }}
+                {...getRootProps({ className: 'dropzone' })}
               >
-                {renderDegreeImages(values.degreeImages)}
-              </Grid>
+                <input {...getInputProps()} />
 
-              <Grid item>
-                <section className="container">
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '240px',
-                      border: '1px dashed lightgray',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '1em',
-                    }}
-                    {...getRootProps({ className: 'dropzone' })}
-                  >
-                    <input {...getInputProps()} />
-
-                    <Grid
-                      container
-                      direction="column"
-                      alignItems="center"
-                      spacing={1}
-                    >
-                      <Grid item>
-                        <AddAPhotoIcon style={{ fontSize: '2rem' }} />
-                      </Grid>
-
-                      <Grid item>
-                        <Typography variant="body2">
-                          Drag 'n' drop some files here, or click to select
-                          files
-                        </Typography>
-                      </Grid>
-
-                      <Grid item>
-                        <MyButton onClick={open}>Select your files</MyButton>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </section>
-              </Grid>
-
-              <Grid
-                item
-                container
-                justify="center"
-                alignItems="center"
-                spacing={2}
-              >
-                {renderPreviewDegreeImages(dataToPreview)}
-              </Grid>
-
-              {loadedDegreeImagesProgress > 0 && (
                 <Grid
-                  item
                   container
-                  spacing={1}
-                  justify="center"
+                  direction="column"
                   alignItems="center"
-                  style={{ margin: 'auto' }}
+                  spacing={1}
                 >
-                  <Grid item style={{ width: '90%' }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={loadedDegreeImagesProgress}
-                    />
-                  </Grid>
                   <Grid item>
-                    <Typography variant="body2">{`${Math.round(
-                      loadedDegreeImagesProgress
-                    )}%`}</Typography>
+                    <AddAPhotoIcon style={{ fontSize: '2rem' }} />
+                  </Grid>
+
+                  <Grid item>
+                    <Typography variant="body2">
+                      Drag 'n' drop some files here, or click to select files
+                    </Typography>
+                  </Grid>
+
+                  <Grid item>
+                    <MyButton onClick={open}>Select your files</MyButton>
                   </Grid>
                 </Grid>
-              )}
+              </div>
+            </section>
+          </Grid>
 
+          <Grid item container justify="center" alignItems="center" spacing={2}>
+            {renderPreviewDegreeImages(dataToPreview)}
+          </Grid>
+
+          {loadedDegreeImagesProgress > 0 && (
+            <Grid
+              item
+              container
+              spacing={1}
+              justify="center"
+              alignItems="center"
+              style={{ margin: 'auto' }}
+            >
+              <Grid item style={{ width: '90%' }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={loadedDegreeImagesProgress}
+                />
+              </Grid>
               <Grid item>
-                <MyButton onClick={handleSubmitDegree}>
-                  <CloudUploadIcon />
-                  &nbsp;Upload
-                </MyButton>
+                <Typography variant="body2">{`${Math.round(
+                  loadedDegreeImagesProgress
+                )}%`}</Typography>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
-    </>
+          )}
+
+          <Grid item>
+            <MyButton onClick={handleSubmitDegree}>
+              <CloudUploadIcon />
+              &nbsp;Upload
+            </MyButton>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   )
 }
 

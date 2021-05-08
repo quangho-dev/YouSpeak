@@ -3,7 +3,6 @@ import { Grid, Typography } from '@material-ui/core'
 import { Field, useFormikContext } from 'formik'
 import { makeStyles } from '@material-ui/styles'
 import { TextField } from 'formik-material-ui'
-import AlertMessage from '../../../components/layout/AlertMessage'
 import MuiDatePicker from './inputs/MuiDatePicker'
 import ProfileCountrySelector from './inputs/ProfileCountrySelector'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,34 +12,14 @@ import VideoUploader from './VideoUploader'
 import TeacherAvatarUploader from './TeacherAvatarUploader'
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    // Provide some spacing between cards
-    margin: 16,
-
-    // Use flex layout with column direction for components in the card
-    // (CardContent and CardActions)
-    display: 'flex',
-    flexDirection: 'column',
-
-    // Justify the content so that CardContent will always be at the top of the card,
-    // and CardActions will be at the bottom
-    justifyContent: 'space-between',
-  },
-  paddingContainer: {
-    padding: '0 4em',
-  },
-  linkText: {
-    textTransform: 'uppercase',
-    '&:hover, &:visited, &:active': {
-      textTransform: 'uppercase',
-      color: 'inherit',
-    },
-  },
   formControl: {
-    marginBottom: '1em',
-  },
-  rowContainer: {
-    padding: '0 7em',
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '60%',
+    },
   },
   degreeImageCard: {
     maxWidth: 300,
@@ -49,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: 'auto',
   },
-  expImageCard: {
-    maxWidth: 300,
-  },
+  // expImageCard: {
+  //   maxWidth: 300,
+  // },
   expImage: {
     width: '100%',
     height: 'auto',
@@ -65,22 +44,19 @@ const ProfileTeacherPage2 = () => {
 
   return (
     <Grid
+      item
       container
       justify="center"
+      alignItems="center"
       direction="column"
-      className={classes.rowContainer}
+      spacing={3}
     >
       <Grid item>
-        <AlertMessage />
-      </Grid>
-      <Grid item>
         <Typography
-          variant="h4"
+          variant="h5"
           align="center"
-          className={classes.formControl}
           style={{
             textTransform: 'uppercase',
-            fontSize: '600',
             fontWeight: '600',
           }}
         >
@@ -100,11 +76,7 @@ const ProfileTeacherPage2 = () => {
         <MuiDatePicker />
       </Grid>
 
-      <Grid
-        item
-        className={classes.formControl}
-        style={{ marginTop: '1em', maxWidth: '20em' }}
-      >
+      <Grid item className={classes.formControl}>
         <div>
           <label htmlFor={'abc'} style={{ fontWeight: '400' }}>
             Choose your nationality: ( * )
@@ -121,6 +93,7 @@ const ProfileTeacherPage2 = () => {
           component={TextField}
           value={values.skypeId}
           label="Skype ID: ( * )"
+          style={{ minWidth: '100%' }}
         />
       </Grid>
 
@@ -130,6 +103,7 @@ const ProfileTeacherPage2 = () => {
           type="number"
           component={TextField}
           label="Your phone number: ( * )"
+          style={{ minWidth: '100%' }}
         />
       </Grid>
 
@@ -141,18 +115,25 @@ const ProfileTeacherPage2 = () => {
           label="Let's write a short paragraph for students to know more about you: ( * )"
           multiline
           rows={5}
-          style={{ width: '50em' }}
+          style={{ minWidth: '100%' }}
         />
       </Grid>
 
-      <VideoUploader />
+      <Grid item className={classes.formControl}>
+        <VideoUploader />
+      </Grid>
 
       {values && values.typeOfTeacher === 'professional' && (
-        <DegreeImagesUploader />
+        <Grid item className={classes.formControl}>
+          <DegreeImagesUploader />
+        </Grid>
       )}
 
       {values && values.typeOfTeacher === 'professional' && (
-        <ExpImagesUploader />
+        <Grid item className={classes.formControl}>
+          {' '}
+          <ExpImagesUploader />
+        </Grid>
       )}
     </Grid>
   )

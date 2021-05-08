@@ -11,6 +11,7 @@ import axios from 'axios'
 import MyButton from '../../../components/ui/MyButton'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { toast } from 'react-toastify'
+import AttachFileIcon from '@material-ui/icons/AttachFile'
 
 const TeacherAvatarUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null)
@@ -118,7 +119,8 @@ const TeacherAvatarUploader = () => {
             color="primary"
             style={{ color: 'white', fontWeight: '500' }}
           >
-            Select your avatar picture
+            <AttachFileIcon />
+            &nbsp;Select your avatar picture
             <input
               type="file"
               style={{ display: 'none' }}
