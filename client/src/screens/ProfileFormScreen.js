@@ -17,7 +17,10 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers'
-import { getCurrentProfile, createOrUpdateProfile } from '../actions/profile'
+import {
+  getCurrentProfile,
+  createOrUpdateProfile,
+} from '../actions/profileStudent'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -64,12 +67,12 @@ const ProfileFormScreen = ({ history }) => {
 
   const [uploading, setUploading] = useState(false)
 
-  const profile = useSelector((state) => state.profile)
-  const { loading, profile: profileUser } = profile
+  const profileStudent = useSelector((state) => state.profileStudent)
+  const { loading, profile: profileUser } = profileStudent
 
   const validationSchema = yup.object().shape({
     dateOfBirth: yup.date().nullable(),
-    phoneNumber: yup.number().required('Vui lòng điền số điện thoại'),
+    phoneNumber: yup.string().required('Vui lòng điền số điện thoại'),
     skypeId: yup.string().required('Vui lòng điền Skype ID của bạn'),
   })
 
@@ -298,7 +301,7 @@ const ProfileFormScreen = ({ history }) => {
                       name="phoneNumber"
                       as={TextField}
                       label="Số điện thoại"
-                      type="number"
+                      type="text"
                       error={errors.phoneNumber}
                     />
                     <ErrorMessage name="phoneNumber">

@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import formatMoney from '../../../utils/formatMoney'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import { useFormikContext } from 'formik'
-import { getLessonById } from '../../../actions/lessons'
+import { getLessonById } from '../../../actions/typeOfLesson'
 import { connect } from 'react-redux'
 import { milliseconds } from 'date-fns'
 import Spinner from '../../ui/Spinner'
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChooseDuration = ({
   getLessonById,
-  lessons: { lesson, loading },
+  typeOfLesson: { lesson, loading },
   nextPage,
 }) => {
   const { setFieldValue, values } = useFormikContext()
@@ -175,7 +175,7 @@ const ChooseDuration = ({
 }
 
 const mapStateToProps = (state) => ({
-  lessons: state.lesson,
+  typeOfLesson: state.typeOfLesson,
 })
 
 export default connect(mapStateToProps, { getLessonById })(ChooseDuration)

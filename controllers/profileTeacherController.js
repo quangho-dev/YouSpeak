@@ -1,5 +1,5 @@
 const ProfileTeacher = require('../models/profileTeacherModel')
-const Lesson = require('../models/lessonModel')
+const TypeOfLesson = require('../models/TypeOfLesson')
 
 // @route    GET api/profileTeacher/me
 // @desc     Get current teacher profile
@@ -28,9 +28,9 @@ const getCurrentProfileTeacher = async (req, res) => {
 // @access   Private
 const createOrUpdateProfileTeacher = async (req, res) => {
   try {
-    const lessonsArray = await Lesson.find({ user: req.user.id })
+    const typeOfLessonArray = await TypeOfLesson.find({ user: req.user.id })
 
-    const objectIdLessonsArray = lessonsArray.map((lesson) => lesson._id)
+    const objectIdLessonsArray = typeOfLessonArray.map((lesson) => lesson._id)
 
     const {
       typeOfTeacher,

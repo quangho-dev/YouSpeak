@@ -168,7 +168,6 @@ const loginUser = async (req, role, res) => {
 // @desc     Verify account
 // @access   Public
 const confirmationGet = async (req, res, next) => {
-  console.log('req.params.token:', req.params.token)
   Token.findOne({ token: req.params.token }, function (err, token) {
     if (!token)
       return res.status(400).send({

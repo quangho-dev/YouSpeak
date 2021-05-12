@@ -17,7 +17,10 @@ import { makeStyles } from '@material-ui/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import FolderIcon from '@material-ui/icons/Folder'
 import { useDispatch, useSelector } from 'react-redux'
-import { createOrUpdateALesson, getLessonById } from '../../../actions/lessons'
+import {
+  createOrUpdateALesson,
+  getLessonById,
+} from '../../../actions/typeOfLesson'
 import axios from 'axios'
 import Spinner from '../../ui/Spinner'
 import { Link } from 'react-router-dom'

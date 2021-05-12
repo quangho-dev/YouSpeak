@@ -8,7 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import momentPlugin from '@fullcalendar/moment'
 import viLocale from 'date-fns/locale/vi'
 import { useFormikContext } from 'formik'
-import { getLessonById } from '../../../actions/lessons'
+import { getLessonById } from '../../../actions/typeOfLesson'
 import { connect } from 'react-redux'
 import { addMinutes } from 'date-fns'
 import { useConfirm } from 'material-ui-confirm'
@@ -17,7 +17,7 @@ import { toast } from 'react-toastify'
 const ChooseTime = ({
   calendarEvents,
   getLessonById,
-  lessons: { lesson },
+  typeOfLesson: { lesson },
   nextPage,
 }) => {
   const { setFieldValue, values } = useFormikContext()
@@ -146,7 +146,7 @@ const ChooseTime = ({
 }
 
 const mapStateToProps = (state) => ({
-  lessons: state.lesson,
+  typeOfLesson: state.typeOfLesson,
 })
 
 export default connect(mapStateToProps, { getLessonById })(ChooseTime)

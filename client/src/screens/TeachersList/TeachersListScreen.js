@@ -4,7 +4,7 @@ import { getTeachers } from '../../actions/teachersList'
 import TeacherInfo from './TeacherInfo'
 import Spinner from '../../components/ui/Spinner'
 import { connect } from 'react-redux'
-import { getLessonsOfTeacherById } from '../../actions/lessons'
+import { getLessonsOfTeacherById } from '../../actions/typeOfLesson'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const TeachersListScreen = ({
   getLessonsOfTeacherById,
   getTeachers,
-  lesson: { loading, lessons },
+  typeOfLesson: { loading, lessons },
   teachersList: { teachersList: teachers, loading: loadingTeachersList },
 }) => {
   const [visible, setVisible] = useState(10)
@@ -107,7 +107,7 @@ TeachersListScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  lesson: state.lesson,
+  typeOfLesson: state.typeOfLesson,
   teachersList: state.teachersList,
 })
 

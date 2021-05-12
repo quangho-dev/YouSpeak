@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setAvailableTime,
   getCurrentAvailableTime,
-} from '../../../actions/bookingCalendar'
+} from '../../../actions/teachingScheduleForTeacher'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Spinner from '../../ui/Spinner'
 import SaveIcon from '@material-ui/icons/Save'
@@ -24,8 +24,10 @@ const SchedulingCalendar = () => {
 
   const dispatch = useDispatch()
 
-  const bookingCalendar = useSelector((state) => state.bookingCalendar)
-  const { loading, availableTime } = bookingCalendar
+  const teachingScheduleForTeacher = useSelector(
+    (state) => state.teachingScheduleForTeacher
+  )
+  const { loading, availableTime } = teachingScheduleForTeacher
 
   const theme = useTheme()
   const matchesMD = useMediaQuery(theme.breakpoints.up('md'))

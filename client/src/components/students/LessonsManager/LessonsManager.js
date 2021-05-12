@@ -11,7 +11,7 @@ import {
   TableCell,
 } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { getBookedLessons } from '../../../actions/bookingCalendarStudent'
+import { getBookedLessons } from '../../../actions/learningScheduleForStudent'
 import Spinner from '../../ui/Spinner'
 import MyButton from '../../ui/MyButton'
 import FindInPageIcon from '@material-ui/icons/FindInPage'
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LessonsManager = ({
-  bookingCalendarStudent: { bookedLessons, loading, bookedTime },
+  learningScheduleForStudent: { bookedLessons, loading, bookedTime },
   getBookedLessons,
 }) => {
   const classes = useStyles()
@@ -130,7 +130,7 @@ const LessonsManager = ({
 }
 
 const mapStateToProps = (state) => ({
-  bookingCalendarStudent: state.bookingCalendarStudent,
+  learningScheduleForStudent: state.learningScheduleForStudent,
 })
 
 export default connect(mapStateToProps, { getBookedLessons })(LessonsManager)

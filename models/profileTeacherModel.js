@@ -28,7 +28,7 @@ const ProfileTeacherSchema = new mongoose.Schema(
       label: String,
     },
     skypeId: String,
-    phoneNumber: Number,
+    phoneNumber: String,
     introduction: {
       type: String,
       required: true,
@@ -46,7 +46,7 @@ const ProfileTeacherSchema = new mongoose.Schema(
     lessons: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'lesson',
+        ref: 'typeOfLesson',
       },
     ],
     trialRate: {

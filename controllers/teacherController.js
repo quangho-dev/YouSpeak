@@ -7,8 +7,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
-const Lesson = require('../models/lessonModel')
-const BookingCalendarStudent = require('../models/bookingCalendarStudentModel')
+const TypeOfLesson = require('../models/TypeOfLesson')
+const LearningScheduleForStudent = require('../models/LearningScheduleForStudent')
 
 // @desc    Register a new teacher
 // @route   POST /api/teachers/register-teacher
@@ -305,7 +305,7 @@ const createOrUpdateALesson = async (req, res) => {
   }
 
   try {
-    let lesson = await Lesson.findOneAndUpdate(
+    let typeOfLesson = await TypeOfLesson.findOneAndUpdate(
       {
         _id: req.params.id,
       },
@@ -316,7 +316,7 @@ const createOrUpdateALesson = async (req, res) => {
         setDefaultsOnInsert: true,
       }
     )
-    return res.json(lesson)
+    return res.json(typeOfLesson)
   } catch (err) {
     console.error(err.message)
     return res.status(500).send('Server Error')
@@ -328,10 +328,10 @@ const createOrUpdateALesson = async (req, res) => {
 // @access   Private/teachers
 const getLessons = async (req, res) => {
   try {
-    const lessons = await Lesson.find({ user: req.user.id }).populate('user', [
-      'name',
-    ])
-    res.json(lessons)
+    const typesOfLesson = await TypeOfLesson.find({
+      user: req.user.id,
+    }).populate('user', ['name'])
+    res.json(typesOfLesson)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
@@ -343,13 +343,13 @@ const getLessons = async (req, res) => {
 // @access   Private/teachers
 const getLessonById = async (req, res) => {
   try {
-    const lesson = await Lesson.findById(req.params.id)
+    const typeOfLesson = await TypeOfLesson.findById(req.params.id)
 
-    if (!lesson) {
+    if (!typeOfLesson) {
       return res.status(404).json({ msg: 'Không tìm thấy bài học này.' })
     }
 
-    res.json(lesson)
+    res.json(typeOfLesson)
   } catch (err) {
     console.error(err.message)
 
@@ -362,18 +362,18 @@ const getLessonById = async (req, res) => {
 // @access   Private/teachers
 const deleteLessonByID = async (req, res) => {
   try {
-    const lesson = await Lesson.findById(req.params.id)
+    const typeOfLesson = await TypeOfLesson.findById(req.params.id)
 
-    if (!lesson) {
+    if (!typeOfLesson) {
       return res.status(404).json({ msg: 'Không tìm thấy bài học' })
     }
 
     // Check user
-    if (lesson.user.toString() !== req.user.id) {
+    if (typeOfLesson.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' })
     }
 
-    await lesson.remove()
+    await typeOfLesson.remove()
 
     res.json({ msg: 'Đã xóa bài học.' })
   } catch (err) {
@@ -392,7 +392,7 @@ const createALesson = async (req, res) => {
 
     const { lessonName, content, periods, documents } = req.body
 
-    const newLesson = new Lesson({
+    const newTypeOfLesson = new TypeOfLesson({
       user: req.user.id,
       lessonName,
       content,
@@ -400,7 +400,7 @@ const createALesson = async (req, res) => {
       documents,
     })
 
-    const lesson = await newLesson.save()
+    const lesson = await newTypeOfLesson.save()
 
     res.json(lesson)
   } catch (err) {
@@ -414,15 +414,17 @@ const createALesson = async (req, res) => {
 // @access   Private/teachers
 const getLessonsOfTeacherById = async (req, res) => {
   try {
-    const lessons = await Lesson.find({ user: req.params.teacherId })
+    const typesOfLesson = await TypeOfLesson.find({
+      user: req.params.teacherId,
+    })
 
-    if (!lessons) {
+    if (!typesOfLesson) {
       return res
         .status(400)
         .json({ msg: 'Không tìm thấy bài học của giáo viên này.' })
     }
 
-    res.json(lessons)
+    res.json(typesOfLesson)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
@@ -434,7 +436,7 @@ const getLessonsOfTeacherById = async (req, res) => {
 // @access   Private/teachers
 const getBookedLessonsOfATeacher = async (req, res) => {
   try {
-    const bookedLessons = await BookingCalendarStudent.find({
+    const bookedLessons = await LearningScheduleForStudent.find({
       teacher: req.params.teacherId,
     })
       .populate('user', ['name'])

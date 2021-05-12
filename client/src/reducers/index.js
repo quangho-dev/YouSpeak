@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux'
 import auth from './auth'
-import profile from './profile'
+import profileStudent from './profileStudent'
 import alert from './alert'
 import profileTeacher from './profileTeacher'
 import teachersList from './teachersList'
-import lesson from './lesson'
-import bookingCalendar from './bookingCalendar'
-import bookingCalendarStudent from './bookingCalendarStudent'
+import typeOfLesson from './typeOfLesson'
+import teachingScheduleForTeacher from './teachingScheduleForTeacher'
+import learningScheduleForStudent from './learningScheduleForStudent'
 
 export default combineReducers({
   auth,
-  profile,
+  profileStudent,
   alert,
   profileTeacher,
   teachersList,
-  lesson,
-  bookingCalendar,
-  bookingCalendarStudent,
+  typeOfLesson,
+  teachingScheduleForTeacher,
+  learningScheduleForStudent,
 })

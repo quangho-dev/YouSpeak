@@ -11,8 +11,8 @@ import Spinner from '../../ui/Spinner'
 import {
   getBookedLessonAndProfileStudent,
   cancelBookedLesson,
-} from '../../../actions/bookingCalendarStudent'
-import { confirmBookedLesson } from '../../../actions/bookingCalendar'
+} from '../../../actions/learningScheduleForStudent'
+import { confirmBookedLesson } from '../../../actions/teachingScheduleForTeacher'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import CancelIcon from '@material-ui/icons/Cancel'
@@ -22,8 +22,8 @@ const BookedLessonInfo = ({
   getBookedLessonAndProfileStudent,
   cancelBookedLesson,
   match,
-  bookingCalendarStudent: { loading, bookedLesson },
-  profile: { loadingProfileStudent, profile: profileStudent },
+  learningScheduleForStudent: { loading, bookedLesson },
+  profileStudent: { loadingProfileStudent, profile: profileStudent },
   history,
 }) => {
   const confirm = useConfirm()
@@ -175,8 +175,8 @@ const BookedLessonInfo = ({
 }
 
 const mapStateToProps = (state) => ({
-  bookingCalendarStudent: state.bookingCalendarStudent,
-  profile: state.profile,
+  learningScheduleForStudent: state.learningScheduleForStudent,
+  profileStudent: state.profileStudent,
 })
 
 export default connect(mapStateToProps, {

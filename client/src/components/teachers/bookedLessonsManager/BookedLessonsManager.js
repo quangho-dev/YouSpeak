@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { getBookedLessonsOfATeacher } from '../../../actions/bookingCalendarStudent'
+import { getBookedLessonsOfATeacher } from '../../../actions/learningScheduleForStudent'
 import Spinner from '../../ui/Spinner'
 import BookedLessonsTable from './BookedLessonsTable'
 
 const BookedLessonsManager = ({
-  bookingCalendarStudent: { bookedLessons, loading },
+  learningScheduleForStudent: { bookedLessons, loading },
   auth: { user },
   getBookedLessonsOfATeacher,
 }) => {
@@ -44,7 +44,7 @@ const BookedLessonsManager = ({
 }
 
 const mapStateToProps = (state) => ({
-  bookingCalendarStudent: state.bookingCalendarStudent,
+  learningScheduleForStudent: state.learningScheduleForStudent,
   auth: state.auth,
 })
 

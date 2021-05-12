@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLessons } from '../../actions/lessons'
+import { getLessons } from '../../actions/typeOfLesson'
 import LessonTable from './LessonTable'
 import { Link } from 'react-router-dom'
 import MyButton from '../ui/MyButton'
@@ -30,9 +30,9 @@ const Lessons = () => {
 
   const dispatch = useDispatch()
 
-  const lesson = useSelector((state) => state.lesson)
+  const typeOfLesson = useSelector((state) => state.typeOfLesson)
 
-  const { lessons, loading } = lesson
+  const { lessons, loading } = typeOfLesson
 
   useEffect(() => {
     dispatch(getLessons())
@@ -48,6 +48,7 @@ const Lessons = () => {
         container
         direction="column"
         alignItems="center"
+        justify="center"
         className={classes.rowContainer}
         style={{ width: '100%', margin: '7em 0 0' }}
         spacing={2}
@@ -60,7 +61,7 @@ const Lessons = () => {
             Type Of Lesson Manager
           </Typography>
         </Grid>
-        <Grid item style={{ minWidth: '60%' }}>
+        <Grid item>
           {lessons && lessons.length > 0 ? (
             <LessonTable lessons={lessons} />
           ) : (

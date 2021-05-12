@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { registerTeacher } from '../../../actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/styles'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import clsx from 'clsx'
 
@@ -66,6 +66,8 @@ const TeacherRegisterForm = (props) => {
 
   const dispatch = useDispatch()
 
+  const history = useHistory()
+
   const auth = useSelector((state) => state.auth)
   const { loading } = auth
 
@@ -84,6 +86,7 @@ const TeacherRegisterForm = (props) => {
     dispatch(registerTeacher(values))
     resetForm({ name: '', email: '', password: '', confirmPassword: '' })
     setSubmitting(false)
+    history.push('/teachers/login')
   }
 
   return (

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { logout } from '../../actions/auth'
 import { connect } from 'react-redux'
 import { getCurrentProfileTeacher } from '../../actions/profileTeacher'
-import { getCurrentProfile } from '../../actions/profile'
+import { getCurrentProfile } from '../../actions/profileStudent'
 import NotLoggedInNav from './NotLoggedInNav'
 import StudentLoggedInNav from './StudentLoggedInNav'
 import TeacherLoggedInNav from './TeacherLoggedInNav'
@@ -12,7 +12,7 @@ const Header = ({
   getCurrentProfile,
   getCurrentProfileTeacher,
   auth: { user, isAuthenticated },
-  profile: { profile },
+  profileStudent: { profile },
   profileTeacher: { profileTeacher },
 }) => {
   useEffect(() => {
@@ -42,7 +42,7 @@ const Header = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile,
+  profileStudent: state.profileStudent,
   profileTeacher: state.profileTeacher,
 })
 

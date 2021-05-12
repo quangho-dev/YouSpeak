@@ -6,15 +6,15 @@ import {
   StepLabel,
   useMediaQuery,
 } from '@material-ui/core'
-import { getAvailableTimeOfATeacher } from '../../../actions/bookingCalendar'
-import { getLessonsOfTeacherById } from '../../../actions/lessons'
+import { getAvailableTimeOfATeacher } from '../../../actions/teachingScheduleForTeacher'
+import { getLessonsOfTeacherById } from '../../../actions/typeOfLesson'
 import { Link } from 'react-router-dom'
 import MyButton from '../../ui/MyButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { Formik, Form } from 'formik'
 import ChooseLesson from './ChooseLesson'
 import ChooseDuration from './ChooseDuration'
-import { bookTime } from '../../../actions/bookingCalendarStudent'
+import { bookTime } from '../../../actions/learningScheduleForStudent'
 import ChooseTime from './ChooseTime'
 import { connect } from 'react-redux'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const BookLearningTime = ({
-  bookingCalendar: { availableTime, loading, currentTeacher },
-  lesson: { lessons, loading: loadingLessons },
+  teachingScheduleForTeacher: { availableTime, loading, currentTeacher },
+  typeOfLesson: { lessons, loading: loadingLessons },
   getAvailableTimeOfATeacher,
   getLessonsOfTeacherById,
   bookTime,
@@ -38,7 +38,6 @@ const BookLearningTime = ({
   const [page, setPage] = useState(0)
   const [activeStep, setActiveStep] = useState(0)
 
-  const classes = useStyles()
   const theme = useTheme()
   const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -159,8 +158,8 @@ const BookLearningTime = ({
 }
 
 const mapStateToProps = (state) => ({
-  bookingCalendar: state.bookingCalendar,
-  lesson: state.lesson,
+  teachingScheduleForTeacher: state.teachingScheduleForTeacher,
+  typeOfLesson: state.typeOfLesson,
 })
 
 export default connect(mapStateToProps, {

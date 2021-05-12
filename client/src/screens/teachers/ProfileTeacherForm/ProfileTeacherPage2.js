@@ -100,7 +100,7 @@ const ProfileTeacherPage2 = () => {
       <Grid item className={classes.formControl}>
         <Field
           name="phoneNumber"
-          type="number"
+          type="text"
           component={TextField}
           label="Your phone number: ( * )"
           style={{ minWidth: '100%' }}

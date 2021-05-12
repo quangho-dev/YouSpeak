@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom'
-import { getCurrentProfile } from '../actions/profile'
+import { getCurrentProfile } from '../actions/profileStudent'
 import Rating from '../components/ui/Rating'
 import { connect } from 'react-redux'
 import Spinner from '../components/ui/Spinner'
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = ({
   getCurrentProfile,
   auth: { user },
-  profile: { profile: profileUser },
+  profileStudent: { profile: profileUser, error, loading },
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -48,14 +48,15 @@ const Dashboard = ({
 
   return (
     <>
-      {user === null || profileUser === null ? (
+      {user === null || loading ? (
         <Spinner />
       ) : (
         <Grid
           container
           direction="column"
           className={classes.rowContainer}
-          style={{ margin: '7em 0 2em' }}
+          style={{ margin: '7em 0 2em', width: '100%' }}
+          spacing={2}
         >
           <Grid item style={{ alignSelf: 'center' }}>
             <Typography
@@ -66,44 +67,48 @@ const Dashboard = ({
             </Typography>
           </Grid>
 
-          <Grid item style={{ marginBottom: '2em' }}>
+          <Grid item>
             <Typography variant="h6">Xin chào {user && user.name}</Typography>
           </Grid>
 
-          <Grid item container direction="column">
-            <Grid item>
-              {profileUser && !profileUser.skypeId && (
-                <Alert severity="error">
-                  Bạn chưa điền Skype ID ở phần "Thông tin người dùng", vui lòng
-                  điền số Skype ID.
-                </Alert>
-              )}
-            </Grid>
-
-            <Grid item>
-              {profileUser && !profileUser.phoneNumber && (
-                <Alert severity="error">
-                  Bạn chưa điền số điện thoại ở phần "Thông tin người dùng", vui
-                  lòng điền số điện thoại.
-                </Alert>
-              )}
-            </Grid>
+          <Grid item>
+            {error && error.msg === 'There is no profile for this user' && (
+              <Alert severity="warning">
+                Bạn chưa tạo profile cho tài khoản này, vui lòng thêm thông tin
+                vào profile của bạn.
+              </Alert>
+            )}
           </Grid>
+
+          {profileUser && !profileUser.skypeId && (
+            <Grid item>
+              <Alert severity="error">
+                Bạn chưa điền Skype ID ở phần "Thông tin người dùng", vui lòng
+                điền số Skype ID.
+              </Alert>
+            </Grid>
+          )}
+
+          {profileUser && !profileUser.phoneNumber && (
+            <Grid item>
+              <Alert severity="error">
+                Bạn chưa điền số điện thoại ở phần "Thông tin người dùng", vui
+                lòng điền số điện thoại.
+              </Alert>
+              )}
+            </Grid>
+          )}
+
           <Grid
             item
             container
             direction="column"
             justify="center"
             alignItems="center"
-            style={{ marginBottom: '2em' }}
+            spacing={1}
           >
             <Grid item>
-              {user && user._id && (
-                <Chip
-                  label={`ID: ${user._id}`}
-                  style={{ marginBottom: '1em' }}
-                />
-              )}
+              {user && user._id && <Chip label={`ID: ${user._id}`} />}
             </Grid>
 
             <Grid item>
@@ -113,14 +118,13 @@ const Dashboard = ({
                   style={{
                     width: '70px',
                     height: '70px',
-                    marginBottom: '1em',
                   }}
                 />
               )}
             </Grid>
 
             {user && user.name && (
-              <Grid item style={{ marginBottom: '1em' }}>
+              <Grid item>
                 <Typography variant="body1">
                   <strong>{user.name}</strong>
                 </Typography>
@@ -142,7 +146,7 @@ const Dashboard = ({
           </Grid>
 
           {profileUser && (
-            <Grid item style={{ marginBottom: '1em' }}>
+            <Grid item>
               <Typography variant="body1">
                 <strong>Địa chỉ:</strong>&nbsp;{profileUser.address}
               </Typography>
@@ -150,7 +154,7 @@ const Dashboard = ({
           )}
 
           {profileUser && (
-            <Grid item style={{ marginBottom: '1em' }}>
+            <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
                   <Typography variant="body1">
@@ -165,7 +169,7 @@ const Dashboard = ({
           )}
 
           {profileUser && (
-            <Grid item style={{ marginBottom: '1em' }}>
+            <Grid item>
               <Typography variant="body1">
                 <strong>Skype ID:</strong>&nbsp;{profileUser.skypeId}
               </Typography>
@@ -173,7 +177,7 @@ const Dashboard = ({
           )}
 
           {profileUser && (
-            <Grid item style={{ marginBottom: '1em' }}>
+            <Grid item>
               <Typography variant="body1">
                 <strong>Số điện thoại:</strong>&nbsp;
                 {profileUser.phoneNumber === 0
@@ -184,7 +188,7 @@ const Dashboard = ({
           )}
 
           {profileUser && (
-            <Grid item style={{ marginBottom: '1em' }}>
+            <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
                   <Typography variant="body1">
@@ -201,21 +205,19 @@ const Dashboard = ({
           )}
 
           <Grid item>
-            <Grid container direction="column">
-              <Grid item style={{ marginBottom: '1em' }}>
-                <Typography variant="body1">
-                  <strong>Ngày tháng năm sinh:</strong>&nbsp;
-                  {moment(profileUser.dateOfBirth).format('DD/MM/YYYY')}
-                </Typography>
-              </Grid>
+            {profileUser && profileUser.dateOfBirth && (
+              <Typography variant="body1">
+                <strong>Ngày tháng năm sinh:</strong>&nbsp;
+                {moment(profileUser.dateOfBirth).format('DD/MM/YYYY')}
+              </Typography>
+            )}
+          </Grid>
 
-              <Grid item>
-                <Typography variant="body1">
-                  <strong>Email:</strong>&nbsp;
-                  {user.email}
-                </Typography>
-              </Grid>
-            </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              <strong>Email:</strong>&nbsp;
+              {user.email}
+            </Typography>
           </Grid>
         </Grid>
       )}
@@ -225,7 +227,7 @@ const Dashboard = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile,
+  profileStudent: state.profileStudent,
 })
 
 export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)

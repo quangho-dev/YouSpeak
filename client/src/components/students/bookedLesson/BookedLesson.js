@@ -6,20 +6,20 @@ import TeacherInfo from './TeacherInfo'
 import {
   getBookedLessonById,
   cancelBookedLesson,
-} from '../../../actions/bookingCalendarStudent'
+  getBookedLessonAndProfileTeacher,
+} from '../../../actions/learningScheduleForStudent'
 import { connect } from 'react-redux'
 import CancelIcon from '@material-ui/icons/Cancel'
 import Spinner from '../../ui/Spinner'
 import { useConfirm } from 'material-ui-confirm'
 import { addHours, compareAsc } from 'date-fns'
-import { getBookedLessonAndProfileTeacher } from '../../../actions/bookingCalendarStudent'
 
 const BookedLesson = ({
   match,
   getBookedLessonById,
   cancelBookedLesson,
   getBookedLessonAndProfileTeacher,
-  bookingCalendarStudent: { loading, bookedLesson },
+  learningScheduleForStudent: { loading, bookedLesson },
   profileTeacher: { loading: loadingProfileTeacher, profileTeacher },
   history,
 }) => {
@@ -123,11 +123,11 @@ const BookedLesson = ({
 
 BookedLesson.propTypes = {
   getBookedLessonById: PropTypes.func.isRequired,
-  bookingCalendarStudent: PropTypes.object.isRequired,
+  learningScheduleForStudent: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  bookingCalendarStudent: state.bookingCalendarStudent,
+  learningScheduleForStudent: state.learningScheduleForStudent,
   profileTeacher: state.profileTeacher,
 })
 

@@ -86,11 +86,11 @@ const Landing = (props) => {
   const auth = useSelector((state) => state.auth)
   const { isAuthenticated, user } = auth
 
-  if (isAuthenticated && user.role === 'user' && user.isVerified) {
+  if (isAuthenticated && user.role === 'user') {
     return <Redirect to="/dashboard" />
   }
 
-  if (isAuthenticated && user.role === 'teacher' && user.isVerified) {
+  if (isAuthenticated && user.role === 'teacher') {
     return <Redirect to="/teachers/dashboard" />
   }
 

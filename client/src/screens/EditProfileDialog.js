@@ -20,7 +20,10 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers'
-import { getCurrentProfile, createOrUpdateProfile } from '../actions/profile'
+import {
+  getCurrentProfile,
+  createOrUpdateProfile,
+} from '../actions/profileStudent'
 import MyCheckBox from '../components/Formik/MyCheckBox'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,8 +56,8 @@ const EditProfileDialog = ({
 
   const [uploading, setUploading] = useState(false)
 
-  const profile = useSelector((state) => state.profile)
-  const { loading, profile: profileUser } = profile
+  const profileStudent = useSelector((state) => state.profileStudent)
+  const { loading, profile: profileUser } = profileStudent
 
   const validationSchema = yup.object().shape({
     dateOfBirth: yup.date().nullable(),

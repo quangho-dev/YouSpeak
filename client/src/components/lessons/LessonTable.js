@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { Link } from 'react-router-dom'
 import { useConfirm } from 'material-ui-confirm'
-import { deleteLesson } from '../../actions/lessons'
+import { deleteLesson } from '../../actions/typeOfLesson'
 import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles({

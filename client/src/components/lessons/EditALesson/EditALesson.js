@@ -11,7 +11,10 @@ import Spinner from '../../ui/Spinner'
 import LessonPeriodForm from './LessonPeriodForm'
 import * as yup from 'yup'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import { getLessonById, createOrUpdateALesson } from '../../../actions/lessons'
+import {
+  getLessonById,
+  createOrUpdateALesson,
+} from '../../../actions/typeOfLesson'
 import EditDocuments from './EditDocuments'
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +44,8 @@ const EditALesson = (props) => {
 
   const dispatch = useDispatch()
 
-  const lesson = useSelector((state) => state.lesson)
-  const { lesson: singleLesson, loading } = lesson
+  const typeOfLesson = useSelector((state) => state.typeOfLesson)
+  const { lesson: singleLesson, loading } = typeOfLesson
 
   const validationSchema = yup.object().shape({
     lessonName: yup.string().required("Lesson's name is required."),

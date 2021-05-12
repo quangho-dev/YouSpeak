@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, useMediaQuery } from '@material-ui/core'
 import { Formik, Field, Form } from 'formik'
 import { useDispatch } from 'react-redux'
 import MyButton from '../../ui/MyButton'
@@ -9,8 +9,8 @@ import AddIcon from '@material-ui/icons/Add'
 import { TextField } from 'formik-material-ui'
 import LessonPeriodForm from './LessonPeriodForm'
 import * as yup from 'yup'
-import { makeStyles } from '@material-ui/styles'
-import { createALesson } from '../../../actions/lessons'
+import { makeStyles, useTheme } from '@material-ui/styles'
+import { createALesson } from '../../../actions/typeOfLesson'
 import AddDocuments from './AddDocuments'
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
 
 const AddALesson = (props) => {
   const classes = useStyles()
+
+  const theme = useTheme()
+  const matchesSM = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const dispatch = useDispatch()
 
@@ -82,7 +86,7 @@ const AddALesson = (props) => {
           >
             <Grid item>
               <Typography
-                variant="h5"
+                variant={matchesMD ? 'h4' : 'h5'}
                 style={{
                   textTransform: 'uppercase',
                   fontWeight: '600',
@@ -93,7 +97,10 @@ const AddALesson = (props) => {
               </Typography>
             </Grid>
 
-            <Grid item style={{ width: '100%' }}>
+            <Grid
+              item
+              style={{ width: matchesMD ? '60%' : matchesSM ? '80%' : '100%' }}
+            >
               <Field
                 fullWidth
                 name="lessonName"
@@ -101,7 +108,10 @@ const AddALesson = (props) => {
                 label="Lesson's name"
               />
             </Grid>
-            <Grid item style={{ width: '100%' }}>
+            <Grid
+              item
+              style={{ width: matchesMD ? '60%' : matchesSM ? '80%' : '100%' }}
+            >
               <Field
                 fullWidth
                 name="content"
@@ -121,7 +131,7 @@ const AddALesson = (props) => {
             </Grid>
             <Grid
               item
-              direction="column"
+              direction={matchesMD ? 'row' : 'column'}
               container
               justify="center"
               alignItems="center"
