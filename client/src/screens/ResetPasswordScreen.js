@@ -50,58 +50,66 @@ const ResetPasswordScreen = (props) => {
   }
 
   return (
-    <div className={classes.rowContainer}>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item>
-          <Typography variant="h4" gutterBottom>
-            Sửa lại mật khẩu
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {({ isSubmitting, isValid }) => {
-              return (
-                <Form>
-                  <Field
-                    component={TextField}
-                    type="password"
-                    label="Mật khẩu mới"
-                    name="password"
-                    fullWidth
-                    className={classes.formControl}
-                  />
-
-                  <Field
-                    component={TextField}
-                    type="password"
-                    label="Xác nhận mật khẩu mới"
-                    name="confirmPassword"
-                    fullWidth
-                    className={classes.formControl}
-                  />
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={!isValid || isSubmitting}
-                    style={{ color: 'white' }}
-                    fullWidth
-                    disableRipple
-                  >
-                    Gửi
-                  </Button>
-                </Form>
-              )
-            }}
-          </Formik>
-        </Grid>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className="container"
+    >
+      <Grid item>
+        <Typography
+          variant="h4"
+          style={{ textTransform: 'uppercase', fontWeight: '600' }}
+          gutterBottom
+        >
+          Sửa lại mật khẩu
+        </Typography>
       </Grid>
-    </div>
+      <Grid item>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {({ isSubmitting, isValid }) => {
+            return (
+              <Form>
+                <Field
+                  component={TextField}
+                  type="password"
+                  label="Mật khẩu mới"
+                  name="password"
+                  fullWidth
+                  className={classes.formControl}
+                />
+
+                <Field
+                  component={TextField}
+                  type="password"
+                  label="Xác nhận mật khẩu mới"
+                  name="confirmPassword"
+                  fullWidth
+                  className={classes.formControl}
+                />
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={!isValid || isSubmitting}
+                  style={{ color: 'white' }}
+                  fullWidth
+                  disableRipple
+                >
+                  Gửi
+                </Button>
+              </Form>
+            )
+          }}
+        </Formik>
+      </Grid>
+    </Grid>
   )
 }
 export default ResetPasswordScreen

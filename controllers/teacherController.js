@@ -35,44 +35,13 @@ const registerTeacher = async (req, role, res) => {
       email,
       role,
       password,
+      isVerified: true,
     })
 
     await user.save(function (err) {
       if (err) {
         return res.status(500).send({ msg: err.message })
       }
-
-      const token = new Token({
-        _userId: user._id,
-        token: crypto.randomBytes(16).toString('hex'),
-      })
-
-      token.save(function (err) {
-        if (err) {
-          return res.status(500).send({ errors: [{ msg: err.message }] })
-        }
-
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'quang.ho1804@gmail.com',
-            pass: 'un1c0rn1234',
-          },
-        })
-
-        const mailOptions = {
-          from: 'no-reply@youspeak.com',
-          to: user.email,
-          subject: 'Xác nhận tài khoản',
-          html: `<p>Xin chào,</p><p>Bạn vui lòng click vào <a href='http://localhost:5000/api/teachers/confirmation/${token.token}'>đường dẫn này</a> để kích hoạt tài khoản.</p>`,
-        }
-
-        transporter.sendMail(mailOptions, function (err) {
-          if (err) {
-            return res.status(500).send({ errors: [{ msg: err.message }] })
-          }
-        })
-      })
     })
 
     const payload = {
@@ -89,8 +58,7 @@ const registerTeacher = async (req, role, res) => {
         if (err) throw err
         res.status(200).json({
           token,
-          msg:
-            'Một email kích hoạt tài khoản đã được gửi vào ' + user.email + '.',
+          msg: 'Bạn đã đăng ký tài khoản thành công!',
         })
       }
     )
@@ -373,6 +341,22 @@ const deleteLessonByID = async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' })
     }
 
+    // remove this lesson from current lesson array in profile teacher
+    const profileTeacher = await ProfileTeacher.find({ user: req.user.id })
+
+    // const filteredLessonArray = profileTeacher[0].lessons.filter(
+    //   (item) => item !== req.params.id
+    // )
+
+    const index = profileTeacher[0].lessons.indexOf(req.params.id)
+    if (index > -1) {
+      profileTeacher[0].lessons.splice(index, 1)
+    }
+
+    // profileTeacher[0].lessons = filteredLessonArray
+
+    await profileTeacher[0].save()
+
     await typeOfLesson.remove()
 
     res.json({ msg: 'Đã xóa bài học.' })
@@ -401,6 +385,13 @@ const createALesson = async (req, res) => {
     })
 
     const lesson = await newTypeOfLesson.save()
+
+    // push new lesson to teacher's profile
+    const profileTeacher = await ProfileTeacher.find({ user: req.user.id })
+
+    profileTeacher[0].lessons.push(lesson._id)
+
+    await profileTeacher[0].save()
 
     res.json(lesson)
   } catch (err) {

@@ -49,7 +49,7 @@ const createResetPassword = (req, res) => {
           service: 'gmail',
           auth: {
             user: 'quang.ho1804@gmail.com',
-            pass: 'un1c0rn1234',
+            pass: 'Un1c0rn!1234',
           },
         })
         var mailOptions = {

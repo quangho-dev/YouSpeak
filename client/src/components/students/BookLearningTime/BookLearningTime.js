@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Grid,
-  Stepper,
-  Step,
-  StepLabel,
-  useMediaQuery,
-} from '@material-ui/core'
+import { Grid, Stepper, Step, StepLabel } from '@material-ui/core'
 import { getAvailableTimeOfATeacher } from '../../../actions/teachingScheduleForTeacher'
 import { getLessonsOfTeacherById } from '../../../actions/typeOfLesson'
 import { Link } from 'react-router-dom'
@@ -17,14 +11,7 @@ import ChooseDuration from './ChooseDuration'
 import { bookTime } from '../../../actions/learningScheduleForStudent'
 import ChooseTime from './ChooseTime'
 import { connect } from 'react-redux'
-import { makeStyles, useTheme } from '@material-ui/styles'
 import ChoosePaymentMethod from './ChoosePaymentMethod'
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginTop: '3em',
-  },
-}))
 
 const BookLearningTime = ({
   teachingScheduleForTeacher: { availableTime, loading, currentTeacher },
@@ -37,9 +24,6 @@ const BookLearningTime = ({
 }) => {
   const [page, setPage] = useState(0)
   const [activeStep, setActiveStep] = useState(0)
-
-  const theme = useTheme()
-  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const teacherCalendarId = match.params.teacherCalendarId
 

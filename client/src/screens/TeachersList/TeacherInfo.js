@@ -15,7 +15,6 @@ import getMinPeriodPrice from '../../utils/getMinPeriodPrice'
 import './ReactPlayer.css'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import SearchIcon from '@material-ui/icons/Search'
-import { getLessons } from '../../actions/typeOfLesson'
 
 const useStyles = makeStyles((theme) => ({
   marginBottom: {

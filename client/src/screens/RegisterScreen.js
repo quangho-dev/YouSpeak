@@ -169,34 +169,6 @@ const RegisterScreen = () => {
                       </Button>
                     </Grid>
                   </Grid>
-
-                  <Grid
-                    container
-                    alignItems="center"
-                    justify="center"
-                    style={{ margin: '0.7em 0' }}
-                  >
-                    <Grid item>
-                      <Typography variant="body1">
-                        Bạn đã đăng ký tài khoản nhưng chưa kích hoạt tài khoản?
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        component={Link}
-                        to="/users/request-resend-confirmation-token"
-                        variant="text"
-                        style={{
-                          fontSize: '1rem',
-                          textTransform: 'none',
-                          fontWeight: '600',
-                        }}
-                        disableRipple
-                      >
-                        Yêu cầu gửi lại link kích hoạt tài khoản.
-                      </Button>
-                    </Grid>
-                  </Grid>
                 </Form>
               )
             }}

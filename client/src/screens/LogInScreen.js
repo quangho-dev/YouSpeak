@@ -128,7 +128,7 @@ const LogInScreen = () => {
                     <Grid item>
                       <Button
                         component={Link}
-                        to="/register"
+                        to="/register-user"
                         variant="text"
                         style={{
                           fontSize: '1rem',

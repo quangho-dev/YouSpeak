@@ -213,7 +213,7 @@ const TeacherRegisterForm = (props) => {
             <Grid item>
               <Button
                 component={Link}
-                to="/login"
+                to="/teachers/login"
                 variant="text"
                 style={{
                   fontSize: '1rem',
@@ -223,35 +223,6 @@ const TeacherRegisterForm = (props) => {
                 disableRipple
               >
                 Sign in
-              </Button>
-            </Grid>
-          </Grid>
-
-          <Grid
-            container
-            alignItems="center"
-            justify="center"
-            style={{ margin: '0.7em 0' }}
-            className={classes.rowContainer}
-          >
-            <Grid item>
-              <Typography variant="body1">
-                Already signed up but not confirm account yet?
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                component={Link}
-                to="/teachers/request-resend-confirmation-token"
-                variant="text"
-                style={{
-                  fontSize: '1rem',
-                  textTransform: 'none',
-                  fontWeight: '600',
-                }}
-                disableRipple
-              >
-                Request confirm account link.
               </Button>
             </Grid>
           </Grid>

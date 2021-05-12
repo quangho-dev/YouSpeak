@@ -65,28 +65,27 @@ export const getLessonById = (lessonId) => async (dispatch) => {
   }
 }
 
-export const createOrUpdateALesson = (lessonId, formData) => async (
-  dispatch
-) => {
-  try {
-    const res = await api.post(
-      `/teachers/lessons/create-or-update-a-lesson/${lessonId}`,
-      formData
-    )
+export const createOrUpdateALesson =
+  (lessonId, formData) => async (dispatch) => {
+    try {
+      const res = await api.post(
+        `/teachers/lessons/create-or-update-a-lesson/${lessonId}`,
+        formData
+      )
 
-    dispatch({
-      type: UPDATE_LESSON,
-      payload: res.data,
-    })
+      dispatch({
+        type: UPDATE_LESSON,
+        payload: res.data,
+      })
 
-    toast.success('Cập nhật thông tin bài học thành công!')
-  } catch (err) {
-    dispatch({
-      type: LESSON_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    })
+      toast.success('Cập nhật thông tin bài học thành công!')
+    } catch (err) {
+      dispatch({
+        type: LESSON_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      })
+    }
   }
-}
 
 export const deleteLesson = (lessonId) => async (dispatch) => {
   try {
@@ -96,6 +95,8 @@ export const deleteLesson = (lessonId) => async (dispatch) => {
       type: REMOVE_LESSON,
       payload: lessonId,
     })
+
+    toast.info('Type of lesson has been deleted.')
   } catch (err) {
     dispatch({
       type: LESSON_ERROR,

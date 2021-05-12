@@ -19,7 +19,7 @@ const sendContactUsEmail = (req, res) => {
     secure: false, // true for 465, false for other ports
     auth: {
       user: 'quang.ho1804@gmail.com',
-      pass: 'un1c0rn1234',
+      pass: 'Un1c0rn!1234',
     },
     tls: {
       rejectUnauthorized: false,

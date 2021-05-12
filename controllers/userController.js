@@ -32,44 +32,13 @@ const registerUser = async (req, role, res) => {
       email,
       role,
       password,
+      isVerified: true,
     })
 
     await user.save(function (err) {
       if (err) {
         return res.status(500).send({ msg: err.message })
       }
-
-      const token = new Token({
-        _userId: user._id,
-        token: crypto.randomBytes(16).toString('hex'),
-      })
-
-      token.save(function (err) {
-        if (err) {
-          return res.status(500).send({ errors: [{ msg: err.message }] })
-        }
-
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'quang.ho1804@gmail.com',
-            pass: 'un1c0rn1234',
-          },
-        })
-
-        const mailOptions = {
-          from: 'no-reply@youspeak.com',
-          to: user.email,
-          subject: 'Xác nhận tài khoản',
-          html: `<p>Xin chào,</p><p>Bạn vui lòng click vào <a href='http://localhost:5000/api/users/confirmation/${token.token}'>đường dẫn này</a> để kích hoạt tài khoản.</p>`,
-        }
-
-        transporter.sendMail(mailOptions, function (err) {
-          if (err) {
-            return res.status(500).send({ errors: [{ msg: err.message }] })
-          }
-        })
-      })
     })
 
     const payload = {
@@ -86,8 +55,7 @@ const registerUser = async (req, role, res) => {
         if (err) throw err
         res.status(200).json({
           token,
-          msg:
-            'Một email kích hoạt tài khoản đã được gửi vào ' + user.email + '.',
+          msg: 'Bạn đã đăng ký tài khoản thành công!',
         })
       }
     )

@@ -26,40 +26,48 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
-    <div className="container">
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item>
-          <Typography variant="h4" gutterBottom>
-            Quên mật khẩu
-          </Typography>
-        </Grid>
-        <Grid item>
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <TextField
-              id="email"
-              label="Nhập email dùng để đặt lại mật khẩu"
-              type="text"
-              fullWidth
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value)
-              }}
-              className={classes.formControl}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              style={{ color: 'white' }}
-              disableRipple
-            >
-              Gửi email
-            </Button>
-          </form>
-        </Grid>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className="container"
+    >
+      <Grid item>
+        <Typography
+          style={{ textTransform: 'uppercase', fontWeight: '600' }}
+          variant="h4"
+          gutterBottom
+        >
+          Quên mật khẩu
+        </Typography>
       </Grid>
-    </div>
+      <Grid item>
+        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <TextField
+            id="email"
+            label="Nhập email dùng để đặt lại mật khẩu"
+            type="text"
+            fullWidth
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
+            className={classes.formControl}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ color: 'white' }}
+            disableRipple
+          >
+            Gửi email
+          </Button>
+        </form>
+      </Grid>
+    </Grid>
   )
 }
 
