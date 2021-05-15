@@ -99,6 +99,9 @@ const ProfileTeacher = ({
     typeOfTeacher: '',
     video: '',
     lesson: '',
+    nameOnCard: '',
+    bankName: '',
+    cardNumber: '',
   }
 
   // cac step trong stepper
@@ -173,6 +176,9 @@ const ProfileTeacher = ({
         typeOfTeacher: profileTeacher.typeOfTeacher,
         video: profileTeacher.video,
         lesson: profileTeacher.lesson,
+        bankName: profileTeacher.bankName,
+        cardNumber: profileTeacher.cardNumber,
+        nameOnCard: profileTeacher.nameOnCard,
       })
     }
   }, [getCurrentProfileTeacher, loading, profileTeacher])
@@ -199,6 +205,9 @@ const ProfileTeacher = ({
               expImages,
               introduction,
               phoneNumber,
+              nameOnCard,
+              cardNumber,
+              bankName,
             } = values
             setTimeout(() => {
               createOrUpdateProfileTeacher(
@@ -214,6 +223,9 @@ const ProfileTeacher = ({
                   thumbnail,
                   introduction,
                   phoneNumber,
+                  nameOnCard,
+                  cardNumber,
+                  bankName,
                 },
                 history,
                 profileTeacher ? true : false

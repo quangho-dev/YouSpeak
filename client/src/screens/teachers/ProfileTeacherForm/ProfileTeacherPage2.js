@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, Card, CardContent } from '@material-ui/core'
 import { Field, useFormikContext } from 'formik'
 import { makeStyles } from '@material-ui/styles'
 import { TextField } from 'formik-material-ui'
@@ -117,6 +117,59 @@ const ProfileTeacherPage2 = () => {
           rows={5}
           style={{ minWidth: '100%' }}
         />
+      </Grid>
+
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <Typography variant="body1">Your card information:</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body2">
+                  We use this information to pay you the money for your finished
+                  lessons. We will deliver the money after 48 hours you finish a
+                  lesson.{' '}
+                </Typography>
+              </Grid>
+              <Grid item className={classes.formControl}>
+                <Field
+                  name="cardNumber"
+                  type="text"
+                  component={TextField}
+                  label="Card number"
+                  style={{ minWidth: '100%' }}
+                />
+              </Grid>
+
+              <Grid item className={classes.formControl}>
+                <Field
+                  name="nameOnCard"
+                  type="text"
+                  component={TextField}
+                  label="Name on card"
+                  style={{ minWidth: '100%' }}
+                />
+              </Grid>
+
+              <Grid item className={classes.formControl}>
+                <Field
+                  name="bankName"
+                  type="text"
+                  component={TextField}
+                  label="Bank's name"
+                  style={{ minWidth: '100%' }}
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
       </Grid>
 
       <Grid item className={classes.formControl}>

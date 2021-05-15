@@ -45,6 +45,9 @@ const createOrUpdateProfileTeacher = async (req, res) => {
       thumbnail,
       videoDuration,
       phoneNumber,
+      nameOnCard,
+      bankName,
+      cardNumber,
     } = req.body
 
     const profileTeacherFields = {
@@ -62,6 +65,9 @@ const createOrUpdateProfileTeacher = async (req, res) => {
       videoDuration,
       phoneNumber,
       lessons: objectIdLessonsArray,
+      nameOnCard,
+      bankName,
+      cardNumber,
     }
 
     // Using upsert option (creates new doc if no match is found):

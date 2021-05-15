@@ -56,6 +56,15 @@ const ProfileTeacherSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    nameOnCard: {
+      type: String,
+    },
+    bankName: {
+      type: String,
+    },
+    cardNumber: {
+      type: String,
+    },
   },
   { timestamps: true }
 )

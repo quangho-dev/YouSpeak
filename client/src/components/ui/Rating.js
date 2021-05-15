@@ -5,7 +5,15 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 const Rating = ({ englishLevel, color, rating }) => {
   return (
     <span>
-      {englishLevel === 1 || rating === 1 ? (
+      {englishLevel === 0 || rating === 0 ? (
+        <>
+          <StarBorderIcon color={color} />
+          <StarBorderIcon color={color} />
+          <StarBorderIcon color={color} />
+          <StarBorderIcon color={color} />
+          <StarBorderIcon color={color} />
+        </>
+      ) : englishLevel === 1 || rating === 1 ? (
         <>
           <StarIcon color={color} />
           <StarBorderIcon color={color} />

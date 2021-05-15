@@ -123,7 +123,13 @@ const ProfileTeacherPage1 = ({ setFieldValue, nextPage }) => {
           </CardActions>
         </Grid>
 
-        <Grid md={5} item component={Card} className={classes.card}>
+        <Grid
+          md={5}
+          item
+          component={Card}
+          className={classes.card}
+          style={{ marginBottom: '2em' }}
+        >
           <CardContent>
             <div style={{ textAlign: 'center' }}>
               <Typography

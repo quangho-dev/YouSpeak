@@ -6,6 +6,8 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Chip from '@material-ui/core/Chip'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { Card, CardContent } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom'
 import { getCurrentProfileTeacher } from '../../../actions/profileTeacher'
 import ReactPlayer from 'react-player'
@@ -105,6 +107,13 @@ const DashboardTeacher = ({
               Hello {user && user.name && user.name}
             </Typography>
           </Grid>
+
+          {profileTeacher === null && (
+            <Alert severity="warning">
+              You haven't created your profile, please create your profile by
+              clicking the edit button.
+            </Alert>
+          )}
 
           <Grid
             item
@@ -248,6 +257,53 @@ const DashboardTeacher = ({
               </Typography>
             </Grid>
           )}
+
+          {profileTeacher &&
+            profileTeacher.cardNumber &&
+            profileTeacher.nameOnCard &&
+            profileTeacher.bankName && (
+              <Grid item style={{ maxWidth: '25em' }}>
+                <Card>
+                  <CardContent>
+                    <Grid container direction="column" justify="center">
+                      <Grid item>
+                        <Typography
+                          variant="body1"
+                          style={{ textAlign: 'center' }}
+                          className={classes.subHeader}
+                        >
+                          Banking card's information:
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1">
+                          <span className={classes.subHeader}>
+                            Card number:
+                          </span>
+                          &nbsp;{profileTeacher.cardNumber}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1">
+                          <span className={classes.subHeader}>
+                            Name on card:
+                          </span>
+                          &nbsp;{profileTeacher.nameOnCard}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1">
+                          <span className={classes.subHeader}>
+                            Bank's name:
+                          </span>
+                          &nbsp;{profileTeacher.bankName}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
 
           {profileTeacher &&
             profileTeacher.video !== null &&

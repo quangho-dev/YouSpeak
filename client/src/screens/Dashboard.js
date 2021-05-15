@@ -72,7 +72,7 @@ const Dashboard = ({
           </Grid>
 
           <Grid item>
-            {error && error.msg === 'There is no profile for this user' && (
+            {profileUser === null && (
               <Alert severity="warning">
                 Bạn chưa tạo profile cho tài khoản này, vui lòng thêm thông tin
                 vào profile của bạn.
@@ -112,15 +112,19 @@ const Dashboard = ({
             </Grid>
 
             <Grid item>
-              {profileUser && (
+              {
                 <Avatar
-                  src={profileUser.imageAvatar}
+                  src={
+                    profileUser &&
+                    profileUser.imageAvatar &&
+                    profileUser.imageAvatar
+                  }
                   style={{
                     width: '70px',
                     height: '70px',
                   }}
                 />
-              )}
+              }
             </Grid>
 
             {user && user.name && (
@@ -145,7 +149,7 @@ const Dashboard = ({
             </Grid>
           </Grid>
 
-          {profileUser && (
+          {profileUser && profileUser.address && (
             <Grid item>
               <Typography variant="body1">
                 <strong>Địa chỉ:</strong>&nbsp;{profileUser.address}
@@ -153,22 +157,22 @@ const Dashboard = ({
             </Grid>
           )}
 
-          {profileUser && (
+          {profileUser && profileUser.englishLevel !== 0 && (
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
                   <Typography variant="body1">
-                    <strong>Trình độ tiếng Anh:</strong>
+                    <strong>Trình độ tiếng Anh:</strong>&nbsp;
                   </Typography>
                 </Grid>
-                <Grid item style={{ marginLeft: '0.5em' }}>
+                <Grid item>
                   <Rating englishLevel={profileUser.englishLevel} />
                 </Grid>
               </Grid>
             </Grid>
           )}
 
-          {profileUser && (
+          {profileUser && profileUser.skypeId && (
             <Grid item>
               <Typography variant="body1">
                 <strong>Skype ID:</strong>&nbsp;{profileUser.skypeId}
@@ -176,7 +180,7 @@ const Dashboard = ({
             </Grid>
           )}
 
-          {profileUser && (
+          {profileUser && profileUser.phoneNumber && (
             <Grid item>
               <Typography variant="body1">
                 <strong>Số điện thoại:</strong>&nbsp;
@@ -187,7 +191,7 @@ const Dashboard = ({
             </Grid>
           )}
 
-          {profileUser && (
+          {profileUser && profileUser.introduction && (
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
@@ -204,14 +208,14 @@ const Dashboard = ({
             </Grid>
           )}
 
-          <Grid item>
-            {profileUser && profileUser.dateOfBirth && (
+          {profileUser && profileUser.dateOfBirth && (
+            <Grid item>
               <Typography variant="body1">
                 <strong>Ngày tháng năm sinh:</strong>&nbsp;
                 {moment(profileUser.dateOfBirth).format('DD/MM/YYYY')}
               </Typography>
-            )}
-          </Grid>
+            </Grid>
+          )}
 
           <Grid item>
             <Typography variant="body1">
