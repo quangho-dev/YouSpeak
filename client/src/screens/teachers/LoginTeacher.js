@@ -31,7 +31,7 @@ const LoginTeacher = () => {
 
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
-  const { isAuthenticated } = auth
+  const { isAuthenticated, user } = auth
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -45,7 +45,7 @@ const LoginTeacher = () => {
     dispatch(loginTeacher(email, password))
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && user.role === 'teacher') {
     return <Redirect to="/teachers/dashboard" />
   }
 
