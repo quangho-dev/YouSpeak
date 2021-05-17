@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom'
 import * as Yup from 'yup'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDispatch, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import { loginTeacher } from '../../actions/authTeacher'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import Avatar from '@material-ui/core/Avatar'
@@ -22,16 +22,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const LoginTeacher = () => {
+const LoginTeacher = ({ loginTeacher, auth: { isAuthenticated, user } }) => {
   const classes = useStyles()
   const initialValues = {
     email: '',
     password: '',
   }
-
-  const dispatch = useDispatch()
-  const auth = useSelector((state) => state.auth)
-  const { isAuthenticated, user } = auth
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -42,10 +38,10 @@ const LoginTeacher = () => {
 
   const onSubmit = async (values) => {
     const { email, password } = values
-    dispatch(loginTeacher(email, password))
+    loginTeacher(email, password)
   }
 
-  if (isAuthenticated && user.role === 'teacher') {
+  if (isAuthenticated && user && user.role === 'teacher') {
     return <Redirect to="/teachers/dashboard" />
   }
 
@@ -138,4 +134,8 @@ const LoginTeacher = () => {
   )
 }
 
-export default LoginTeacher
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { loginTeacher })(LoginTeacher)

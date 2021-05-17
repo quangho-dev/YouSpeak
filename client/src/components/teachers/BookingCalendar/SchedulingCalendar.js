@@ -120,7 +120,7 @@ const SchedulingCalendar = () => {
       </Grid>
       <Grid item style={{ backgroundColor: 'white', padding: '1em' }}>
         <FullCalendar
-          initialView={matchesMD ? 'timeGridWeek' : 'timeGridDay'}
+          initialView="timeGridWeek"
           headerToolbar={{
             left: 'prev,next today',
             center: 'title',
