@@ -12,13 +12,14 @@ const setAvailableTime = async (req, res) => {
   }
 
   try {
-    const teachingScheduleForTeacher = await TeachingScheduleForTeacher.findOneAndUpdate(
-      {
-        user: req.user.id,
-      },
-      { $set: availableTimeFields },
-      { new: true, upsert: true }
-    )
+    const teachingScheduleForTeacher =
+      await TeachingScheduleForTeacher.findOneAndUpdate(
+        {
+          user: req.user.id,
+        },
+        { $set: availableTimeFields },
+        { new: true, upsert: true }
+      )
 
     if (!teachingScheduleForTeacher) {
       return res
@@ -38,7 +39,7 @@ const setAvailableTime = async (req, res) => {
 // @access   Private
 const getAvailableTime = async (req, res) => {
   try {
-    const availableTime = await TeachingScheduleTeacher.findOne({
+    const availableTime = await TeachingScheduleForTeacher.findOne({
       user: req.user.id,
     }).populate('user', ['name'])
 
