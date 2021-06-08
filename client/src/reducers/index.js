@@ -7,6 +7,7 @@ import teachersList from './teachersList'
 import typeOfLesson from './typeOfLesson'
 import teachingScheduleForTeacher from './teachingScheduleForTeacher'
 import learningScheduleForStudent from './learningScheduleForStudent'
+import review from './review'
 
 export default combineReducers({
   auth,
@@ -17,4 +18,5 @@ export default combineReducers({
   typeOfLesson,
   teachingScheduleForTeacher,
   learningScheduleForStudent,
+  review,
 })

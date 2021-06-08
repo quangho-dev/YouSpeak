@@ -20,6 +20,7 @@ import formatMoney from '../../../utils/formatMoney'
 import { Link } from 'react-router-dom'
 import './ReactPlayer.css'
 import DateRangeIcon from '@material-ui/icons/DateRange'
+import Reviews from './Reviews'
 
 const useStyles = makeStyles((theme) => ({
   rowContainer: {
@@ -289,6 +290,10 @@ const TeacherInfo = ({
                 </Grid>
               </CardContent>
             </Card>
+          </Grid>
+
+          <Grid item>
+            <Reviews teacherId={match.params.teacherProfileId} />
           </Grid>
         </Grid>
       )}

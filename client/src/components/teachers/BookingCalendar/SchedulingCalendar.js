@@ -7,8 +7,7 @@ import momentPlugin from '@fullcalendar/moment'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
 import { Link } from 'react-router-dom'
-import { Grid, Typography, useMediaQuery } from '@material-ui/core'
-import { useTheme } from '@material-ui/styles'
+import { Grid, Typography } from '@material-ui/core'
 import MyButton from '../../ui/MyButton'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -28,9 +27,6 @@ const SchedulingCalendar = () => {
     (state) => state.teachingScheduleForTeacher
   )
   const { loading, availableTime } = teachingScheduleForTeacher
-
-  const theme = useTheme()
-  const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
   const id = uuidv4()
 

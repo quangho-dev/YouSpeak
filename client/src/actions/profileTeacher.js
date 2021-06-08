@@ -27,35 +27,33 @@ export const getCurrentProfileTeacher = () => async (dispatch) => {
 }
 
 // Create or update profile
-export const createOrUpdateProfileTeacher = (
-  formData,
-  history,
-  edit = false
-) => async (dispatch) => {
-  try {
-    const res = await api.post('/profileTeacher', formData)
+export const createOrUpdateProfileTeacher =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const res = await api.post('/profileTeacher', formData)
 
-    dispatch({
-      type: GET_PROFILE_TEACHER,
-      payload: res.data,
-    })
+      dispatch({
+        type: GET_PROFILE_TEACHER,
+        payload: res.data,
+      })
 
-    toast.success(
-      edit
-        ? 'Your profile has been updated successfully!'
-        : 'Your profile has been created!'
-    )
+      toast.success(
+        edit
+          ? 'Your profile has been updated successfully!'
+          : 'Your profile has been created!'
+      )
 
-    if (!edit) {
-      history.push('/teachers/dashboard')
+      if (!edit) {
+        history.push('/teachers/dashboard')
+      }
+    } catch (err) {
+      dispatch({
+        type: PROFILE_TEACHER_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      })
     }
-  } catch (err) {
-    dispatch({
-      type: PROFILE_TEACHER_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    })
   }
-}
 
 // Delete account & profile
 export const deleteAccount = () => async (dispatch) => {

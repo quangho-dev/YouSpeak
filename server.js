@@ -23,6 +23,7 @@ const sendContactUsEmail = require('./routes/api/contactUsRoute')
 const cors = require('cors')
 const config = require('config')
 const connectDB = require('./config/db')
+const momoPaymentRoutes = require('./routes/api/momoPaymentRoutes')
 
 const app = express()
 
@@ -64,6 +65,8 @@ app.use('/api/profileStudent', profileStudentRoutes)
 app.use('/api/profileTeacher', profileTeacherRoutes)
 
 app.use('/api/learning-schedule-for-student', learningScheduleForStudentRoutes)
+
+app.use('/api/reviews', require('./routes/api/reviews'))
 
 // Set up paypal payment
 const CLIENT_PAYPAL = config.get('CLIENT_PAYPAL')
@@ -149,6 +152,9 @@ app.post('/execute-payment/', async (req, res) => {
     }
   )
 })
+
+// Momo payment setup
+app.use('/api/momo-payment', momoPaymentRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
