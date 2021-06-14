@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {
   getReviewsByTeacherId,
   updateReviewById,
+  deleteReview,
 } from '../../../actions/review'
 import {
   Card,
@@ -21,7 +22,9 @@ const Reviews = ({
   teacherId,
   getReviewsByTeacherId,
   updateReviewById,
+  auth: { user },
   review: { reviews, loading, error },
+  deleteReview,
 }) => {
   const [openAddReviewDialog, setOpenAddReviewDialog] = useState(false)
 
@@ -85,6 +88,8 @@ const Reviews = ({
                   <ReviewItem
                     review={review}
                     updateReviewById={updateReviewById}
+                    deleteReview={deleteReview}
+                    user={user}
                   />
                 </Grid>
               ))
@@ -110,10 +115,12 @@ const Reviews = ({
 }
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   review: state.review,
 })
 
 export default connect(mapStateToProps, {
   getReviewsByTeacherId,
   updateReviewById,
+  deleteReview,
 })(Reviews)

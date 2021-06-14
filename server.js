@@ -24,6 +24,8 @@ const cors = require('cors')
 const config = require('config')
 const connectDB = require('./config/db')
 const momoPaymentRoutes = require('./routes/api/momoPaymentRoutes')
+const nganluongPaymentRoutes = require('./routes/api/nganluongPaymentRoutes')
+const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -33,6 +35,8 @@ connectDB()
 app.use(cors())
 
 app.use(express.json())
+
+app.use(express.urlencoded({ extended: true }))
 
 app.use(morgan('tiny'))
 
@@ -152,6 +156,8 @@ app.post('/execute-payment/', async (req, res) => {
     }
   )
 })
+
+app.use('/api/nganluong-payment', nganluongPaymentRoutes)
 
 // Momo payment setup
 app.use('/api/momo-payment', momoPaymentRoutes)

@@ -1,6 +1,12 @@
 import api from '../utils/api'
 import { toast } from 'react-toastify'
-import { GET_REVIEWS, REVIEW_ERROR, ADD_REVIEW, UPDATE_REVIEW } from './types'
+import {
+  GET_REVIEWS,
+  REVIEW_ERROR,
+  ADD_REVIEW,
+  UPDATE_REVIEW,
+  DELETE_REVIEW,
+} from './types'
 
 // Get all reviews of a teacher
 export const getReviewsByTeacherId = (teacherId) => async (dispatch) => {
@@ -49,6 +55,25 @@ export const updateReviewById = (reviewId, formData) => async (dispatch) => {
     })
 
     toast.success('Bạn đã sửa nhận xét về giáo viên')
+  } catch (err) {
+    dispatch({
+      type: REVIEW_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
+
+// Delete a review
+export const deleteReview = (id) => async (dispatch) => {
+  try {
+    await api.delete(`/reviews/${id}`)
+
+    dispatch({
+      type: DELETE_REVIEW,
+      payload: id,
+    })
+
+    toast.info('Bạn đã xóa nhận xét')
   } catch (err) {
     dispatch({
       type: REVIEW_ERROR,

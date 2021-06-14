@@ -8,7 +8,8 @@
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "ngrok": "ngrok http 5000"
   },
   "author": "Quang Ho",
   "license": "MIT",
@@ -19,6 +20,8 @@
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "build-url": "^6.0.1",
     "colors": "^1.4.0",
     "config": "^3.3.6",
     "consola": "^2.15.0",
@@ -34,6 +37,7 @@
     "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "ngrok": "^4.0.1",
     "nodemailer": "^6.4.17",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

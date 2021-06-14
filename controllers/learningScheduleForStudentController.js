@@ -1,7 +1,8 @@
 const LearningScheduleForStudent = require('../models/LearningScheduleForStudent')
 const TeachingScheduleForTeacher = require('../models/TeachingScheduleForTeacher')
-const nodemailer = require('nodemailer')
+const TeacherTaughtLesson = require('../models/TeacherTaughtLesson')
 const User = require('../models/userModel')
+const sendEmail = require('../utils/sendEmail')
 
 // @route    POST api/booking-calendar-student
 // @desc     Book a time for learning
@@ -24,33 +25,12 @@ const bookTime = async (req, res) => {
     // send a notification email to the teacher
     const teacherInfo = await User.findById(bookedTimeData.teacher)
 
-    const output = `<p>You have received a new order for a lesson</p>
-    <p>Please click <a href='http://localhost:3000/teachers/bookedLesson/${bookedTimeData._id}'>this link</a> to confirm that you can deliver the lesson on time.</p>`
-
-    const smtpTransport = nodemailer.createTransport({
-      service: 'gmail',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: 'quang.ho1804@gmail.com',
-        pass: 'Un1c0rn!1234',
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    })
-
-    const mailOptions = {
+    sendEmail({
+      htmlOutput: `<p>You have received a new order for a lesson</p>
+  <p>Please click <a href='http://localhost:3000/teachers/bookedLesson/${bookedTimeData._id}'>this link</a> to confirm that you can deliver the lesson on time.</p>`,
       to: teacherInfo.email,
       from: 'YouSpeak <quang.ho1804@gmail.com>',
-      subject: "You've got a new order",
-      html: output,
-    }
-
-    smtpTransport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error)
-      }
+      subject: "You've had a new booked lesson",
     })
 
     const teacherAvailableTime = await TeachingScheduleForTeacher.findOne({
@@ -59,10 +39,14 @@ const bookTime = async (req, res) => {
 
     const availableTime = teacherAvailableTime.availableTime
 
-    if (duration === 1800000) {
+    const THIRTY_MINUTES_IN_MILLISECONDS = 1800000
+    const FORTY_FIVE_MINUTES_IN_MILLISECONDS = 2700000
+    const ONE_HOUR_IN_MILLISECONDS = 3600000
+
+    if (duration === THIRTY_MINUTES_IN_MILLISECONDS) {
       const filteredAvailTimeArray = availableTime.filter(
-        (item) =>
-          new Date(item.start).getTime() !==
+        (element) =>
+          new Date(element.start).getTime() !==
           new Date(bookedTime.start).getTime()
       )
 
@@ -71,10 +55,13 @@ const bookTime = async (req, res) => {
       await teacherAvailableTime.save()
 
       res.json(bookedTimeData)
-    } else if (duration === 2700000 || duration === 3600000) {
+    } else if (
+      duration === FORTY_FIVE_MINUTES_IN_MILLISECONDS ||
+      duration === ONE_HOUR_IN_MILLISECONDS
+    ) {
       const filteredAvailTimeArray = availableTime.filter(
-        (item) =>
-          new Date(item.start).getTime() !==
+        (element) =>
+          new Date(element.start).getTime() !==
           new Date(bookedTime[0].start).getTime()
       )
 
@@ -88,10 +75,38 @@ const bookTime = async (req, res) => {
 
       await teacherAvailableTime.save()
 
+      addBookedLessonToTeacherTaughtLessonModel({
+        teacher,
+        studentId: req.user.id,
+        duration,
+        typeOfLesson: lesson,
+      })
+
       res.json(bookedTimeData)
     }
   } catch (err) {
     console.error(err.message)
+    res.status(500).send('Server error')
+  }
+}
+
+const addBookedLessonToTeacherTaughtLessonModel = async ({
+  teacher,
+  studentId,
+  duration,
+  typeOfLesson,
+}) => {
+  try {
+    const newTeacherTaughtLesson = new TeacherTaughtLesson({
+      teacher,
+      student: studentId,
+      duration,
+      typeOfLesson,
+    })
+
+    await newTeacherTaughtLesson.save()
+  } catch (err) {
+    console.error(err)
     res.status(500).send('Server error')
   }
 }
@@ -137,11 +152,6 @@ const cancelBookedLesson = async (req, res) => {
     teacherAvailableTime.availableTime = newAvailableTimeArray
 
     const returnTeacherAvailableTime = await teacherAvailableTime.save()
-
-    // Check user
-    // if (bookedTime.user.toString() !== req.user.id) {
-    //   return res.status(401).json({ msg: 'User not authorized' })
-    // }
 
     await bookedTime.remove()
 

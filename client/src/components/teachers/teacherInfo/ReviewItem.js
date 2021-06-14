@@ -1,25 +1,16 @@
 import React, { useState } from 'react'
 import Rating from '../../ui/Rating'
-import {
-  Grid,
-  Typography,
-  Avatar,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  MenuItem,
-  FormGroup,
-} from '@material-ui/core'
+import { Grid, Typography, Avatar, IconButton } from '@material-ui/core'
 import format from 'date-fns/format'
 import CloseIcon from '@material-ui/icons/Close'
 import EditIcon from '@material-ui/icons/Edit'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import MyButton from '../../ui/MyButton'
+import { useConfirm } from 'material-ui-confirm'
+import EditReview from './EditReview'
 
-const ReviewItem = ({ review, updateReviewById }) => {
+const ReviewItem = ({ review, updateReviewById, deleteReview, user }) => {
   const [openDialog, setOpenDialog] = useState(false)
+
+  const confirm = useConfirm()
 
   const handleCloseDialog = () => {
     setOpenDialog(false)
@@ -29,16 +20,15 @@ const ReviewItem = ({ review, updateReviewById }) => {
     setOpenDialog(true)
   }
 
-  const handleDelete = () => {}
-
-  const initialValues = {
-    content: review.content,
-    rating: review.rating,
-  }
-
-  const handleSubmit = async (values) => {
-    updateReviewById(review._id, values)
-    setOpenDialog(false)
+  const handleDelete = () => {
+    confirm({
+      description: 'Nhấn đồng ý sẽ xóa nhận xét',
+      title: 'Bạn có chắc không?',
+    })
+      .then(() => {
+        deleteReview(review._id)
+      })
+      .catch(() => {})
   }
 
   return (
@@ -58,98 +48,32 @@ const ReviewItem = ({ review, updateReviewById }) => {
           <span>{''}</span>
         )}
 
-        <Grid item style={{ alignSelf: 'flex-end' }}>
-          <Grid container>
-            <Grid item>
-              <IconButton onClick={handleOpenDialog}>
-                <EditIcon fontSize="small" />
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <IconButton onClick={handleDelete}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
+        {user._id === review.student ? (
+          <Grid item style={{ alignSelf: 'flex-end' }}>
+            <Grid container>
+              <Grid item>
+                <IconButton onClick={handleOpenDialog}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton onClick={handleDelete}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <span>{''}</span>
+        )}
 
-        <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle style={{ textAlign: 'center' }}>
-            Sửa nhận xét
-          </DialogTitle>
-          <DialogContent>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={handleSubmit}
-              style={{ minWidth: '100%' }}
-            >
-              {({ values, errors }) => (
-                <Form>
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <Grid item style={{ minWidth: '90%' }}>
-                      <FormGroup>
-                        <Field
-                          autoComplete="off"
-                          name="rating"
-                          label="Đánh giá giáo viên"
-                          as={TextField}
-                          select
-                        >
-                          <MenuItem value="0">Chọn đánh giá</MenuItem>
-                          <MenuItem value="1">{'1 / 5'}</MenuItem>
-                          <MenuItem value="2">{'2 / 5'}</MenuItem>
-                          <MenuItem value="3">{'3 / 5'}</MenuItem>
-                          <MenuItem value="4">{'4 / 5'}</MenuItem>
-                          <MenuItem value="5">{'5 / 5'}</MenuItem>
-                        </Field>
-                      </FormGroup>
-                    </Grid>
-
-                    <Grid item style={{ minWidth: '90%' }}>
-                      <FormGroup>
-                        <Field
-                          autoComplete="off"
-                          name="content"
-                          as={TextField}
-                          label="Nội dung"
-                          multiline
-                          rows={5}
-                        />
-                        <ErrorMessage name="content" />
-                      </FormGroup>
-                    </Grid>
-
-                    <Grid
-                      item
-                      container
-                      justify="center"
-                      align="center"
-                      spacing={1}
-                    >
-                      <Grid item>
-                        <MyButton onClick={handleCloseDialog}>Đóng</MyButton>
-                      </Grid>
-
-                      <Grid item>
-                        <MyButton type="submit">Cập nhật</MyButton>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      {JSON.stringify(values, null, 2)}
-                      {JSON.stringify(errors, null, 2)}
-                    </Grid>
-                  </Grid>
-                </Form>
-              )}
-            </Formik>
-          </DialogContent>
-        </Dialog>
+        <EditReview
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          handleCloseDialog={handleCloseDialog}
+          review={review}
+          updateReviewById={updateReviewById}
+        />
       </Grid>
 
       <Grid item>
@@ -170,12 +94,12 @@ const ReviewItem = ({ review, updateReviewById }) => {
           <Grid container>
             <Grid item style={{ marginRight: '0.5em' }}>
               {review.isUpdated && (
-                <Typography variant="body2">Cập nhật lần cuối lúc</Typography>
+                <Typography variant="body2">Đã sửa lại lần cuối lúc</Typography>
               )}
             </Grid>
 
             <Grid item>
-              {format(new Date(review.date), 'hh:mm, dd-MM-yyyy')}
+              {format(new Date(review.date), 'hh:mm aa, dd-MM-yyyy')}
             </Grid>
           </Grid>
         </Grid>

@@ -3,6 +3,7 @@ import {
   ADD_REVIEW,
   REVIEW_ERROR,
   UPDATE_REVIEW,
+  DELETE_REVIEW,
 } from '../actions/types'
 
 const initialState = {
@@ -33,6 +34,12 @@ function reviewReducer(state = initialState, action) {
       return {
         ...state,
         reviews: payload,
+        loading: false,
+      }
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review._id !== payload),
         loading: false,
       }
     case REVIEW_ERROR:

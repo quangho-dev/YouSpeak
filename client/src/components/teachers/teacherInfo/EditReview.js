@@ -1,43 +1,36 @@
 import React from 'react'
 import {
-  FormGroup,
-  TextField,
-  MenuItem,
-  Grid,
   Dialog,
   DialogTitle,
   DialogContent,
+  Grid,
+  TextField,
+  MenuItem,
+  FormGroup,
 } from '@material-ui/core'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import MyButton from '../../ui/MyButton'
-import { connect } from 'react-redux'
-import { addReview } from '../../../actions/review'
-const AddReview = ({
-  openAddReviewDialog,
-  handleClose,
-  addReview,
-  teacherId,
+
+const EditReview = ({
+  openDialog,
+  handleCloseDialog,
+  review,
+  updateReviewById,
+  setOpenDialog,
 }) => {
   const initialValues = {
-    rating: '0',
-    content: '',
+    content: review.content,
+    rating: review.rating,
   }
 
-  const handleSubmit = async (values) => {
-    const { rating, content } = values
-
-    await addReview({ rating, content, teacher: teacherId })
-    await handleClose()
+  const handleSubmit = (values) => {
+    updateReviewById(review._id, values)
+    setOpenDialog(false)
   }
 
   return (
-    <Dialog
-      open={openAddReviewDialog}
-      onClose={handleClose}
-      style={{ minWidth: '100%' }}
-    >
-      <DialogTitle style={{ textAlign: 'center' }}>Thêm nhận xét</DialogTitle>
-
+    <Dialog open={openDialog} onClose={handleCloseDialog}>
+      <DialogTitle style={{ textAlign: 'center' }}>Sửa nhận xét</DialogTitle>
       <DialogContent>
         <Formik
           initialValues={initialValues}
@@ -94,11 +87,11 @@ const AddReview = ({
                   spacing={1}
                 >
                   <Grid item>
-                    <MyButton onClick={handleClose}>Đóng</MyButton>
+                    <MyButton onClick={handleCloseDialog}>Đóng</MyButton>
                   </Grid>
 
                   <Grid item>
-                    <MyButton type="submit">Gửi</MyButton>
+                    <MyButton type="submit">Cập nhật</MyButton>
                   </Grid>
                 </Grid>
               </Grid>
@@ -110,4 +103,4 @@ const AddReview = ({
   )
 }
 
-export default connect(null, { addReview })(AddReview)
+export default EditReview
