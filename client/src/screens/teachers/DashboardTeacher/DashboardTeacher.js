@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 import Spinner from '../../../components/ui/Spinner'
 import PropTypes from 'prop-types'
 import './ReactPlayer.css'
+import Reviews from '../../../components/teachers/Reviews/Reviews'
 
 const useStyles = makeStyles((theme) => ({
   rowContainer: {
@@ -381,6 +382,10 @@ const DashboardTeacher = ({
                 </Grid>
               </Grid>
             )}
+
+          <Grid item>
+            <Reviews />
+          </Grid>
         </Grid>
       )}
     </>

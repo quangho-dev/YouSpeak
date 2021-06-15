@@ -22,58 +22,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    // const canStudentCreateReview = async () => {
-    //   try {
-    //     const teacherTaughtLesson = await TeacherTaughtLesson.findOne({
-    //       teacher,
-    //       student: req.user.id,
-    //     })
-
-    //     const isTaughtLessonValid = () => {
-    //       const getExpiredDay = () => {
-    //         let expiredDay = new Date(teacherTaughtLesson.createdAt)
-
-    //         expiredDay.setDate(expiredDay.getDate() + 7)
-
-    //         return expiredDay
-    //       }
-
-    //       return (
-    //         new Date(teacherTaughtLesson.createdAt).getTime() <=
-    //         getExpiredDay().getTime()
-    //       )
-    //     }
-
-    // const didStudentCreateReview = async () => {
-    //   const reviews = await Review.find({
-    //     teacher,
-    //     student: req.user.id,
-    //   })
-
-    //   const reviewInPast15Days = reviews.find(
-    //     (review) =>
-    //       new Date(review.createdAt).getTime() <= getExpiredDay().getTime()
-    //   )
-
-    //   if (reviewInPast15Days) {
-    //     return true
-    //   }
-
-    //   return false
-    // }
-
-    // if (isTaughtLessonValid()) {
-    //   return true
-    // }
-
-    // return false
-    //   } catch (err) {
-    //     console.error(err.message)
-    //     res.status(500).send('Server error')
-    //   }
-    // }
-
-    // if (canStudentCreateReview()) {
     try {
       const user = await User.findById(req.user.id).select('-password')
 
@@ -98,9 +46,6 @@ router.post(
       res.status(500).send('Server Error')
     }
   }
-
-  //   res.status(400).send('Bad request')
-  // }
 )
 
 //  @route   POST api/reviews/:reviewId
