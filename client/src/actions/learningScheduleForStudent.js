@@ -57,6 +57,8 @@ export const cancelBookedLesson = (bookedLessonId) => async (dispatch) => {
 
 // Get all booked lessons
 export const getBookedLessons = () => async (dispatch) => {
+  console.log('action called')
+
   try {
     const res = await api.get('/learning-schedule-for-student/bookedLessons')
 
@@ -110,18 +112,16 @@ export const getBookedLessonsOfATeacher = (teacherId) => async (dispatch) => {
   }
 }
 
-export const getBookedLessonAndProfileTeacher = (bookedLessonId) => async (
-  dispatch
-) => {
-  dispatch(getBookedLessonById(bookedLessonId)).then((res) =>
-    dispatch(getProfileTeacherById(res.teacher))
-  )
-}
+export const getBookedLessonAndProfileTeacher =
+  (bookedLessonId) => async (dispatch) => {
+    dispatch(getBookedLessonById(bookedLessonId)).then((res) =>
+      dispatch(getProfileTeacherById(res.teacher))
+    )
+  }
 
-export const getBookedLessonAndProfileStudent = (bookedLessonId) => async (
-  dispatch
-) => {
-  dispatch(getBookedLessonById(bookedLessonId)).then((res) =>
-    dispatch(getProfileStudentById(res.user._id))
-  )
-}
+export const getBookedLessonAndProfileStudent =
+  (bookedLessonId) => async (dispatch) => {
+    dispatch(getBookedLessonById(bookedLessonId)).then((res) =>
+      dispatch(getProfileStudentById(res.user._id))
+    )
+  }

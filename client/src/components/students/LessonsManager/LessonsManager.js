@@ -95,8 +95,12 @@ const LessonsManager = ({
                       <TableCell component="th" scope="row">
                         {index + 1}
                       </TableCell>
-                      <TableCell>{lesson.lesson.lessonName}</TableCell>
-                      <TableCell>{lesson.teacher.name}</TableCell>
+                      <TableCell>
+                        {lesson && lesson.lesson && lesson.lesson.lessonName}
+                      </TableCell>
+                      <TableCell>
+                        {lesson && lesson.teacher && lesson.teacher.name}
+                      </TableCell>
                       <TableCell>
                         <MyButton
                           component={Link}

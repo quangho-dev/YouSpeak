@@ -166,7 +166,7 @@ const cancelBookedLesson = async (req, res) => {
   }
 }
 
-// @route    GET api/booking-calendar-student/bookedLessons
+// @route    GET api/learning-schedule-for-student/bookedLessons
 // @desc     Get all booked lessons
 // @access   Private
 const getBookedLessons = async (req, res) => {
