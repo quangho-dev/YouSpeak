@@ -3,14 +3,16 @@ const router = express.Router()
 const { v4: uuidv4 } = require('uuid')
 const md5 = require('md5')
 const buildUrl = require('build-url')
+const sendEmail = require('../../utils/sendEmail')
 
 router.post('/create-payment', async (req, res) => {
   const merchant_site_code = '50215'
   const return_url = 'http://localhost:3000/nganluong-payment/success'
   const cancel_url = ''
-  const notify_url = 'https://77aee87b4fd6.ngrok.io/api/nganluong-payment/ipn'
+  const notify_url = 'https://f8b802ddf5c2.ngrok.io/api/nganluong-payment/ipn'
   const receiver = 'quang.ho1804@gmail.com'
-  const transaction_info = ''
+  const transaction_info =
+    '60a291ad81cc2a007cdaeb77 60a28fcd81cc2a007cdaeb73 1800000'
   const order_code = uuidv4()
   const price = 50000
   const currency = 'vnd'
@@ -143,33 +145,12 @@ router.get('/ipn', async (req, res) => {
       // send a notification email to the teacher
       const teacherInfo = await User.findById(bookedTimeData.teacher)
 
-      const output = `<p>You have received a new order for a lesson</p>
-  <p>Please click <a href='http://localhost:3000/teachers/bookedLesson/${bookedTimeData._id}'>this link</a> to confirm that you can deliver the lesson on time.</p>`
-
-      const smtpTransport = nodemailer.createTransport({
-        service: 'gmail',
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: 'quang.ho1804@gmail.com',
-          pass: 'Un1c0rn!1234',
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      })
-
-      const mailOptions = {
+      sendEmail({
+        htmlOutput: `<p>You have received a new order for a lesson</p>
+  <p>Please click <a href='http://localhost:3000/teachers/bookedLesson/${bookedTimeData._id}'>this link</a> to confirm that you can deliver the lesson on time.</p>`,
         to: teacherInfo.email,
         from: 'YouSpeak <quang.ho1804@gmail.com>',
         subject: "You've got a new order",
-        html: output,
-      }
-
-      smtpTransport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error)
-        }
       })
 
       const teacherAvailableTime = await TeachingScheduleForTeacher.findOne({
@@ -188,8 +169,6 @@ router.get('/ipn', async (req, res) => {
         teacherAvailableTime.availableTime = filteredAvailTimeArray
 
         await teacherAvailableTime.save()
-
-        res.json(bookedTimeData)
       } else if (duration === 2700000 || duration === 3600000) {
         const filteredAvailTimeArray = availableTime.filter(
           (item) =>
