@@ -18,15 +18,23 @@ import { getProfileStudentById } from './profileStudent'
 // Book time for learning
 export const bookTime = (bookedTime) => async (dispatch) => {
   try {
-    await api.post('/learning-schedule-for-student', bookedTime)
-
-    toast.success('Bạn đã đặt lịch học thành công!')
+    const res = await api.post('/learning-schedule-for-student', bookedTime)
 
     dispatch({
       type: BOOK_TIME_SUCCESS,
-      payload: { id1: bookedTime.id1, id2: bookedTime.id2 },
+      payload: res.data,
     })
+
+    toast.success('Bạn đã đặt lịch học thành công!')
   } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      errors.forEach((error) => {
+        toast.error(error.msg)
+      })
+    }
+
     dispatch({
       type: BOOK_TIME_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
@@ -57,8 +65,6 @@ export const cancelBookedLesson = (bookedLessonId) => async (dispatch) => {
 
 // Get all booked lessons
 export const getBookedLessons = () => async (dispatch) => {
-  console.log('action called')
-
   try {
     const res = await api.get('/learning-schedule-for-student/bookedLessons')
 

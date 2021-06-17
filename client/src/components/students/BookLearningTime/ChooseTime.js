@@ -64,13 +64,9 @@ const ChooseTime = ({
               clickedAvailableEvent,
               adjacentAvailableEvent,
             ])
-            setFieldValue('id1', clickedAvailableEvent.id)
-            setFieldValue('id2', adjacentAvailableEvent.id)
             nextPage()
           } else {
             setFieldValue('bookedTime', clickedAvailableEvent)
-            setFieldValue('id1', clickedAvailableEvent.id)
-            setFieldValue('id2', clickedAvailableEvent.id)
             nextPage()
           }
         })

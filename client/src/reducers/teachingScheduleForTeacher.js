@@ -7,7 +7,6 @@ import {
   GET_CURRENT_AVAILABLE_OF_TEACHER_ERROR,
   CANCEL_BOOKED_LESSON_SUCCESS,
   CANCEL_BOOKED_LESSON_ERROR,
-  BOOK_TIME_SUCCESS,
 } from '../actions/types'
 
 const initialState = {
@@ -28,14 +27,6 @@ export default function (state = initialState, action) {
         loading: false,
         currentTeacher: payload.user,
         availableTime: payload.availableTime,
-      }
-    case BOOK_TIME_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        availableTime: state.availableTime
-          .filter((time) => time.id !== payload.id1)
-          .filter((time) => time.id !== payload.id2),
       }
     case GET_CURRENT_AVAILABLE_TIME:
       return {

@@ -1,19 +1,26 @@
 const mongoose = require('mongoose')
 
+// Day la cac bai hoc da duoc dat boi hoc sinh
 const LearningScheduleForStudentSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
+      required: true,
     },
-    bookedTime: [{ start: Date, end: Date, id: String, title: String }],
+    bookedTime: {
+      type: [{ start: Date, end: Date, id: String, title: String }],
+      required: true,
+    },
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
+      required: true,
     },
     lesson: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'typeOfLesson',
+      required: true,
     },
     duration: {
       type: Number,

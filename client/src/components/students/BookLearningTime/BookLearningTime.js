@@ -51,8 +51,6 @@ const BookLearningTime = ({
     duration: 0,
     bookedTime: [{ start: null, end: null, title: 'Booked time' }],
     price: 0,
-    id1: '',
-    id2: '',
   }
 
   const pages = [
@@ -134,6 +132,8 @@ const BookLearningTime = ({
             </Grid>
 
             {pages[page]}
+
+            <Grid item>{JSON.stringify(values, null, 2)}</Grid>
           </Grid>
         </Form>
       )}

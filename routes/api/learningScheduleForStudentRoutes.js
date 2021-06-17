@@ -8,8 +8,18 @@ const {
   getBookedLessonById,
 } = require('../../controllers/learningScheduleForStudentController')
 const checkObjectId = require('../../middleware/checkObjectId')
+const { check } = require('express-validator')
 
-router.post('/', userAuth, bookTime)
+router.post(
+  '/',
+  userAuth,
+  check('duration', 'Duration is required'),
+  check('price', 'Price is required'),
+  check('bookedTime', 'BookedTime is required'),
+  check('teacher', 'Teacher is required'),
+  check('lesson', 'Lesson is required'),
+  bookTime
+)
 
 router.delete(
   '/cancel-booked-lesson/:bookedTimeId',

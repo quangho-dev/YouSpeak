@@ -10,6 +10,7 @@ import {
   CANCEL_BOOKED_LESSON_ERROR,
   GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
   GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
+  BOOK_TIME_SUCCESS,
 } from '../actions/types'
 
 const initialState = {
@@ -29,6 +30,12 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         error: payload,
+      }
+    case BOOK_TIME_SUCCESS:
+      return {
+        ...state,
+        bookedLessons: [...state.bookedLessons, payload],
+        loading: false,
       }
     case GET_ALL_BOOKED_LESSONS_SUCCESS:
     case GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS:

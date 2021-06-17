@@ -19,6 +19,7 @@ const TeacherTaughtLessonSchema = new mongoose.Schema(
     typeOfLesson: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'typeOfLesson',
+      required: true,
     },
   },
   {

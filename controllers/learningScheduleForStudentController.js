@@ -3,11 +3,17 @@ const TeachingScheduleForTeacher = require('../models/TeachingScheduleForTeacher
 const TeacherTaughtLesson = require('../models/TeacherTaughtLesson')
 const User = require('../models/userModel')
 const sendEmail = require('../utils/sendEmail')
+const { validationResult } = require('express-validator')
 
 // @route    POST api/booking-calendar-student
 // @desc     Book a time for learning
 // @access   Private
 const bookTime = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
   const { bookedTime, teacher, duration, lesson, price } = req.body
 
   try {
@@ -33,6 +39,7 @@ const bookTime = async (req, res) => {
       subject: "You've had a new booked lesson",
     })
 
+    // Remove booked time from teacher's available time
     const teacherAvailableTime = await TeachingScheduleForTeacher.findOne({
       user: teacher,
     })

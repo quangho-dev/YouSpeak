@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 
+// Day la thoi gian co the day cua giao vien
 const TeachingScheduleForTeacherSchema = new mongoose.Schema({
+  // user co nghia la teacher
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',

@@ -1,3 +1,4 @@
+const { Schema } = require('mongoose')
 const mongoose = require('mongoose')
 
 const ProfileTeacherSchema = new mongoose.Schema(
@@ -65,6 +66,12 @@ const ProfileTeacherSchema = new mongoose.Schema(
     cardNumber: {
       type: String,
     },
+    bookedLessons: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'learningScheduleForStudent',
+      },
+    ],
   },
   { timestamps: true }
 )
