@@ -66,7 +66,7 @@ const ChooseTime = ({
             ])
             nextPage()
           } else {
-            setFieldValue('bookedTime', clickedAvailableEvent)
+            setFieldValue('bookedTime', [clickedAvailableEvent])
             nextPage()
           }
         })

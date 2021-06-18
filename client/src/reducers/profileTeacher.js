@@ -5,6 +5,7 @@ import {
   UPDATE_PROFILE_TEACHER,
   GET_PROFILE_TEACHER_BY_ID_SUCCESS,
   GET_PROFILE_TEACHER_BY_ID_ERROR,
+  BOOK_TIME_SUCCESS,
 } from '../actions/types'
 
 const initialState = {
@@ -24,6 +25,12 @@ export default function (state = initialState, action) {
         ...state,
         profileTeacher: payload,
         loading: false,
+      }
+    case BOOK_TIME_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        profileTeacher: payload.newProfileTeacher,
       }
     case PROFILE_TEACHER_ERROR:
     case GET_PROFILE_TEACHER_BY_ID_ERROR:

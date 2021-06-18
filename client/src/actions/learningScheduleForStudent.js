@@ -49,12 +49,15 @@ export const cancelBookedLesson = (bookedLessonId) => async (dispatch) => {
       `/learning-schedule-for-student/cancel-booked-lesson/${bookedLessonId}`
     )
 
-    toast.error('Đã hủy bài học')
-
     dispatch({
       type: CANCEL_BOOKED_LESSON_SUCCESS,
-      payload: { res, bookedLessonId },
+      payload: {
+        bookedLessonId,
+        newTeacherAvailableTime: res.data.newTeacherAvailableTime,
+      },
     })
+
+    toast.info(res.data.msg)
   } catch (err) {
     dispatch({
       type: CANCEL_BOOKED_LESSON_ERROR,

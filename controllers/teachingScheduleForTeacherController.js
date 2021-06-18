@@ -2,40 +2,40 @@ const TeachingScheduleForTeacher = require('../models/TeachingScheduleForTeacher
 const LearningScheduleForStudent = require('../models/LearningScheduleForStudent')
 
 // @route    POST api/booking-calendar-teacher
-// @desc     Set available time for teacher
+// @desc     Create or update available time of teacher
 // @access   Private
 const setAvailableTime = async (req, res) => {
   const { availableTime } = req.body
 
-  const availableTimeFields = {
-    availableTime,
-  }
-
   try {
-    const teachingScheduleForTeacher =
-      await TeachingScheduleForTeacher.findOneAndUpdate(
-        {
-          user: req.user.id,
-        },
-        { $set: availableTimeFields },
-        { new: true, upsert: true }
-      )
-
-    if (!teachingScheduleForTeacher) {
-      return res
-        .status(400)
-        .json({ msg: 'Không có lịch dạy của giáo viên này.' })
+    const availableTimeFields = {
+      user: req.user.id,
+      availableTime: availableTime.map((time) => {
+        return {
+          start: time.start,
+          end: time.end,
+          id: time.id,
+          title: time.title,
+        }
+      }),
     }
 
-    res.json(teachingScheduleForTeacher)
+    let availableTimeForTeaching =
+      await TeachingScheduleForTeacher.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: availableTimeFields },
+        { new: true, upsert: true, setDefaultsOnInsert: true }
+      )
+
+    res.json(availableTimeForTeaching)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
   }
 }
 
-// @route    GET api/booking-calendar-teacher/me
-// @desc     Get available time of teacher
+// @route    GET api/teaching-schedule-for-teacher/me
+// @desc     Get available time of current teacher
 // @access   Private
 const getAvailableTime = async (req, res) => {
   try {
@@ -113,13 +113,12 @@ const cancelBookedLesson = async (req, res) => {
       return res.status(404).json({ msg: 'Không tìm thấy giờ học.' })
     }
 
-    const {
-      user,
-      bookedTime: bookedDuration,
-      teacher,
-      lesson,
-      duration,
-    } = bookedLesson
+    // Check user
+    if (bookedLesson.teacher.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' })
+    }
+
+    const { bookedTime: bookedDuration, teacher } = bookedLesson
 
     const availableTimeArray = bookedDuration.map((duration) => {
       return {
@@ -142,16 +141,11 @@ const cancelBookedLesson = async (req, res) => {
 
     const returnTeacherAvailableTime = await teacherAvailableTime.save()
 
-    // Check user
-    if (bookedLesson.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorized' })
-    }
-
     await bookedLesson.remove()
 
     res.json({
       msg: 'Đã hủy giờ học.',
-      addedAvailableTime: returnTeacherAvailableTime,
+      newTeacherAvailableTime: returnTeacherAvailableTime,
     })
   } catch (err) {
     console.error(err.message)

@@ -50,6 +50,8 @@ const BookedLesson = ({
     return false
   }
 
+  console.log('bookedLesson', bookedLesson)
+
   return (
     <Grid
       container
@@ -75,7 +77,10 @@ const BookedLesson = ({
         style={{ marginTop: '1em' }}
       >
         <Grid item>
-          {loading || !bookedLesson || !profileTeacher ? (
+          {loading ||
+          !bookedLesson ||
+          Object.keys(bookedLesson).length === 0 ||
+          !profileTeacher ? (
             <Spinner />
           ) : (
             <BookedLessonInfo bookedLesson={bookedLesson} />

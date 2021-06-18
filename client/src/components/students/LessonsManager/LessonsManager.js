@@ -50,7 +50,7 @@ const LessonsManager = ({
       direction="column"
       alignItems="center"
       className={classes.rowContainer}
-      style={{ marginTop: '7em' }}
+      style={{ margin: '7em 0 4em' }}
     >
       <Grid item>
         <Typography

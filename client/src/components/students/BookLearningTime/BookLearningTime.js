@@ -132,9 +132,9 @@ const BookLearningTime = ({
             </Grid>
 
             {pages[page]}
-
-            <Grid item>{JSON.stringify(values, null, 2)}</Grid>
           </Grid>
+
+          <Grid item>{JSON.stringify(values, null, 2)}</Grid>
         </Form>
       )}
     </Formik>

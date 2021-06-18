@@ -8,6 +8,8 @@ import {
   CONFIRM_BOOKED_LESSON_ERROR,
   CANCEL_BOOKED_LESSON_SUCCESS,
   CANCEL_BOOKED_LESSON_ERROR,
+  CANCEL_BOOKED_LESSON_SUCCESS_TEACHER,
+  CANCEL_BOOKED_LESSON_ERROR_TEACHER,
   GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
   GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
   BOOK_TIME_SUCCESS,
@@ -34,7 +36,7 @@ export default function (state = initialState, action) {
     case BOOK_TIME_SUCCESS:
       return {
         ...state,
-        bookedLessons: [...state.bookedLessons, payload],
+        bookedLessons: [...state.bookedLessons, payload.bookedTimeData],
         loading: false,
       }
     case GET_ALL_BOOKED_LESSONS_SUCCESS:
@@ -67,6 +69,7 @@ export default function (state = initialState, action) {
         ),
       }
     case CANCEL_BOOKED_LESSON_SUCCESS:
+    case CANCEL_BOOKED_LESSON_SUCCESS_TEACHER:
       return {
         ...state,
         loading: false,
@@ -77,6 +80,7 @@ export default function (state = initialState, action) {
     case GET_BOOKED_LESSON_ERROR:
     case CONFIRM_BOOKED_LESSON_ERROR:
     case CANCEL_BOOKED_LESSON_ERROR:
+    case CANCEL_BOOKED_LESSON_ERROR_TEACHER:
     case GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR:
       return {
         ...state,

@@ -6,10 +6,9 @@ import interactionPlugin from '@fullcalendar/interaction'
 import momentPlugin from '@fullcalendar/moment'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Grid, Typography } from '@material-ui/core'
 import MyButton from '../../ui/MyButton'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   setAvailableTime,
   getCurrentAvailableTime,
@@ -17,18 +16,16 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Spinner from '../../ui/Spinner'
 import SaveIcon from '@material-ui/icons/Save'
+import { connect } from 'react-redux'
 
-const SchedulingCalendar = () => {
+const SchedulingCalendar = ({
+  setAvailableTime,
+  getCurrentAvailableTime,
+  teachingScheduleForTeacher: { loading, availableTime },
+}) => {
   const [calendarEvents, setCalendarEvents] = useState([])
 
-  const dispatch = useDispatch()
-
-  const teachingScheduleForTeacher = useSelector(
-    (state) => state.teachingScheduleForTeacher
-  )
-  const { loading, availableTime } = teachingScheduleForTeacher
-
-  const id = uuidv4()
+  const history = useHistory()
 
   const calendarComponentRef = React.createRef()
 
@@ -50,6 +47,8 @@ const SchedulingCalendar = () => {
   const handleDateClick = (arg) => {
     const endDate = moment(arg.date).add(30, 'minutes')
 
+    const id = uuidv4()
+
     setCalendarEvents((prevState) => [
       ...prevState,
       {
@@ -61,17 +60,16 @@ const SchedulingCalendar = () => {
     ])
   }
 
-  const handleSubmit = async () => {
-    dispatch(setAvailableTime(calendarEvents))
+  const handleSubmit = () => {
+    setAvailableTime(calendarEvents)
+    history.push('/teachers/dashboard')
   }
 
   useEffect(() => {
-    if (!availableTime[0]) {
-      dispatch(getCurrentAvailableTime())
-    } else {
-      setCalendarEvents(availableTime)
-    }
-  }, [dispatch, availableTime, loading])
+    if (availableTime.length === 0) getCurrentAvailableTime()
+
+    if (!loading && availableTime.length > 0) setCalendarEvents(availableTime)
+  }, [getCurrentAvailableTime, availableTime, loading])
 
   if (loading) {
     return <Spinner />
@@ -142,4 +140,11 @@ const SchedulingCalendar = () => {
   )
 }
 
-export default SchedulingCalendar
+const mapStateToProps = (state) => ({
+  teachingScheduleForTeacher: state.teachingScheduleForTeacher,
+})
+
+export default connect(mapStateToProps, {
+  setAvailableTime,
+  getCurrentAvailableTime,
+})(SchedulingCalendar)

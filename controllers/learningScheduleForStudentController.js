@@ -1,6 +1,6 @@
 const LearningScheduleForStudent = require('../models/LearningScheduleForStudent')
 const TeachingScheduleForTeacher = require('../models/TeachingScheduleForTeacher')
-const TeacherTaughtLesson = require('../models/TeacherTaughtLesson')
+const ProfileTeacher = require('../models/profileTeacherModel')
 const User = require('../models/userModel')
 const sendEmail = require('../utils/sendEmail')
 const { validationResult } = require('express-validator')
@@ -54,14 +54,25 @@ const bookTime = async (req, res) => {
       const filteredAvailTimeArray = availableTime.filter(
         (element) =>
           new Date(element.start).getTime() !==
-          new Date(bookedTime.start).getTime()
+          new Date(bookedTime[0].start).getTime()
       )
 
       teacherAvailableTime.availableTime = filteredAvailTimeArray
 
-      await teacherAvailableTime.save()
+      const newTeacherAvailableTime = await teacherAvailableTime.save()
 
-      res.json(bookedTimeData)
+      // Update booked lessons array in teacher's profile
+      const profileTeacher = await ProfileTeacher.findOne({ user: teacher })
+
+      profileTeacher.bookedLessons.push(bookedTimeData._id)
+
+      const newProfileTeacher = await profileTeacher.save()
+
+      res.json({
+        bookedTimeData,
+        newTeacherAvailableTime,
+        newProfileTeacher,
+      })
     } else if (
       duration === FORTY_FIVE_MINUTES_IN_MILLISECONDS ||
       duration === ONE_HOUR_IN_MILLISECONDS
@@ -80,16 +91,20 @@ const bookTime = async (req, res) => {
 
       teacherAvailableTime.availableTime = secondfilterdAvailTimeArray
 
-      await teacherAvailableTime.save()
+      const newTeacherAvailableTime = await teacherAvailableTime.save()
 
-      addBookedLessonToTeacherTaughtLessonModel({
-        teacher,
-        studentId: req.user.id,
-        duration,
-        typeOfLesson: lesson,
+      // Update booked lessons array in teacher's profile
+      const profileTeacher = await ProfileTeacher.findOne({ user: teacher })
+
+      profileTeacher.bookedLessons.push(bookedTimeData._id)
+
+      const newProfileTeacher = await profileTeacher.save()
+
+      res.json({
+        bookedTimeData,
+        newTeacherAvailableTime,
+        newProfileTeacher,
       })
-
-      res.json(bookedTimeData)
     }
   } catch (err) {
     console.error(err.message)
@@ -97,29 +112,8 @@ const bookTime = async (req, res) => {
   }
 }
 
-const addBookedLessonToTeacherTaughtLessonModel = async ({
-  teacher,
-  studentId,
-  duration,
-  typeOfLesson,
-}) => {
-  try {
-    const newTeacherTaughtLesson = new TeacherTaughtLesson({
-      teacher,
-      student: studentId,
-      duration,
-      typeOfLesson,
-    })
-
-    await newTeacherTaughtLesson.save()
-  } catch (err) {
-    console.error(err)
-    res.status(500).send('Server error')
-  }
-}
-
-// @route    DELETE api/booking-calendar-student/cancel-booked-lesson/:bookedTimeId
-// @desc     Delete a booked lesson
+// @route    DELETE api/learning-schedule-for-student/cancel-booked-lesson/:bookedTimeId
+// @desc     Cancel a booked lesson
 // @access   Private
 const cancelBookedLesson = async (req, res) => {
   try {
@@ -131,15 +125,10 @@ const cancelBookedLesson = async (req, res) => {
       return res.status(404).json({ msg: 'Không tìm thấy giờ học.' })
     }
 
-    const {
-      user,
-      bookedTime: bookedDuration,
-      teacher,
-      lesson,
-      duration,
-    } = bookedTime
+    const { bookedTime: bookedDuration, teacher } = bookedTime
 
-    const availableTimeArray = bookedDuration.map((duration) => {
+    //  Add cancel booked time to teacher's available time
+    const cancelBookedTimeArray = bookedDuration.map((duration) => {
       return {
         start: duration.start,
         end: duration.end,
@@ -154,17 +143,17 @@ const cancelBookedLesson = async (req, res) => {
 
     const newAvailableTimeArray = [
       ...teacherAvailableTime.availableTime,
-    ].concat(availableTimeArray)
+    ].concat(cancelBookedTimeArray)
 
     teacherAvailableTime.availableTime = newAvailableTimeArray
 
-    const returnTeacherAvailableTime = await teacherAvailableTime.save()
+    const newTeacherAvailableTime = await teacherAvailableTime.save()
 
     await bookedTime.remove()
 
     res.json({
-      msg: 'Đã hủy giờ học.',
-      addedAvailableTime: returnTeacherAvailableTime,
+      msg: 'Đã hủy bài học',
+      newTeacherAvailableTime,
     })
   } catch (err) {
     console.error(err.message)

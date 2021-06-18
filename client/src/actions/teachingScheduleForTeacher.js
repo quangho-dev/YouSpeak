@@ -7,6 +7,8 @@ import {
   GET_AVAILABLE_TIME_OF_TEACHER_SUCCESS,
   CONFIRM_BOOKED_LESSON_SUCCESS,
   CONFIRM_BOOKED_LESSON_ERROR,
+  CANCEL_BOOKED_LESSON_ERROR_TEACHER,
+  CANCEL_BOOKED_LESSON_SUCCESS_TEACHER,
 } from './types'
 import { toast } from 'react-toastify'
 
@@ -17,7 +19,7 @@ export const setAvailableTime = (availableTimeArray) => async (dispatch) => {
       availableTime: availableTimeArray,
     })
 
-    toast.success('Đã đặt thời gian có thể dạy.')
+    toast.success('Update available time for teaching successfully!')
 
     dispatch({
       type: SET_AVAILABLE_TIME_SUCCESS,
@@ -31,7 +33,7 @@ export const setAvailableTime = (availableTimeArray) => async (dispatch) => {
   }
 }
 
-// Get current teachers available time
+// Get current teacher's available time
 export const getCurrentAvailableTime = () => async (dispatch) => {
   try {
     const res = await api.get('/teaching-schedule-for-teacher/me')
@@ -49,25 +51,24 @@ export const getCurrentAvailableTime = () => async (dispatch) => {
 }
 
 // Get available time of a teacher to show to student
-export const getAvailableTimeOfATeacher = (teacherCalendarId) => async (
-  dispatch
-) => {
-  try {
-    const res = await api.get(
-      `/teaching-schedule-for-teacher/${teacherCalendarId}`
-    )
+export const getAvailableTimeOfATeacher =
+  (teacherCalendarId) => async (dispatch) => {
+    try {
+      const res = await api.get(
+        `/teaching-schedule-for-teacher/${teacherCalendarId}`
+      )
 
-    dispatch({
-      type: GET_AVAILABLE_TIME_OF_TEACHER_SUCCESS,
-      payload: res.data,
-    })
-  } catch (err) {
-    dispatch({
-      type: GET_CURRENT_AVAILABLE_TIME_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    })
+      dispatch({
+        type: GET_AVAILABLE_TIME_OF_TEACHER_SUCCESS,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: GET_CURRENT_AVAILABLE_TIME_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      })
+    }
   }
-}
 
 // Confirm a booked lesson
 export const confirmBookedLesson = (bookedLessonId) => async (dispatch) => {
@@ -86,6 +87,30 @@ export const confirmBookedLesson = (bookedLessonId) => async (dispatch) => {
     toast.error('Confirm error')
     dispatch({
       type: CONFIRM_BOOKED_LESSON_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
+
+// Cancel a booked lesson
+export const cancelBookedLesson = (bookedLessonId) => async (dispatch) => {
+  try {
+    const res = await api.delete(
+      `/teaching-schedule-for-teacher/${bookedLessonId}`
+    )
+
+    dispatch({
+      type: CANCEL_BOOKED_LESSON_SUCCESS_TEACHER,
+      payload: {
+        bookedLessonId,
+        newTeacherAvailableTime: res.data.newTeacherAvailableTime,
+      },
+    })
+
+    toast.info(res.data.msg)
+  } catch (err) {
+    dispatch({
+      type: CANCEL_BOOKED_LESSON_ERROR_TEACHER,
       payload: { msg: err.response.statusText, status: err.response.status },
     })
   }
