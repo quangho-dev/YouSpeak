@@ -88,12 +88,20 @@ const confirmBookedLesson = async (req, res) => {
     )
 
     if (!bookedLesson) {
-      return res.status(400).json({ msg: 'Không tìm thấy bài học này.' })
+      return res.status(400).json({ msg: 'Can not find this booked lesson' })
+    }
+
+    if (bookedLesson.isConfirmed) {
+      return res.status(400).json({
+        msg: 'This booked lesson has already been confirmed.',
+      })
     }
 
     bookedLesson.isConfirmed = true
 
-    await bookedLesson.save()
+    const confirmedBookedLesson = await bookedLesson.save()
+
+    res.status(200).json(confirmedBookedLesson)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')

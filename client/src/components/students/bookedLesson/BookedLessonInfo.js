@@ -54,6 +54,15 @@ const BookedLessonInfo = ({ bookedLesson }) => {
 
             <Grid item>
               <Typography variant="body1">
+                <strong>Tình trạng:</strong>&nbsp;
+                {bookedLesson && bookedLesson.isConfirmed
+                  ? 'Đã xác nhận'
+                  : 'Đang chờ xác nhận'}
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <Typography variant="body1">
                 <strong>Thời gian bắt đầu:</strong>&nbsp;
                 {bookedLesson &&
                   bookedLesson.bookedTime &&

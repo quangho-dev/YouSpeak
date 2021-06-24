@@ -77,7 +77,7 @@ export const confirmBookedLesson = (bookedLessonId) => async (dispatch) => {
       `/teaching-schedule-for-teacher/${bookedLessonId}`
     )
 
-    toast.success('Order has been confirmed successully!')
+    toast.success('Booked lesson has been confirmed successully!')
 
     dispatch({
       type: CONFIRM_BOOKED_LESSON_SUCCESS,

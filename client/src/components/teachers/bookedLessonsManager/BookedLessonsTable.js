@@ -26,6 +26,7 @@ const BookedLessonsTable = ({ bookedLessons }) => {
             <TableCell>Type of lesson</TableCell>
             <TableCell>Starting time</TableCell>
             <TableCell>Lesson's duration</TableCell>
+            <TableCell>State</TableCell>
             <TableCell>{''}</TableCell>
           </TableRow>
         </TableHead>
@@ -46,6 +47,9 @@ const BookedLessonsTable = ({ bookedLessons }) => {
                 </TableCell>
                 <TableCell>
                   {convertMillisecondsToMinutes(lesson.duration)}&nbsp;minutes
+                </TableCell>
+                <TableCell>
+                  {lesson.isConfirmed ? 'Confirmed' : 'Waiting to be confirmed'}
                 </TableCell>
                 <TableCell>
                   <MyButton

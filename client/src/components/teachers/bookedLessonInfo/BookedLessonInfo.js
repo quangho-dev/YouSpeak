@@ -17,6 +17,8 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import CancelIcon from '@material-ui/icons/Cancel'
 import { useConfirm } from 'material-ui-confirm'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import MyButton from '../../ui/MyButton'
 
 const BookedLessonInfo = ({
   getBookedLessonAndProfileStudent,
@@ -25,6 +27,7 @@ const BookedLessonInfo = ({
   learningScheduleForStudent: { loading, bookedLesson },
   profileStudent: { loadingProfileStudent, profile: profileStudent },
   history,
+  confirmBookedLesson,
 }) => {
   const confirm = useConfirm()
 
@@ -35,6 +38,18 @@ const BookedLessonInfo = ({
     })
       .then(() => {
         cancelBookedLesson(bookedLessonId)
+        history.push('/teachers/booked-lessons-manager')
+      })
+      .catch(() => {})
+  }
+
+  const handleConfirmLesson = (bookedLessonId) => {
+    confirm({
+      description: 'Press ok to confirm the order',
+      title: 'Are you sure?',
+    })
+      .then(() => {
+        confirmBookedLesson(bookedLessonId)
         history.push('/teachers/booked-lessons-manager')
       })
       .catch(() => {})
@@ -113,6 +128,15 @@ const BookedLessonInfo = ({
 
                 <Grid item>
                   <Typography variant="body1">
+                    <strong>State: </strong>
+                    {bookedLesson && bookedLesson.isConfirmed
+                      ? 'Already confirmed'
+                      : 'Waiting to confirm'}
+                  </Typography>
+                </Grid>
+
+                <Grid item>
+                  <Typography variant="body1">
                     <strong>Order's starting time: </strong>
                     {bookedLesson &&
                       bookedLesson.bookedTime &&
@@ -165,6 +189,16 @@ const BookedLessonInfo = ({
                   <CancelIcon />
                   &nbsp;Cancel order
                 </Button>
+              </Grid>
+
+              <Grid item>
+                <MyButton
+                  onClick={() => handleConfirmLesson(bookedLesson._id)}
+                  disabled={bookedLesson.isConfirmed}
+                >
+                  <CheckCircleIcon />
+                  &nbsp;Confirm order
+                </MyButton>
               </Grid>
             </Grid>
           </CardActions>

@@ -65,7 +65,9 @@ export default function (state = initialState, action) {
         loading: false,
         bookedLesson: payload,
         bookedLessons: state.bookedLessons.map((lesson) =>
-          lesson._id === payload._id ? { ...lesson, isConfirmed: true } : lesson
+          lesson._id === payload._id
+            ? { ...lesson, isConfirmed: payload.isConfirmed }
+            : lesson
         ),
       }
     case CANCEL_BOOKED_LESSON_SUCCESS:

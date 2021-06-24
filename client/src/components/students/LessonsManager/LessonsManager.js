@@ -77,6 +77,7 @@ const LessonsManager = ({
                   <TableCell>STT</TableCell>
                   <TableCell>Tên bài học</TableCell>
                   <TableCell>Giáo viên</TableCell>
+                  <TableCell>Tình trạng</TableCell>
                   <TableCell align="center">Xem thêm</TableCell>
                 </TableRow>
               </TableHead>
@@ -100,6 +101,11 @@ const LessonsManager = ({
                       </TableCell>
                       <TableCell>
                         {lesson && lesson.teacher && lesson.teacher.name}
+                      </TableCell>
+                      <TableCell>
+                        {lesson && lesson.isConfirmed
+                          ? 'Đã xác nhận'
+                          : 'Đang chờ xác nhận'}
                       </TableCell>
                       <TableCell>
                         <MyButton

@@ -24,6 +24,7 @@ const cors = require('cors')
 const config = require('config')
 const connectDB = require('./config/db')
 const momoPaymentRoutes = require('./routes/api/momoPaymentRoutes')
+const vnpayRoutes = require('./routes/api/vnpayRoutes')
 const nganluongPaymentRoutes = require('./routes/api/nganluongPaymentRoutes')
 const bodyParser = require('body-parser')
 
@@ -162,6 +163,8 @@ app.use('/api/nganluong-payment', nganluongPaymentRoutes)
 // Momo payment setup
 app.use('/api/momo-payment', momoPaymentRoutes)
 
+app.use('/api/vnpay', vnpayRoutes)
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 // Serve static assets in production
@@ -184,7 +187,7 @@ app.use((error, req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  const error = new Error('Not Found')
+  const error = new Error('Can not find that route!')
   error.status = 404
   next(error)
 })
