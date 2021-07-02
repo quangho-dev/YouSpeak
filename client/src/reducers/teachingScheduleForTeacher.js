@@ -11,6 +11,8 @@ import {
   CANCEL_BOOKED_LESSON_ERROR_TEACHER,
   BOOK_TIME_SUCCESS,
   BOOK_TIME_ERROR,
+  SYNC_ORDER_SUCCESS,
+  SYNC_ORDER_ERROR,
 } from '../actions/types'
 
 const initialState = {
@@ -36,6 +38,12 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         availableTime: payload.newTeacherAvailableTime.availableTime,
+      }
+    case SYNC_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        availableTime: payload.teacherAvailableTime,
       }
     case GET_CURRENT_AVAILABLE_TIME:
       return {
@@ -63,6 +71,7 @@ export default function (state = initialState, action) {
     case CANCEL_BOOKED_LESSON_ERROR_TEACHER:
     case CANCEL_BOOKED_LESSON_ERROR:
     case BOOK_TIME_ERROR:
+    case SYNC_ORDER_ERROR:
       return {
         ...state,
         loading: false,

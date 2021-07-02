@@ -13,6 +13,8 @@ import {
   GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
   GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
   BOOK_TIME_SUCCESS,
+  SYNC_ORDER_SUCCESS,
+  SYNC_ORDER_ERROR,
 } from '../actions/types'
 
 const initialState = {
@@ -33,11 +35,25 @@ export default function (state = initialState, action) {
         loading: false,
         error: payload,
       }
+    case SYNC_ORDER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        bookedLesson: {},
+        error: payload,
+      }
     case BOOK_TIME_SUCCESS:
       return {
         ...state,
         bookedLessons: [...state.bookedLessons, payload.bookedTimeData],
         loading: false,
+      }
+    case SYNC_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bookedLessons: [...state.bookedLessons, payload.bookedLesson],
+        bookedLesson: payload.bookedLesson,
       }
     case GET_ALL_BOOKED_LESSONS_SUCCESS:
     case GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS:

@@ -42,6 +42,10 @@ const LearningScheduleForStudentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    app_trans_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 )

@@ -12,6 +12,7 @@ import { bookTime } from '../../../actions/learningScheduleForStudent'
 import ChooseTime from './ChooseTime'
 import { connect } from 'react-redux'
 import ChoosePaymentMethod from './ChoosePaymentMethod'
+import axios from 'axios'
 
 const BookLearningTime = ({
   teachingScheduleForTeacher: { availableTime, loading, currentTeacher },
@@ -53,6 +54,10 @@ const BookLearningTime = ({
     price: 0,
   }
 
+  const handleSubmit = async (values) => {
+    console.log('values:', values)
+  }
+
   const pages = [
     <ChooseLesson
       nextPage={nextPage}
@@ -81,12 +86,7 @@ const BookLearningTime = ({
   }, [teacherCalendarId, getAvailableTimeOfATeacher, getLessonsOfTeacherById])
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={async (values) => {
-        bookTime(values)
-      }}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {({ isValid, isSubmitting, values, errors }) => (
         <Form autoComplete="off">
           <Grid

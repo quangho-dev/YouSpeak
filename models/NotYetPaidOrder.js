@@ -28,6 +28,10 @@ const NotYetPaidOrderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    app_trans_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 )

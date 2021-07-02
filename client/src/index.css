@@ -31,3 +31,8 @@ code {
     padding: 7em 5em 2em;
   }
 }
+
+.hideHorizontalScrollBar {
+  width: 100%;
+  margin: 0;
+}

@@ -165,6 +165,8 @@ app.use('/api/momo-payment', momoPaymentRoutes)
 
 app.use('/api/vnpay', vnpayRoutes)
 
+app.use('/api/zaloPayment', require('./routes/api/zaloPayment'))
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 // Serve static assets in production

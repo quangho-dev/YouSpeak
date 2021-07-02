@@ -34,6 +34,7 @@ import EditDegreeImages from '../../screens/teachers/ProfileTeacherForm/EditDegr
 import ContactUs from '../layout/contactUs/ContactUs'
 import LandingScreen from '../../screens/LandingScreen'
 import VnpayReturn from '../students/BookLearningTime/PaymentMethods/VnpayReturn'
+import ZaloPaySuccessScreen from '../Payments/ZaloPaySuccessScreen'
 
 const Routes = (props) => {
   return (
@@ -85,6 +86,11 @@ const Routes = (props) => {
           component={BookedLesson}
         />
         <PrivateRoute exact path="/vnpay-return" component={VnpayReturn} />
+        <PrivateRoute
+          exact
+          path="/zaloPay/success"
+          component={ZaloPaySuccessScreen}
+        />
 
         {/* Teacher routes */}
         <Route exact path="/for-teacher" component={ForTeacherScreen} />

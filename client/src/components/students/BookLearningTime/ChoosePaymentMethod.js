@@ -2,11 +2,21 @@ import React from 'react'
 import { Grid, Typography, useMediaQuery } from '@material-ui/core'
 import { useTheme } from '@material-ui/styles'
 import Paypal from './PaymentMethods/Paypal'
+import MyButton from '../../ui/MyButton'
+import { useFormikContext } from 'formik'
+import axios from 'axios'
+import api from '../../../utils/api'
 
 const ChoosePaymentMethod = (props) => {
   const theme = useTheme()
   const matchesMD = useMediaQuery(theme.breakpoints.up('md'))
 
+  const { values, submitForm } = useFormikContext()
+
+  const handleSubmitZaloPay = async () => {
+    const res = await api.post('/zaloPayment/createOrder', values)
+    window.location.replace(res.data)
+  }
   return (
     <Grid item container direction="column" alignItems="center" spacing={2}>
       <Grid item>
@@ -35,6 +45,10 @@ const ChoosePaymentMethod = (props) => {
         <Grid item>
           <Paypal />
         </Grid>
+      </Grid>
+
+      <Grid item>
+        <MyButton onClick={handleSubmitZaloPay}>ZaloPay</MyButton>
       </Grid>
     </Grid>
   )

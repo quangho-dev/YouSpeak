@@ -10,6 +10,8 @@ import {
   GET_BOOKED_LESSON_ERROR,
   GET_BOOKED_LESSONS_OF_A_TEACHER_SUCCESS,
   GET_BOOKED_LESSONS_OF_A_TEACHER_ERROR,
+  SYNC_ORDER_SUCCESS,
+  SYNC_ORDER_ERROR,
 } from './types'
 import { toast } from 'react-toastify'
 import { getProfileTeacherById } from './profileTeacher'
@@ -134,3 +136,23 @@ export const getBookedLessonAndProfileStudent =
       dispatch(getProfileStudentById(res.user._id))
     )
   }
+
+export const syncSuccessfulOrder = (app_trans_id) => async (dispatch) => {
+  console.log('app_trans_id', app_trans_id)
+
+  try {
+    const res = await api.get(
+      `/zaloPayment/sync-successful-order/${app_trans_id}`
+    )
+
+    dispatch({
+      type: SYNC_ORDER_SUCCESS,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: SYNC_ORDER_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    })
+  }
+}
